@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { Game } from "../entity/Game.ts";
-import { getGames } from "../service/gameService.ts";
+import { Game } from "../entity/Game";
+import { getGames } from "../service/gameService";
 
 interface Response {
   count: number;

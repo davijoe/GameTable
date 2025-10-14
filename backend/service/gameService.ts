@@ -1,7 +1,7 @@
 import { SelectQueryBuilder } from "typeorm";
-import { AppDataSource } from "../data-source.ts";
-import { Game } from "../entity/Game.ts";
-import { ModifiedGame } from "../router/gameRouter.ts";
+import { AppDataSource } from "../data-source";
+import { Game } from "../entity/Game";
+import { ModifiedGame } from "../router/gameRouter";
 
 const gameRepository = AppDataSource.getRepository(Game);
 

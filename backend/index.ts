@@ -1,5 +1,5 @@
 import express from "express";
-import init from "./startup/init.ts";
+import init from "./startup/init";
 
 const app = express();
 

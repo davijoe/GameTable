@@ -1,5 +1,5 @@
 import express from "express"
-import gameRouter from "../router/gameRouter.ts";
+import gameRouter from "../router/gameRouter";
 // import genreRouter from "../router/genreRouter.ts";
 
 const setupRouters = (app: express.Application) => {

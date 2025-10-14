@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
-import { Game } from "./Game.ts";
+import { Game } from "./Game";
 
 @Entity({ name: "genre" })
 export class Genre {

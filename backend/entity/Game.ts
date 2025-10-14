@@ -6,7 +6,7 @@ import {
   JoinTable,
 } from "typeorm";
 
-import { Genre } from "./Genre.ts";
+import { Genre } from "./Genre";
 
 @Entity({ name: "game" })
 export class Game {
