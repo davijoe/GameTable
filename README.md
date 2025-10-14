@@ -1,4 +1,11 @@
-# backend
+# Mono-Repo with GameTable backend and frontend
+
+## Frontend
+Bun + React
+
+## Backend
+Bun + Ts-Node + Express + Mysql + Docker
+
 
 To install dependencies:
 
@@ -22,5 +29,3 @@ Check server uptime status and database connection:
 curl http://localhost:8000/health
 ```
 
-
-This project was created using `bun init` in bun v1.2.23. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
