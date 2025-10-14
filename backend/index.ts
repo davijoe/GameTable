@@ -1,6 +1,9 @@
 import express from "express";
+import init from "./startup/init.ts";
 
 const app = express();
+
+init(app);
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");
