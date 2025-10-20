@@ -21,7 +21,7 @@ console.log("[DB] Host:", DB_HOST, "| Port:", DB_PORT);
 console.log("[DB] Username:", DB_USERNAME, "| Password:", DB_PASSWORD);
 
 // Quick validation before constructing the DataSource
-if (!Number.isFinite(DB_PORT)) throw new Error(`Invalid DB_PORT: ${process.env.DB_PORT}`);
+if (!Number.isFinite(DB_PORT)) throw new Error(`Invalid DB_PORT: ${DB_PORT}`);
 if (!DB_HOST) throw new Error("DB_HOST is required");
 if (!DB_USERNAME) throw new Error("DB_USERNAME is required");
 if (DB_PASSWORD == null) throw new Error("DB_PASSWORD is required");
