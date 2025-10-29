@@ -4,6 +4,7 @@ from app.model.game_model import Game
 from app.schema.game_schema import GameCreate, GameUpdate, GameRead
 from app.repository.game_repository import GameRepository
 
+
 class GameService:
     def __init__(self, db: Session):
         self.repo = GameRepository(db)
@@ -13,7 +14,9 @@ class GameService:
         obj = self.repo.get(game_id)
         return GameRead.model_validate(obj) if obj else None
 
-    def list(self, offset: int, limit: int, search: Optional[str]) -> Tuple[List[GameRead], int]:
+    def list(
+        self, offset: int, limit: int, search: Optional[str]
+    ) -> Tuple[List[GameRead], int]:
         rows, total = self.repo.list(offset=offset, limit=limit, search=search)
         return [GameRead.model_validate(r) for r in rows], total
 
@@ -39,4 +42,3 @@ class GameService:
         if ok:
             self.db.commit()
         return ok
-

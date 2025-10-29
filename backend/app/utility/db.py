@@ -13,8 +13,11 @@ print(f"User: {DB_USER} | Pass: {DB_PASS}")
 print(f"Host: {DB_HOST} | Port: {DB_PORT}")
 print(f"Database: {DB_NAME}")
 
-# Example: export DATABASE_URL="mysql+pymysql://user:pass@localhost:3306/gametable"
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://appuser:change_me_too@localhost:3306/gametable")
+# Example:
+# export DATABASE_URL="mysql+pymysql://user:pass@localhost:3306/gametable"
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "mysql+pymysql://appuser:change_me_too@localhost:3306/gametable"
+)
 
 engine = create_engine(
     DATABASE_URL,
@@ -24,8 +27,10 @@ engine = create_engine(
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
 
+
 class Base(DeclarativeBase):
     pass
+
 
 def get_db():
     db = SessionLocal()
