@@ -5,19 +5,35 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi>=0.120.1",
-    "pydantic>=2.12.3",
-    "pymysql>=1.1.2",
-    "sqlalchemy>=2.0.44",
-    "uvicorn>=0.38.0",
+  "fastapi>=0.120.1",
+  "pydantic>=2.12.3",
+  "pymysql>=1.1.2",
+  "sqlalchemy>=2.0.44",
+  "uvicorn>=0.38.0",
 ]
 
 [dependency-groups]
-dev = [
-    "mypy>=1.18.2",
-    "pytest>=8.4.2",
-    "ruff>=0.14.2",
+dev = ["mypy>=1.18.2", "pytest>=8.4.2", "ruff>=0.14.2"]
+
+[tool.ruff.lint]
+select = [
+  "E",      # pycodestyle errors
+  "W",      # pycodestyle warnings
+  "F",      # pyflakes
+  "I",      # isort
+  "B",      # flake8-bugbear
+  "C4",     # flake8-comprehensions
+  "UP",     # pyupgrade
+  "ARG001", # unused arguments in functions
+  "T201",   # print statements are not allowed
 ]
+ignore = [
+  "E501", # line too long, handled by black
+  "B008", # do not perform function calls in argument defaults
+  "W191", # indentation contains tabs
+  "B904", # Allow raising exceptions without from e, for HTTPException
+]
+
 
 # Get inspiration from this repo
 # https://github.com/fastapi/full-stack-fastapi-template/blob/master/backend/pyproject.toml
