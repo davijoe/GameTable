@@ -28,13 +28,14 @@ UV.lock is kept in VSC
 Clone repo
 
 ```bash
-git clone https://github.com/davijoe/GameTale-2025
+git clone https://github.com/davijoe/GameTable
 ```
 
 run UV sync from repository
 
 ```bash
-cd GameTale-2025 && uv sync
+cd GameTale/backend && uv sync
 ```
 
 Remember to set database auth info in .env
+And in the temp url in db.py
