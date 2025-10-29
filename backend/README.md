@@ -31,10 +31,11 @@ Clone repo
 git clone https://github.com/davijoe/GameTable
 ```
 
-run UV sync from repository
+Install python libs via UV sync from the backend dir
 
 ```bash
-cd GameTale/backend && uv sync
+cd GameTable/backend
+uv sync
 ```
 
 Remember to set database auth info in .env
