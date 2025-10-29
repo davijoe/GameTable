@@ -1,15 +1,40 @@
-# backend
+# Backend Application for GameTable
 
-To install dependencies:
+Made with UV, FastAPI, MySQL,
+
+## Full stack
+
+### Frontend: LINK TO FRONTEND
+
+React, TypeScript, Chakra (perhaps)
+
+### Backend
+
+FastAPI, UV, MySQL
+Pydantic, SqlAlchemy (ORM), RUFF
+
+#### DB and ORM
+
+Pydantic (as alternative to Dataclasses)
+SqlAlchemy (ORM)
+
+#### Dev Environment
+
+Docker, Docker Compose
+UV.lock is kept in VSC
+
+## Setup
+
+Clone repo
 
 ```bash
-bun install
+git clone https://github.com/davijoe/GameTale-2025
 ```
 
-To run:
+run UV sync from repository
 
 ```bash
-bun run index.ts
+cd GameTale-2025 && uv sync
 ```
 
-This project was created using `bun init` in bun v1.2.23. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+Remember to set database auth info in .env

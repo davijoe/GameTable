@@ -1,0 +1,23 @@
+[project]
+name = "gametable-2025"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.120.1",
+    "pydantic>=2.12.3",
+    "pymysql>=1.1.2",
+    "sqlalchemy>=2.0.44",
+    "uvicorn>=0.38.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.18.2",
+    "pytest>=8.4.2",
+    "ruff>=0.14.2",
+]
+
+# Get inspiration from this repo
+# https://github.com/fastapi/full-stack-fastapi-template/blob/master/backend/pyproject.toml
