@@ -1,7 +1,9 @@
 from __future__ import annotations
-from typing import Optional
-from pydantic import BaseModel, ConfigDict, constr, EmailStr
+
 from datetime import date
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, EmailStr, constr
 
 
 class ORMModel(BaseModel):
@@ -29,3 +31,4 @@ class UserUpdate(ORMModel):
 
 class UserRead(UserBase):
     id: int
+

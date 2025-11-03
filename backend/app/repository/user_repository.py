@@ -1,7 +1,9 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
-from app.model.user import User
+from sqlalchemy.orm import Session
+
+from app.model.user_model import User
 
 
 class UserRepository:
@@ -45,3 +47,4 @@ class UserRepository:
     def delete(self, user: User) -> None:
         self.db.delete(user)
         self.db.flush()
+

@@ -1,8 +1,10 @@
 from typing import List, Optional, Tuple
+
 from sqlalchemy.orm import Session
+
 from app.model.game_model import Game
-from app.schema.game_schema import GameCreate, GameUpdate, GameRead
 from app.repository.game_repository import GameRepository
+from app.schema.game_schema import GameCreate, GameRead, GameUpdate
 
 
 class GameService:

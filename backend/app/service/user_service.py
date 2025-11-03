@@ -1,8 +1,10 @@
 from typing import List, Optional, Tuple
+
 from sqlalchemy.orm import Session
-from app.model.user import User
-from app.schema.user_schema import UserCreate, UserUpdate, UserRead
+
+from app.model.user_model import User
 from app.repository.user_repository import UserRepository
+from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 
 
 class UserService:
@@ -41,14 +43,14 @@ class UserService:
         obj = self.repo.get(user_id)
         if not obj:
             return None
-        
+
         update_data = payload.model_dump(exclude_unset=True)
         # Here you would typically hash the password if it's being updated
         # TODO: Add password hashing if password is in update_data
-        
+
         for key, value in update_data.items():
             setattr(obj, key, value)
-        
+
         obj = self.repo.update(obj)
         self.db.commit()
         self.db.refresh(obj)
@@ -61,3 +63,4 @@ class UserService:
         self.repo.delete(obj)
         self.db.commit()
         return True
+
