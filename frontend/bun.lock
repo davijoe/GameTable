@@ -4,6 +4,7 @@
     "": {
       "name": "gametable",
       "dependencies": {
+        "@chakra-ui/icons": "^2.2.4",
         "@chakra-ui/react": "2",
         "@emotion/react": "^11.14.0",
         "@emotion/styled": "^11.14.1",
@@ -70,6 +71,8 @@
     "@chakra-ui/anatomy": ["@chakra-ui/anatomy@2.3.6", "", {}, "sha512-TjmjyQouIZzha/l8JxdBZN1pKZTj7sLpJ0YkFnQFyqHcbfWggW9jKWzY1E0VBnhtFz/xF3KC6UAVuZVSJx+y0g=="],
 
     "@chakra-ui/hooks": ["@chakra-ui/hooks@2.4.5", "", { "dependencies": { "@chakra-ui/utils": "2.2.5", "@zag-js/element-size": "0.31.1", "copy-to-clipboard": "3.3.3", "framesync": "6.1.2" }, "peerDependencies": { "react": ">=18" } }, "sha512-601fWfHE2i7UjaxK/9lDLlOni6vk/I+04YDbM0BrelJy+eqxdlOmoN8Z6MZ3PzFh7ofERUASor+vL+/HaCaZ7w=="],
+
+    "@chakra-ui/icons": ["@chakra-ui/icons@2.2.4", "", { "peerDependencies": { "@chakra-ui/react": ">=2.0.0", "react": ">=18" } }, "sha512-l5QdBgwrAg3Sc2BRqtNkJpfuLw/pWRDwwT58J6c4PqQT6wzXxyNa8Q0PForu1ltB5qEiFb1kxr/F/HO1EwNa6g=="],
 
     "@chakra-ui/react": ["@chakra-ui/react@2.10.9", "", { "dependencies": { "@chakra-ui/hooks": "2.4.5", "@chakra-ui/styled-system": "2.12.4", "@chakra-ui/theme": "3.4.9", "@chakra-ui/utils": "2.2.5", "@popperjs/core": "^2.11.8", "@zag-js/focus-visible": "^0.31.1", "aria-hidden": "^1.2.3", "react-fast-compare": "3.2.2", "react-focus-lock": "^2.9.6", "react-remove-scroll": "^2.5.7" }, "peerDependencies": { "@emotion/react": ">=11", "@emotion/styled": ">=11", "framer-motion": ">=4.0.0", "react": ">=18", "react-dom": ">=18" } }, "sha512-lhdcgoocOiURwBNR3L8OioCNIaGCZqRfuKioLyaQLjOanl4jr0PQclsGb+w0cmito252vEWpsz2xRqF7y+Flrw=="],
 

@@ -7,12 +7,14 @@ import FriendsTab from "./components/tabs/Friends";
 import MessagesTab from "./components/tabs/Messages";
 import LeaderboardTab from "./components/tabs/Leaderboard";
 import ProfileTab from "./components/tabs/Profile";
+import Header from "./components/Header";
 
 function App() {
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
 
   return (
     <>
+    <Header/>
       <Tabs variant="enclosed">
         <TabList>
           <Tab>Games</Tab>
