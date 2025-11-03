@@ -18,6 +18,7 @@ const colors = {
   },
 };
 
+//used for the Chakra styling
 const components = {
   Tabs: {
     variants: {
@@ -30,14 +31,12 @@ const components = {
           },
           _hover: {
             bg: "brand.50",
+            _selected: {
+              bg: "brand.500",
+            },
           },
         },
       },
-    },
-  },
-  Box: {
-    baseStyle: {
-      bg: "blackAlpha.500",
     },
   },
 };
