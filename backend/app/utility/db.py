@@ -3,21 +3,24 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASS")
-DB_HOST = os.getenv("DB_HOST")
-DB_PORT = os.getenv("DB_PORT")
-DB_NAME = os.getenv("DB_NAME")
 
+print(f" ! --- ALL THE ENV VARS --- !: {os.environ}")
+
+DB_USER = os.getenv("MYSQL_USER")
+DB_PASS = os.getenv("MYSQL_PASSWORD")
+DB_HOST = os.getenv("MYSQL_SERVER")
+DB_PORT = os.getenv("MYSQL_PORT")
+DB_NAME = os.getenv("MYSQL_DB_NAME")
+
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+print(f"------------------------------------")
+print(f"Database: {DB_NAME}")
 print(f"User: {DB_USER} | Pass: {DB_PASS}")
 print(f"Host: {DB_HOST} | Port: {DB_PORT}")
-print(f"Database: {DB_NAME}")
-
-# Example:
-# export DATABASE_URL="mysql+pymysql://user:pass@localhost:3306/gametable"
-DATABASE_URL = os.getenv(
-    "DATABASE_URL", "mysql+pymysql://appuser:change_me_too@localhost:3306/gametable"
-)
+print(f"------------------------------------")
+print(f"URI: {DATABASE_URL}")
+print(f"------------------------------------")
 
 engine = create_engine(
     DATABASE_URL,
