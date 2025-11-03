@@ -1,7 +1,9 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
-from app.model.matchup import Matchup
+from sqlalchemy.orm import Session
+
+from app.model.matchup_model import Matchup
 
 
 class MatchupRepository:
@@ -41,11 +43,11 @@ class MatchupRepository:
         self, user_id: int, offset: int = 0, limit: int = 50
     ) -> Tuple[List[Matchup], int]:
         stmt = select(Matchup).where(
-            (Matchup.user_id_1 == user_id) | 
-            (Matchup.user_id_2 == user_id)
+            (Matchup.user_id_1 == user_id) | (Matchup.user_id_2 == user_id)
         )
         total = self.db.execute(
             select(func.count()).select_from(stmt.subquery())
         ).scalar_one()
         rows = self.db.execute(stmt.offset(offset).limit(limit)).scalars().all()
         return rows, total
+

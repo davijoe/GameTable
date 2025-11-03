@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Double, Boolean, Text, Date
+from sqlalchemy import Boolean, Column, Date, Double, Integer, String, Text
+
 from app.utility.db import Base
 
 
@@ -15,3 +16,4 @@ class Matchup(Base):
     user_id_winner = Column(Integer, nullable=False)
     user_id_1 = Column(Integer, nullable=False)
     user_id_2 = Column(Integer, nullable=False)
+

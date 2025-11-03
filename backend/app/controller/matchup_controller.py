@@ -1,10 +1,11 @@
+from typing import Any, Dict, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional, Dict, Any
 
-from app.utility.db import get_db
-from app.schema.matchup_schema import MatchupRead, MatchupCreate, MatchupUpdate
+from app.schema.matchup_schema import MatchupCreate, MatchupRead, MatchupUpdate
 from app.service.matchup_service import MatchupService
+from app.utility.db import get_db
 
 router = APIRouter(prefix="/api/matchups", tags=["matchups"])
 
@@ -37,7 +38,9 @@ def get_matchup(matchup_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{matchup_id}", response_model=MatchupRead)
-def update_matchup(matchup_id: int, payload: MatchupUpdate, db: Session = Depends(get_db)):
+def update_matchup(
+    matchup_id: int, payload: MatchupUpdate, db: Session = Depends(get_db)
+):
     svc = MatchupService(db)
     item = svc.update(matchup_id, payload)
     if not item:
@@ -62,3 +65,4 @@ def get_user_matchups(
     svc = MatchupService(db)
     items, total = svc.get_user_matchups(user_id=user_id, offset=offset, limit=limit)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
+

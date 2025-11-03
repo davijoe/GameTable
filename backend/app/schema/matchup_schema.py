@@ -1,7 +1,9 @@
 from __future__ import annotations
-from typing import Optional
-from pydantic import BaseModel, ConfigDict
+
 from datetime import date
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict
 
 
 class ORMModel(BaseModel):
@@ -38,3 +40,4 @@ class MatchupUpdate(ORMModel):
 
 class MatchupRead(MatchupBase):
     id: int
+
