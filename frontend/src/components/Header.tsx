@@ -9,13 +9,12 @@ import {
 import { BellIcon } from "@chakra-ui/icons";
 
 export default function Header() {
-  const bg = useColorModeValue("gray.500", "gray.700");
 
   return (
     <Flex
       align="center"
       justify="space-between"
-      bg={bg}
+      bg="blackAlpha.600"
       px={8}
       py={4}
       boxShadow="md"
@@ -32,9 +31,9 @@ export default function Header() {
         />
         <Box
           borderRadius="full"
-          bg="blackAlpha.500"
+          bg="blackAlpha.400"
           display="flex"
-          padding="9px"
+          padding="10px"
         >
           <Text fontSize="sm" fontWeight="semibold" color="white">
             Username

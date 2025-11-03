@@ -2,7 +2,7 @@ import { Box, Heading, Text } from "@chakra-ui/react";
 
 export default function ProfileTab() {
     return (
-        <Box p={4}>
+        <Box>
             <Text>Profile</Text>
         </Box>
     );

@@ -16,14 +16,22 @@ function App() {
     <>
       <Header />
       <Box p="2%">
-        <Tabs variant="solid-rounded">
-          <TabList>
-            <Tab>Games</Tab>
-            <Tab>Friends</Tab>
-            <Tab>Messages</Tab>
-            <Tab>Leaderboard</Tab>
-            <Tab>Profile</Tab>
-          </TabList>
+        <Tabs variant="solid-rounded" size="lg">
+          <Box
+            border="1px solid"
+            borderColor="whiteAlpha.300"
+            borderRadius="full"
+            p={1}
+            display="inline-flex"
+          >
+            <TabList gap={2}>
+              <Tab>Games</Tab>
+              <Tab>Friends</Tab>
+              <Tab>Messages</Tab>
+              <Tab>Leaderboard</Tab>
+              <Tab>Profile</Tab>
+            </TabList>
+          </Box>
           <TabPanels>
             <TabPanel>
               <GamesTab />
