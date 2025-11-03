@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import "./App.css";
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import GamesTab from "./components/tabs/Games";
 import FriendsTab from "./components/tabs/Friends";
 import MessagesTab from "./components/tabs/Messages";
@@ -14,33 +14,35 @@ function App() {
 
   return (
     <>
-    <Header/>
-      <Tabs variant="enclosed">
-        <TabList>
-          <Tab>Games</Tab>
-          <Tab>Friends</Tab>
-          <Tab>Messages</Tab>
-          <Tab>Leaderboard</Tab>
-          <Tab>Profile</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            <GamesTab />
-          </TabPanel>
-          <TabPanel>
-            <FriendsTab />
-          </TabPanel>
-          <TabPanel>
-            <MessagesTab />
-          </TabPanel>
-          <TabPanel>
-            <LeaderboardTab />
-          </TabPanel>
-          <TabPanel>
-            <ProfileTab />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <Header />
+      <Box p="2%">
+        <Tabs variant="solid-rounded">
+          <TabList>
+            <Tab>Games</Tab>
+            <Tab>Friends</Tab>
+            <Tab>Messages</Tab>
+            <Tab>Leaderboard</Tab>
+            <Tab>Profile</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <GamesTab />
+            </TabPanel>
+            <TabPanel>
+              <FriendsTab />
+            </TabPanel>
+            <TabPanel>
+              <MessagesTab />
+            </TabPanel>
+            <TabPanel>
+              <LeaderboardTab />
+            </TabPanel>
+            <TabPanel>
+              <ProfileTab />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
     </>
   );
 }
