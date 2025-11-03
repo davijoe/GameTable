@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 from typing import Optional
-from pydantic import BaseModel, ConfigDict, constr, confloat
+
+from pydantic import BaseModel, ConfigDict, confloat, constr
 
 
 class ORMModel(BaseModel):

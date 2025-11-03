@@ -1,6 +1,8 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
+from sqlalchemy.orm import Session
+
 from app.model.game_model import Game
 
 

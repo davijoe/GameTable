@@ -3,9 +3,6 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-
-print(f" ! --- ALL THE ENV VARS --- !: {os.environ}")
-
 DB_USER = os.getenv("MYSQL_USER")
 DB_PASS = os.getenv("MYSQL_PASSWORD")
 DB_HOST = os.getenv("MYSQL_SERVER")
@@ -16,7 +13,7 @@ DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAM
 
 print(f"------------------------------------")
 print(f"Database: {DB_NAME}")
-print(f"User: {DB_USER} | Pass: {DB_PASS}")
+print(f"User: {DB_USER} | Pass: onewillneverknowwhatthepasswordis")
 print(f"Host: {DB_HOST} | Port: {DB_PORT}")
 print(f"------------------------------------")
 print(f"URI: {DATABASE_URL}")
