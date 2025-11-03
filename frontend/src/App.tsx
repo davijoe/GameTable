@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+
+import "./App.css";
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import GamesTab from "./components/tabs/Games";
+import FriendsTab from "./components/tabs/Friends";
+import MessagesTab from "./components/tabs/Messages";
+import LeaderboardTab from "./components/tabs/Leaderboard";
+import ProfileTab from "./components/tabs/Profile";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Tabs variant="enclosed">
+        <TabList>
+          <Tab>Games</Tab>
+          <Tab>Friends</Tab>
+          <Tab>Messages</Tab>
+          <Tab>Leaderboard</Tab>
+          <Tab>Profile</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <GamesTab />
+          </TabPanel>
+          <TabPanel>
+            <FriendsTab />
+          </TabPanel>
+          <TabPanel>
+            <MessagesTab />
+          </TabPanel>
+          <TabPanel>
+            <LeaderboardTab />
+          </TabPanel>
+          <TabPanel>
+            <ProfileTab />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
