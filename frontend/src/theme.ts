@@ -1,4 +1,4 @@
-import { extendTheme, TabList, type ThemeConfig } from "@chakra-ui/react";
+import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
 
 const config: ThemeConfig = {
   initialColorMode: "system",
@@ -7,8 +7,11 @@ const config: ThemeConfig = {
 
 const colors = {
   brand: {
-    50: "#f5f3ff",
+    50: "#f5f3ff3f",
     100: "#ede9fe",
+    200: "#d6c2fc",
+    300: "#b08bf9",
+    400: "#8b54f6",
     500: "#7c3aed",
     600: "#6d28d9",
     700: "#5b21b6",
@@ -18,26 +21,28 @@ const colors = {
 const components = {
   Tabs: {
     variants: {
-      'solid-rounded': {
-        tabList:{
-            gap: 5,
-        },
+      "solid-rounded": {
         tab: {
-          color: 'white',
+          color: "white",
           _selected: {
-            bg: 'brand.500',
-            color: 'white',
+            bg: "brand.500",
+            color: "white",
           },
           _hover: {
-            bg: 'brand.600',
+            bg: "brand.50",
           },
         },
       },
     },
   },
+  Box: {
+    baseStyle: {
+      bg: "blackAlpha.500",
+    },
+  },
 };
 
-//used for the background 
+//used for the background
 const styles = {
   global: {
     "html, body, #root": {

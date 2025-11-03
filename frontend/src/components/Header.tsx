@@ -14,7 +14,7 @@ export default function Header() {
     <Flex
       align="center"
       justify="space-between"
-      bg="blackAlpha.600"
+      bg="blackAlpha.300"
       px={8}
       py={4}
       boxShadow="md"

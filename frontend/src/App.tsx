@@ -23,6 +23,7 @@ function App() {
             borderRadius="full"
             p={1}
             display="inline-flex"
+            bg="blackAlpha.300"
           >
             <TabList gap={2}>
               <Tab>Games</Tab>
