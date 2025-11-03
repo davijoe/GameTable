@@ -1,6 +1,8 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
+from sqlalchemy.orm import Session
+
 from app.model.genre_model import Genre
 
 
@@ -10,7 +12,7 @@ class GenreRepository:
 
     def get(self, genre_id: int) -> Optional[Genre]:
         return self.db.get(Genre, genre_id)
-    
+
     def list(
         self, offset: int = 0, limit: int = 50, search: Optional[str] = None
     ) -> Tuple[List[Genre], int]:
@@ -37,3 +39,4 @@ class GenreRepository:
     def delete(self, genre: Genre) -> None:
         self.db.delete(genre)
         self.db.flush()
+

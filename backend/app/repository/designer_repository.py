@@ -1,6 +1,8 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
+from sqlalchemy.orm import Session
+
 from app.model.designer_model import Designer
 
 
@@ -37,3 +39,4 @@ class DesignerRepository:
     def delete(self, designer: Designer) -> None:
         self.db.delete(designer)
         self.db.flush()
+

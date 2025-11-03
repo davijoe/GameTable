@@ -1,8 +1,10 @@
 from typing import List, Optional, Tuple
+
 from sqlalchemy.orm import Session
+
 from app.model.artists_model import Artists
-from app.schema.artist_schema import ArtistCreate, ArtistUpdate, ArtistRead
 from app.repository.artist_repository import ArtistRepository
+from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 
 
 class ArtistService:
@@ -23,7 +25,7 @@ class ArtistService:
     def create(self, payload: ArtistCreate) -> ArtistRead:
         if self.repo.get_by_name(payload.name):
             raise ValueError("Artist with this name already exists")
-            
+
         obj = Artists(**payload.model_dump())
         obj = self.repo.create(obj)
         self.db.commit()
@@ -34,9 +36,9 @@ class ArtistService:
         obj = self.repo.get(artist_id)
         if not obj:
             return None
-        
+
         update_data = payload.model_dump(exclude_unset=True)
-        
+
         if "name" in update_data:
             existing = self.repo.get_by_name(update_data["name"])
             if existing and existing.id != artist_id:
@@ -44,7 +46,7 @@ class ArtistService:
 
         for key, value in update_data.items():
             setattr(obj, key, value)
-        
+
         obj = self.repo.update(obj)
         self.db.commit()
         self.db.refresh(obj)
@@ -57,3 +59,4 @@ class ArtistService:
         self.repo.delete(obj)
         self.db.commit()
         return True
+

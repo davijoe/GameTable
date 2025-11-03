@@ -1,6 +1,8 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
+from sqlalchemy.orm import Session
+
 from app.model.move_model import Move
 
 
@@ -36,3 +38,4 @@ class MoveRepository:
     def delete(self, move: Move) -> None:
         self.db.delete(move)
         self.db.flush()
+

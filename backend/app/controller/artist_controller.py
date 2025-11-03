@@ -56,3 +56,4 @@ def delete_artist(artist_id: int, db: Session = Depends(get_db)):
     svc = ArtistService(db)
     if not svc.delete(artist_id):
         raise HTTPException(status_code=404, detail="Artist not found")
+

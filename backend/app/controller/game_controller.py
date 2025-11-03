@@ -1,10 +1,11 @@
+from typing import Any, Dict, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional, Dict, Any
 
-from app.utility.db import get_db
-from app.schema.game_schema import GameRead, GameCreate, GameUpdate
+from app.schema.game_schema import GameCreate, GameRead, GameUpdate
 from app.service.game_service import GameService
+from app.utility.db import get_db
 
 router = APIRouter(prefix="/api/games", tags=["games"])
 

@@ -1,10 +1,11 @@
+from typing import Any, Dict, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional, Dict, Any
 
-from app.utility.db import get_db
-from app.schema.move_schema import MoveRead, MoveCreate, MoveUpdate
+from app.schema.move_schema import MoveCreate, MoveRead, MoveUpdate
 from app.service.move_service import MoveService
+from app.utility.db import get_db
 
 router = APIRouter(prefix="/api/moves", tags=["moves"])
 
@@ -50,3 +51,4 @@ def delete_move(move_id: int, db: Session = Depends(get_db)):
     svc = MoveService(db)
     if not svc.delete(move_id):
         raise HTTPException(status_code=404, detail="Move not found")
+

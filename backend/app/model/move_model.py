@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Double, Boolean, Text
+from sqlalchemy import Boolean, Column, Double, Integer, String, Text
+
 from app.utility.db import Base
 
 
@@ -11,3 +12,4 @@ class Move(Base):
     start_y_coordinate = Column(Integer, nullable=False)
     end_x_coordinate = Column(Integer, nullable=True)
     end_y_coordinate = Column(Integer, nullable=True)
+

@@ -1,6 +1,8 @@
 from typing import List, Optional, Tuple
-from sqlalchemy.orm import Session
+
 from sqlalchemy import func, select
+from sqlalchemy.orm import Session
+
 from app.model.artists_model import Artists
 
 
@@ -37,3 +39,4 @@ class ArtistRepository:
     def delete(self, artist: Artists) -> None:
         self.db.delete(artist)
         self.db.flush()
+

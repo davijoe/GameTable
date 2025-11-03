@@ -1,8 +1,10 @@
 from typing import List, Optional, Tuple
+
 from sqlalchemy.orm import Session
+
 from app.model.move_model import Move
-from app.schema.move_schema import MoveCreate, MoveUpdate, MoveRead
 from app.repository.move_repository import MoveRepository
+from app.schema.move_schema import MoveCreate, MoveRead, MoveUpdate
 
 
 class MoveService:
@@ -31,11 +33,11 @@ class MoveService:
         obj = self.repo.get(move_id)
         if not obj:
             return None
-        
+
         update_data = payload.model_dump(exclude_unset=True)
         for key, value in update_data.items():
             setattr(obj, key, value)
-        
+
         obj = self.repo.update(obj)
         self.db.commit()
         self.db.refresh(obj)
@@ -48,3 +50,4 @@ class MoveService:
         self.repo.delete(obj)
         self.db.commit()
         return True
+

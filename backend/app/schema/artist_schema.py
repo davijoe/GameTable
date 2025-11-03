@@ -1,7 +1,9 @@
 from __future__ import annotations
-from typing import Optional
-from pydantic import BaseModel, ConfigDict, constr
+
 from datetime import date
+from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, constr
 
 
 class ORMModel(BaseModel):
@@ -24,3 +26,4 @@ class ArtistUpdate(ORMModel):
 
 class ArtistRead(ArtistBase):
     id: int
+
