@@ -16,7 +16,21 @@ This application is developed for the courses "Full Stack Development", "Databas
 
 Also remember to populate a .env in the backend. Use .env.example
 
-### Usage
+## NEW Usage Guidelines
+
+```bat
+docker compose -f docker-compose.dev.yml up -d
+```
+
+Your should now have 3 containers running
+
+| Container       | Port |
+| :-------------- | :--: |
+| Backend Server  | 8000 |
+| Frontend Server | 3000 |
+| MySQL 8.4       | 3306 |
+
+### OLD Usage guidelines
 
 To run the backend application and a MySQL docker container, \
 run the following command from repository root folder
