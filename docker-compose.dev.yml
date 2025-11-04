@@ -2,13 +2,13 @@ services:
   backend-server:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./backend/Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app/app
-      - ./.env:/app/env:ro
-    # TODO: Add tests here when time comes. ./tests:/app/tests
+      - ./backend/app:/app/app
+      - ./backend/.env:/app/.env:ro
+      - ./backend/tests:/app/tests
     depends_on:
       - database
 

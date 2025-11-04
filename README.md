@@ -1,32 +1,78 @@
 # GameTable
-This application is developed for the courses "Full Stack Development", "Databases for Developers", and "Testing"  on the first semester of the PBa Software Development Top-up
+
+This application is developed for the courses "Full Stack Development", "Databases for Developers", and "Testing" on the first semester of the PBa Software Development Top-up
 
 ## Stack
-DevOps: Docker (compose), GitHub (actions), Azure VPS,
-Backend: UV, Python, FastAPI, MySQL
-Frontend: React, Chakra (perhaps), TypeScript
+
+- DevOps: Docker (compose), GitHub (actions), Azure VPS,
+- Backend: UV, Python, FastAPI, MySQL
+- Frontend: React, Chakra (perhaps), TypeScript, Bun
 
 ### Pre-Requirements
-Docker Engine
-Docker Compose
-UV
-A MySQL Database
+
+- Docker Engine
+- Docker Compose
+- Bun
 
 Also remember to populate a .env in the backend. Use .env.example
 
-To run the backend application change dir to /backend and then:
+### Usage
+
+To run the backend application and a MySQL docker container, \
+run the following command from repository root folder
+
 ```bash
-uv run --env-file .env -- uvicorn app.main:app --port 8000 --reload
+docker compose -f docker-compose.dev.yml up -d
 ```
 
-Install the dependancies for the backend application
+The backend will now be run at localhost:8000 and you endpoints \
+can be seen at: \
+localhost:8000/docs
+
+The MySQL Database runs at port 3306
+
+If you want to run the frontend as well, then switch to the \
+fronted folder and install the node modules with bun:
+
 ```bash
-cd backend/
+cd frontend
+bun i
+```
+
+Lastly, run your development server with:
+
+```bash
+bun run dev
+```
+
+The frontend should now be running at port 3000
+
+### Errors You Might Encounter
+
+1. "Command not found" when using docker compose
+
+You are probably using Docker Compose V1. Use docker-compose instead
+
+```bash
+docker-compose -f docker-compose.dev.yml up -d
+```
+
+2. Internal Server Error:
+
+Probably you just build a new container and now need to populate \
+your database
+
+3. \[Insert a lot of different python errors here\] \
+
+Try and make sure all the python libraries are correctly \
+installed. (only relevant when working with the files locally \
+and not inside the docker container mentioned above)
+
+```bash
+cd backend
 uv sync
 ```
 
-```
+## This these top-tier advice not work for you?
 
-```bash
-
-```
+Contact Wenmin Ye for free technical support support
