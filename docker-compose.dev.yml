@@ -1,0 +1,31 @@
+services:
+  backend-server:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/.env:/app/.env:ro
+      - ./backend/tests:/app/tests
+    depends_on:
+      - database
+
+  database:
+    image: mysql:8.4
+    container_name: 1st_semester_exam_mysql8
+    environment:
+      MYSQL_ROOT_PASSWORD: skiftmig
+      MYSQL_DATABASE: gametable
+      MYSQL_USER: appbruger
+      MYSQL_PASSWORD: megethemmeligt
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql8_data:/var/lib/mysql
+
+volumes:
+  mysql8_data:
+    name: semester_project_mysql_data
