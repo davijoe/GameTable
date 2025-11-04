@@ -1,5 +1,18 @@
 services:
-  db:
+  backend-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./.env:/app/env:ro
+    # TODO: Add tests here when time comes. ./tests:/app/tests
+    depends_on:
+      - database
+
+  database:
     image: mysql:8.4
     container_name: 1st_semester_exam_mysql8
     environment:
