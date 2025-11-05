@@ -26,6 +26,22 @@ services:
     volumes:
       - mysql8_data:/var/lib/mysql
 
+  frontend-server:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - ./frontend/bun.lock:/app/bun.lock:ro
+      - /app/node_modules
+    environment:
+      # point the frontend to the backend service name inside the compose network
+      VITE_API_BASE_URL: http://backend-server:8000
+    depends_on:
+      - backend-server
+
 volumes:
   mysql8_data:
     name: semester_project_mysql_data
