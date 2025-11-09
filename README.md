@@ -16,19 +16,38 @@ This application is developed for the courses "Full Stack Development", "Databas
 
 Also remember to populate a .env in the backend. Use .env.example
 
-## NEW Usage Guidelines
+## NEW Usage Guidelines (3 Steps!)
+
+1. Create .env file in /backend from the .env.example
+
+Don't change any values unless you intend to manually create a different user for the database.
+
+2. Build and run the 3 containers with docker compose.
+
+from the root folder:
 
 ```bat
 docker compose -f docker-compose.dev.yml up -d
 ```
 
-Your should now have 3 containers running
+Your should now have these 3 containers running
 
 | Container       | Port |
 | :-------------- | :--: |
 | Backend Server  | 8000 |
 | Frontend Server | 3000 |
 | MySQL 8.4       | 3306 |
+
+3. Create schema + tables + triggers + functions + procedures
+
+IF YOU HAVE NOT CREATED A DATABASE WITH TEST DATA YET:
+
+run the file "/db/run_me_first.ddl" in your preferred database program
+run the "/db/run_me_second.sql" file in your preferred database program
+
+The first one (the ddl file) creates that Database / schema, the tables, a trigger, etc.
+
+The second one (the sql file) populates the database with real testing data
 
 ### OLD Usage guidelines
 

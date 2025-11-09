@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import "./App.css";
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import GamesTab from "./components/tabs/Games";
