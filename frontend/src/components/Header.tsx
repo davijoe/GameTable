@@ -4,7 +4,6 @@ import {
   Flex,
   IconButton,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { BellIcon } from "@chakra-ui/icons";
 
