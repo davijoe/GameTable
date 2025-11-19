@@ -8,7 +8,63 @@ from app.settings import settings
 app = FastAPI()
 
 
+MONGO_USER = settings.mongo_root_username
+MONGO_PASS = settings.mongo_root_password
+
+
+def get_mongo_collection():
+    uri = f"mongodb://{MONGO_USER}:{MONGO_PASS}@localhost:27017/gametable?authSource=admin"
+    client = MongoClient(uri)
+    db = client["gametable"]
+    return db["bgg_games"]
+
+
+def save_games_to_mongo(games, collection):
+    inserted_ids = []
+
+    for game in games:
+        # Use BGG ID as the Mongo _id so you do not insert duplicates
+        game_id = int(game["id"])
+
+        doc = {
+            "_id": game_id,  # unique key in Mongo
+            "bgg_id": game_id,
+            "name": game["name"],
+            "thumbnail": game["thumbnail"],
+            "image": game["image"],
+            "year_published": game["year_published"],
+            "min_players": game["min_players"],
+            "max_players": game["max_players"],
+            "designers": game["game_designer"],
+            "artists": game["artists"],
+            "categories": game["categories"],
+        }
+
+        # Upsert so running the scraper twice will update instead of duplicating
+        result = collection.update_one(
+            {"_id": game_id},
+            {"$set": doc},
+            upsert=True,
+        )
+
+        if result.upserted_id is not None:
+            inserted_ids.append(result.upserted_id)
+
+    return inserted_ids
+
+
 def main():
+    ids = load_game_ids(limit=1)
+    xml_text = fetch_games_xml(ids)
+    games = parse_games_xml(xml_text)
+
+    collection = get_mongo_collection()
+    inserted_ids = save_games_to_mongo(games, collection)
+
+    print("Inserted IDs:", inserted_ids)
+
+
+def main2():
     print("Hello from bgg-scraper!")
 
     # Load up to 20 IDs from secrets/games.csv
@@ -36,26 +92,5 @@ def main():
         print("-" * 40)
 
 
-MONGO_USER = settings.mongo_root_username
-MONGO_PASS = settings.mongo_root_password
-
-
-def notmain():
-    uri = f"mongodb://{MONGO_USER}:{MONGO_PASS}@localhost:27017/gametable?authSource=admin"
-
-    doc = {
-        "name": "Example",
-        "value": 123,
-        "items": ["a", "b", "c"],
-    }
-
-    client = MongoClient(uri)
-    db = client["gametable"]
-    collection = db["test_collection"]
-    inserted = collection.insert_one(doc)
-    print("Inserted ID:", inserted.inserted_id)
-
-
 if __name__ == "__main__":
-    # main()
-    notmain()
+    main()
