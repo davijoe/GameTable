@@ -1,5 +1,6 @@
 services:
   backend-server:
+    container_name: gametable-backend-server
     build:
       context: .
       dockerfile: ./backend/Dockerfile
@@ -10,11 +11,11 @@ services:
       - ./backend/.env:/app/.env:ro
       - ./backend/tests:/app/tests
     depends_on:
-      - database
+      - mysql8_database
 
-  database:
+  mysql8_database:
     image: mysql:8.4
-    container_name: 1st_semester_exam_mysql8
+    container_name: gametable-mysql8-database
     env_file: ".env"
     restart: unless-stopped
     ports:
@@ -22,7 +23,22 @@ services:
     volumes:
       - mysql8_data:/var/lib/mysql
 
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0-ubi8
+    container_name: gametable-mongodb-database
+    restart: unless-stopped
+    env_file: ".env"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=gametable
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
   frontend-server:
+    container_name: gametable-frontend-server
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
@@ -41,3 +57,5 @@ services:
 volumes:
   mysql8_data:
     name: semester_project_mysql_data
+  mongo_data:
+    name: semester_project_mongo_data
