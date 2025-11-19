@@ -92,23 +92,26 @@ def parse_games_xml(xml_text: str):
         designers = []
         for link in links:
             if link.get("type") == "boardgamedesigner":
-                value = link.get("value")
-                if value is not None:
-                    designers.append(value)
+                designer_id = link.get("id")
+                designer_name = link.get("value")
+                if designer_id and designer_name:
+                    designers.append({"id": designer_id, "name": designer_name})
 
         artists = []
         for link in links:
             if link.get("type") == "boardgameartist":
-                value = link.get("value")
-                if value is not None:
-                    artists.append(value)
+                artist_id = link.get("id")
+                artist_name = link.get("value")
+                if artist_id and artist_name:
+                    artists.append({"id": artist_id, "name": artist_name})
 
         categories = []
         for link in links:
             if link.get("type") == "boardgamecategory":
-                value = link.get("value")
-                if value is not None:
-                    categories.append(value)
+                category_id = link.get("id")
+                category_name = link.get("value")
+                if category_id and category_name:
+                    categories.append({"id": int(category_id), "name": category_name})
 
         results.append(
             {

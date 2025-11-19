@@ -2,12 +2,10 @@ def save_games_to_mongo(games, collection):
     inserted_ids = []
 
     for game in games:
-        # Use BGG ID as the Mongo _id so you do not insert duplicates
         game_id = int(game["id"])
 
         doc = {
             "_id": game_id,
-            "bgg_id": game_id,
             "name": game["name"],
             "thumbnail": game["thumbnail"],
             "image": game["image"],
