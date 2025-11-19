@@ -8,19 +8,8 @@ from app.service.mongo_service import save_games_to_mongo
 app = FastAPI()
 
 
-def main():
-    ids = load_game_ids(limit=20)
-    xml_text = fetch_games_xml(ids)
-    games = parse_games_xml(xml_text)
-
-    collection = get_mongo_collection()
-    inserted_ids = save_games_to_mongo(games, collection)
-
-    print(f"Newly inserted {len(inserted_ids)} games into MongoDB")
-
-
 def newmain():
-    all_ids = load_game_ids(100)
+    all_ids = load_game_ids(170669)
     batch_size = 20
     collection = get_mongo_collection()
 
