@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 
+from pymongo import MongoClient
+
 from app.service.games_service import fetch_games_xml, load_game_ids, parse_games_xml
+from app.settings import settings
 
 app = FastAPI()
 
@@ -33,5 +36,26 @@ def main():
         print("-" * 40)
 
 
+MONGO_USER = settings.mongo_root_username
+MONGO_PASS = settings.mongo_root_password
+
+
+def notmain():
+    uri = f"mongodb://{MONGO_USER}:{MONGO_PASS}@localhost:27017/gametable?authSource=admin"
+
+    doc = {
+        "name": "Example",
+        "value": 123,
+        "items": ["a", "b", "c"],
+    }
+
+    client = MongoClient(uri)
+    db = client["gametable"]
+    collection = db["test_collection"]
+    inserted = collection.insert_one(doc)
+    print("Inserted ID:", inserted.inserted_id)
+
+
 if __name__ == "__main__":
-    main()
+    # main()
+    notmain()

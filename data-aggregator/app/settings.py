@@ -7,6 +7,9 @@ class Settings(BaseSettings):
 
     api_token: str
 
+    mongo_root_username: str
+    mongo_root_password: str
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
