@@ -11,6 +11,7 @@ DB_NAME = os.getenv("MYSQL_DB_NAME")
 
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
+# TODO: FIX BEFORE PROD
 print(f"------------------------------------")
 print(f"Database: {DB_NAME}")
 print(f"User: {DB_USER} | Pass: onewillneverknowwhatthepasswordis")

@@ -15,11 +15,7 @@ services:
   database:
     image: mysql:8.4
     container_name: 1st_semester_exam_mysql8
-    environment:
-      MYSQL_ROOT_PASSWORD: skiftmig
-      MYSQL_DATABASE: gametable
-      MYSQL_USER: appbruger
-      MYSQL_PASSWORD: megethemmeligt
+    env_file: ".env"
     restart: unless-stopped
     ports:
       - "3306:3306"
