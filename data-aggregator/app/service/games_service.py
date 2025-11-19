@@ -77,6 +77,16 @@ def parse_games_xml(xml_text: str):
         if maxp is not None:
             max_players = maxp.get("value")
 
+        playing_time = None
+        pt = item.find("playingtime")
+        if pt is not None:
+            playing_time = pt.get("value")
+
+        min_age = None
+        ma = item.find("minage")
+        if ma is not None:
+            min_age = ma.get("value")
+
         links = item.findall("link")
 
         designers = []
@@ -110,6 +120,8 @@ def parse_games_xml(xml_text: str):
                 "year_published": year_published,
                 "min_players": min_players,
                 "max_players": max_players,
+                "playing_time": playing_time,
+                "minimum_age": min_age,
                 "game_designer": designers,
                 "artists": artists,
                 "categories": categories,
