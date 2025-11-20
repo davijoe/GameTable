@@ -1,9 +1,11 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import { GameGrid } from "../game/GameGrid";
 
 export default function GamesTab() {
-  return (
-    <Box>
-      <Text>Grid of games will go here</Text>
-    </Box>
-  );
+
+	return (
+		<Box p={4}>
+			<GameGrid />
+		</Box>
+	);
 }
