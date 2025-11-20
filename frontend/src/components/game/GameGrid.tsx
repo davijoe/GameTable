@@ -8,8 +8,6 @@ export const GameGrid = () => {
   if (error) return <p>Error loading games</p>;
 
   const games = data?.pages.flatMap((page) => page.items) ?? [];
-
-  console.log(data?.pages);
     
   return (
     <InfiniteScroll
