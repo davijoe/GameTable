@@ -1,5 +1,5 @@
 import "./App.css";
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import GamesTab from "./components/tabs/Games";
 import FriendsTab from "./components/tabs/Friends";
 import MessagesTab from "./components/tabs/Messages";
@@ -8,7 +8,6 @@ import ProfileTab from "./components/tabs/Profile";
 import Header from "./components/Header";
 import { Route, Routes } from "react-router-dom";
 import SelectedGame from "./components/game/SelectedGame";
-import { Link as RouterLink } from "react-router-dom";
 import TabButtons from "./components/tabs/TabButtons";
 function App() {
   return (
@@ -23,7 +22,7 @@ function App() {
           <Route path="/messages" element={<MessagesTab />} />
           <Route path="/leaderboard" element={<LeaderboardTab />} />
           <Route path="/profile" element={<ProfileTab />} />
-          <Route path="*" element={<GamesTab />} /> {/* fallback */}
+          <Route path="*" element={<GamesTab />} /> {/* should maybe be error page instead? */}
         </Routes>
       </Box>
     </>

@@ -1,5 +1,5 @@
 export interface Game {
-	id: number;
+	id: string;
 	name: string;
 	slug: string | null;
 	year_published: string | null;

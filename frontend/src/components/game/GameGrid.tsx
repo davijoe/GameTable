@@ -1,13 +1,19 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useGames } from "../../hooks/useGames";
-import  { SimpleGrid, Spinner } from "@chakra-ui/react";
+import { SimpleGrid, Spinner } from "@chakra-ui/react";
 import { GameCard } from "./GameCard";
 import GameCardContainer from "./GameCardContainer";
 import GameCardSkeleton from "./gameCardSkeleton";
 
 export const GameGrid = () => {
-  const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useGames();
+  const {
+    data,
+    error,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGames();
 
   if (error) return <p>Error loading games</p>;
 
@@ -35,14 +41,12 @@ export const GameGrid = () => {
             </GameCardContainer>
           ))}
 
-        {/* loaded games ready to show */}
         {games.map((game) => (
-          <GameCardContainer key={game.id}>
+          <GameCardContainer key={game.id} gameId={game.id}>
             <GameCard game={game} />
           </GameCardContainer>
         ))}
 
-        {/*more skeletons when more fetching */}
         {isFetchingNextPage &&
           skeletons.map((id) => (
             <GameCardContainer key={`skeleton-next-${id}`}>
