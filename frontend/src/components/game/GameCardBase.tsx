@@ -9,7 +9,7 @@ type GameCardBaseProps = {
 export const GameCardBase = ({ image, children }: GameCardBaseProps) => {
   return (
     <Card>
-      <AspectRatio ratio={4 / 3} width="100%">
+      <AspectRatio ratio={4 / 4} width="100%">
         {image}
       </AspectRatio>
       <CardBody>{children}</CardBody>
