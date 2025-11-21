@@ -1,29 +1,55 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useGames } from "../../hooks/useGames";
+import  { SimpleGrid, Spinner } from "@chakra-ui/react";
+import { GameCard } from "./GameCard";
+import GameCardContainer from "./GameCardContainer";
+import GameCardSkeleton from "./gameCardSkeleton";
 
 export const GameGrid = () => {
-  const { data, error, isLoading, fetchNextPage, hasNextPage } = useGames();
+  const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useGames();
 
-  if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading games</p>;
 
   const games = data?.pages.flatMap((page) => page.items) ?? [];
-    
+
+  const skeletons = [...Array(10).keys()];
+
   return (
     <InfiniteScroll
       dataLength={games.length}
       hasMore={!!hasNextPage}
       next={fetchNextPage}
-      loader={<p>Loading more games...</p>}
+      loader={<Spinner />}
     >
-      <div className="grid grid-cols-4 gap-4">
+      <SimpleGrid
+        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+        spacing={5}
+        padding={3}
+      >
+        {/* make fake gamecard so layout shifting does not happen*/}
+        {isLoading &&
+          skeletons.map((id) => (
+            <GameCardContainer key={`skeleton-initial-${id}`}>
+              <GameCardSkeleton />
+            </GameCardContainer>
+          ))}
+
+        {/* loaded games ready to show */}
         {games.map((game) => (
-          <div key={game.id} className="p-4 bg-gray-800 rounded-lg">
-            <h2 className="font-bold">{game.name}</h2>
-            <p>{game.year_published}</p>
-          </div>
+          <GameCardContainer key={game.id}>
+            <GameCard game={game} />
+          </GameCardContainer>
         ))}
-      </div>
+
+        {/*more skeletons when more fetching */}
+        {isFetchingNextPage &&
+          skeletons.map((id) => (
+            <GameCardContainer key={`skeleton-next-${id}`}>
+              <GameCardSkeleton />
+            </GameCardContainer>
+          ))}
+      </SimpleGrid>
     </InfiniteScroll>
   );
 };
