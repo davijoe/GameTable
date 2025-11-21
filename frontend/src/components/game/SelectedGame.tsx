@@ -1,27 +1,32 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { VStack, Heading, Text, Box, IconButton } from "@chakra-ui/react";
+import { VStack, Heading, Text, Box, HStack, Icon } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
 export default function SelectedGame() {
-	const { gameId } = useParams<{ gameId: string }>();
-	const navigate = useNavigate();
+  const { gameId } = useParams<{ gameId: string }>();
+  const navigate = useNavigate();
 
-	return (
-		<Box p={4}>
-			{/* Back button */}
-			<IconButton
-				icon={<ArrowBackIcon />}
-				aria-label="Go back"
-				onClick={() => navigate(-1)} // go to previous page
-				variant="ghost"
-				size="lg"
-				mb={4}
-			/>
+  return (
+    <Box p={4}>
+      <HStack
+        as="button"
+        onClick={() => navigate(-1)}
+        mb={4}
+        spacing={2}
+        cursor="pointer"
+        align="center"
+        _hover={{
+          bg: "brand.50",
+        }}
+      >
+        <Icon as={ArrowBackIcon} boxSize={6} />
+        <Text fontWeight="bold">Back to Games</Text>
+      </HStack>
 
-			<VStack align="start" spacing={4}>
-				<Heading>Game {gameId}</Heading>
-				<Text>Here goes detailed information about the game.</Text>
-			</VStack>
-		</Box>
-	);
+      <VStack align="start" spacing={4}>
+        <Heading>Game {gameId}</Heading>
+        <Text>Here goes detailed information about the game.</Text>
+      </VStack>
+    </Box>
+  );
 }

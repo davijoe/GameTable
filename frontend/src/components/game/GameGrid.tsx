@@ -33,7 +33,6 @@ export const GameGrid = () => {
         spacing={5}
         padding={3}
       >
-        {/* make fake gamecard so layout shifting does not happen*/}
         {isLoading &&
           skeletons.map((id) => (
             <GameCardContainer key={`skeleton-initial-${id}`}>
