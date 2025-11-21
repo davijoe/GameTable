@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.controller.artist_controller import router as artist_router
 from app.controller.designer_controller import router as designer_router
@@ -9,6 +10,15 @@ from app.controller.move_controller import router as move_router
 from app.controller.user_controller import router as user_router
 
 app = FastAPI(title="Game API")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(designer_router)
 app.include_router(game_router)

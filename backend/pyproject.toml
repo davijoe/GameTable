@@ -8,6 +8,7 @@ dependencies = [
   "cryptography>=46.0.3",
   "fastapi>=0.120.1",
   "pydantic[email]>=2.12.3",
+  "pyjwt>=2.10.1",
   "pymysql>=1.1.2",
   "sqlalchemy>=2.0.44",
   "uvicorn>=0.38.0",

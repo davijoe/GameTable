@@ -6,12 +6,13 @@ import MessagesTab from "./components/tabs/Messages";
 import LeaderboardTab from "./components/tabs/Leaderboard";
 import ProfileTab from "./components/tabs/Profile";
 import Header from "./components/Header";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   //const [count, setCount] = useState(0);
 
   return (
-    <>
+    <AuthProvider>
       <Header />
       <Box p="2%">
         <Tabs variant="solid-rounded" size="lg">
@@ -50,7 +51,7 @@ function App() {
           </TabPanels>
         </Tabs>
       </Box>
-    </>
+    </AuthProvider>
   );
 }
 

@@ -1,16 +1,37 @@
-from typing import Any, Dict, Optional
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
+from app.schema.auth_schema import LoginRequest, LoginResponse
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 from app.service.user_service import UserService
+from app.utility.auth import create_access_token
 from app.utility.db import get_db
 
 router = APIRouter(prefix="/api/users", tags=["users"])
 
 
-@router.get("", response_model=Dict[str, Any])
+@router.post("/auth/login", response_model=LoginResponse)
+def login(payload: LoginRequest, db: Session = Depends(get_db)):
+    """Authenticate user and return JWT token."""
+    svc = UserService(db)
+    user = svc.authenticate(payload.username, payload.password)
+    
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    access_token = create_access_token(user_id=user.id, username=user.username)
+    
+    return LoginResponse(
+        access_token=access_token,
+        user_id=user.id,
+        username=user.username,
+        display_name=user.display_name,
+    )
+
+
+@router.get("")
 def list_users(
     q: Optional[str] = Query(None, description="Search by display name or username"),
     offset: int = Query(0, ge=0),
@@ -69,4 +90,3 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     svc = UserService(db)
     if not svc.delete(user_id):
         raise HTTPException(status_code=404, detail="User not found")
-

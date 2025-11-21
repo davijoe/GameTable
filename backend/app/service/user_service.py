@@ -1,3 +1,4 @@
+import hashlib
 from typing import List, Optional, Tuple
 
 from sqlalchemy.orm import Session
@@ -63,4 +64,21 @@ class UserService:
         self.repo.delete(obj)
         self.db.commit()
         return True
+
+    def authenticate(self, username: str, password: str) -> Optional[UserRead]:
+        """Authenticate a user by username and password.
+        
+        Returns the user if credentials are valid, None otherwise.
+        Password in database is hashed with SHA256.
+        """
+        user = self.repo.get_by_username(username)
+        if not user:
+            return None
+        
+        # Hash the input password and compare with database password
+        hashed_input = hashlib.sha256(password.encode()).hexdigest()
+        if hashed_input != user.password:
+            return None
+        
+        return UserRead.model_validate(user)
 
