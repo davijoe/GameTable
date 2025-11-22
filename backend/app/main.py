@@ -12,7 +12,8 @@ from app.controller.user_controller import router as user_router
 app = FastAPI(title="Game API")
 
 origins = [
-    "http://localhost:5173",  #harcoded to what vite uses standard. might not work with docker
+    "http://localhost:5173",  #harcoded to what vite uses standard when run with "bun run dev"
+    "http://localhost:3000" # works with docker
 ]
 
 app.add_middleware(
