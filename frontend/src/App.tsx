@@ -1,54 +1,29 @@
 import "./App.css";
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import GamesTab from "./components/tabs/Games";
 import FriendsTab from "./components/tabs/Friends";
 import MessagesTab from "./components/tabs/Messages";
 import LeaderboardTab from "./components/tabs/Leaderboard";
 import ProfileTab from "./components/tabs/Profile";
 import Header from "./components/Header";
-
+import { Route, Routes } from "react-router-dom";
+import SelectedGame from "./components/game/SelectedGame";
+import TabButtons from "./components/tabs/TabButtons";
 function App() {
-  //const [count, setCount] = useState(0);
-
   return (
     <>
       <Header />
+      <TabButtons />
       <Box p="2%">
-        <Tabs variant="solid-rounded" size="lg">
-          <Box
-            border="1px solid"
-            borderColor="whiteAlpha.300"
-            borderRadius="full"
-            p={1}
-            display="inline-flex"
-            bg="blackAlpha.300"
-          >
-            <TabList gap={2}>
-              <Tab>Games</Tab>
-              <Tab>Friends</Tab>
-              <Tab>Messages</Tab>
-              <Tab>Leaderboard</Tab>
-              <Tab>Profile</Tab>
-            </TabList>
-          </Box>
-          <TabPanels>
-            <TabPanel>
-              <GamesTab />
-            </TabPanel>
-            <TabPanel>
-              <FriendsTab />
-            </TabPanel>
-            <TabPanel>
-              <MessagesTab />
-            </TabPanel>
-            <TabPanel>
-              <LeaderboardTab />
-            </TabPanel>
-            <TabPanel>
-              <ProfileTab />
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+        <Routes>
+          <Route path="/games" element={<GamesTab />} />
+          <Route path="/games/:gameId" element={<SelectedGame />} />
+          <Route path="/friends" element={<FriendsTab />} />
+          <Route path="/messages" element={<MessagesTab />} />
+          <Route path="/leaderboard" element={<LeaderboardTab />} />
+          <Route path="/profile" element={<ProfileTab />} />
+          <Route path="*" element={<GamesTab />} /> {/* should maybe be error page instead? */}
+        </Routes>
       </Box>
     </>
   );
