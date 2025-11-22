@@ -1,6 +1,7 @@
 from pathlib import Path
 import csv
 from typing import List
+import time
 import httpx
 import xml.etree.ElementTree as ET
 
@@ -23,16 +24,31 @@ def load_game_ids(limit: int = 20) -> List[str]:
     return ids
 
 
-def fetch_games_xml(ids: List[str]) -> str:
+def fetch_games_xml(ids: List[str], retries: int = 3, delay: int = 5) -> str:
     joined = ",".join(ids)
     url = f"{settings.base_url}/thing?id={joined}"
 
     headers = {"Authorization": f"Bearer {settings.api_token}"}
 
-    with httpx.Client() as client:
-        r = client.get(url, headers=headers)
-        r.raise_for_status()
-        return r.text
+    for attempt in range(1, retries + 1):
+        try:
+            with httpx.Client() as client:
+                resp = client.get(url, headers=headers, timeout=30)
+                resp.raise_for_status()
+                return resp.text
+        except httpx.HTTPStatusError as error:
+            status = error.response.status_code
+            print(f"Request failed with status {status} on attempt {attempt}/{retries}")
+            if 500 <= status < 600 and attempt < retries:
+                time.sleep(delay)
+                continue
+            raise
+        except httpx.RequestError as error:
+            print(f"Network error on attempt {attempt}/{retries}: {error}")
+            if attempt < retries:
+                time.sleep(delay)
+                continue
+            raise
 
 
 def parse_games_xml(xml_text: str):
