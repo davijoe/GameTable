@@ -13,6 +13,7 @@ This application is developed for the courses "Full Stack Development", "Databas
 - Docker Engine
 - Docker Compose
 - Bun
+- Patience
 
 Also remember to populate a .env in the backend. Use .env.example
 

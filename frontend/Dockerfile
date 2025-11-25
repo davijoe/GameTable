@@ -6,7 +6,7 @@ COPY frontend/package.json frontend/bun.lock ./
 
 RUN bun install
 
-COPY frontend/ .
+COPY ./frontend /app
 
 EXPOSE 3000
 

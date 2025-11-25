@@ -1,0 +1,62 @@
+services:
+  mongodbMigration:
+    image: mongo:7
+    container_name: gametable-migration-database-mongodb
+    restart: unless-stopped
+    env_file: ".env"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: gametable_nosql
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - migration-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  neo4j:
+    image: neo4j
+    container_name: gametable-migration-database-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/password
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+    networks:
+      - migration-network
+
+  migration-app:
+    build: .
+    environment:
+      - MYSQL_HOST=host.docker.internal
+      - MONGODB_HOST=mongodbMigration
+      - MONGODB_PORT=27017
+      - NEO4J_URI=bolt://neo4j:7687
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: python scripts/run_migration.py
+    stdin_open: true
+    tty: true
+    depends_on:
+      mongodbMigration:
+        condition: service_healthy
+    networks:
+      - migration-network
+
+volumes:
+  mongodb_data:
+  neo4j_data:
+
+networks:
+  migration-network:
+    driver: bridge

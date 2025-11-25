@@ -11,14 +11,19 @@ from app.controller.user_controller import router as user_router
 
 app = FastAPI(title="Game API")
 
-# Configure CORS
+origins = [
+    "http://localhost:5173",  #harcoded to what vite uses standard when run with "bun run dev"
+    "http://localhost:3000" # works with docker
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 app.include_router(designer_router)
 app.include_router(game_router)
