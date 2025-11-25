@@ -6,8 +6,11 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { BellIcon } from "@chakra-ui/icons";
+import LoginModal from "./LoginModal";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header() {
+  const { user, logout } = useAuth();
 
   return (
     <Flex
@@ -28,17 +31,25 @@ export default function Header() {
           variant="ghost"
           size="md"
         />
-        <Box
-          borderRadius="full"
-          bg="blackAlpha.400"
-          display="flex"
-          padding="10px"
-        >
-          <Text fontSize="sm" fontWeight="semibold" color="white">
-            Username
-          </Text>
-        </Box>
-        <Button colorScheme="red">Logout</Button>
+        {user ? (
+          <>
+            <Box
+              borderRadius="full"
+              bg="blackAlpha.400"
+              display="flex"
+              padding="10px"
+            >
+              <Text fontSize="sm" fontWeight="semibold" color="white">
+                {user.display_name}
+              </Text>
+            </Box>
+            <Button colorScheme="red" onClick={logout}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <LoginModal />
+        )}
       </Flex>
     </Flex>
   );
