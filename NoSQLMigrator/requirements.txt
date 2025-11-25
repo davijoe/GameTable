@@ -1,4 +1,0 @@
-mysql-connector-python==8.0.33
-pymongo==4.3.3
-#neo4j==
-python-dotenv==1.0.0
