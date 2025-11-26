@@ -12,6 +12,8 @@ class ORMModel(BaseModel):
 class GameBase(ORMModel):
     name: constr(max_length=255)
     slug: Optional[constr(max_length=255)] = None
+    image: Optional[str] = None
+    thumbnail: Optional[str] = None
     year_published: Optional[constr(max_length=5)] = None
     bgg_rating: Optional[confloat()] = None
     difficulty_rating: Optional[confloat()] = None
@@ -29,6 +31,8 @@ class GameCreate(GameBase):
 class GameUpdate(ORMModel):
     name: Optional[constr(max_length=255)] = None
     slug: Optional[constr(max_length=255)] = None
+    image: Optional[str] = None
+    thumbnail: Optional[str] = None
     year_published: Optional[constr(max_length=5)] = None
     bgg_rating: Optional[confloat()] = None
     difficulty_rating: Optional[confloat()] = None

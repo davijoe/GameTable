@@ -7,6 +7,8 @@ class Game(Base):
     __tablename__ = "game"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    image = Column(String(255), nullable=True)
+    thumbnail = Column(String(255), nullable=True)
     name = Column(String(255), nullable=False)
     slug = Column(String(255), nullable=True)
     year_published = Column(String(5), nullable=True)
