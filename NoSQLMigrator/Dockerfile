@@ -12,4 +12,4 @@ COPY . .
 
 RUN mkdir -p /app/logs
 
-CMD ["python", "scripts/run_migration.py"]
+CMD ["python", "scripts/run_all_migrations.py"]
