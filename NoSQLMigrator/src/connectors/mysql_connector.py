@@ -185,6 +185,141 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
+
+    def get_all_designers(self):
+        """Get all designers"""
+        query = "SELECT * FROM designer"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_artists(self):
+        """Get all artists"""
+        query = "SELECT * FROM artists"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_genres(self):
+        """Get all genres"""
+        query = "SELECT * FROM genre"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_game_designers(self):
+        """Get all game-designer relationships"""
+        query = "SELECT * FROM game_designers"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_game_artists(self):
+        """Get all game-artist relationships"""
+        query = "SELECT * FROM game_artists"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_game_genres(self):
+        """Get all game-genre relationships"""
+        query = "SELECT * FROM game_genres"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_friendships(self):
+        """Get all friendships"""
+        query = "SELECT * FROM friendship"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_messages(self):
+        """Get all messages"""
+        query = "SELECT * FROM message"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_reviews(self):
+        """Get all reviews"""
+        query = "SELECT * FROM review"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_game_reviews(self):
+        """Get all game-review relationships"""
+        query = "SELECT * FROM game_reviews"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_moves(self):
+        """Get all moves"""
+        query = "SELECT * FROM move"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_matchup_moves(self):
+        """Get all matchup-move relationships"""
+        query = "SELECT * FROM matchup_move"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_spectators_with_users(self):
+        """Get all spectators with user information"""
+        query = """
+        SELECT s.id as spectator_id, s.matchup_id, su.user_id, u.display_name
+        FROM spectator s
+        JOIN spectator_users su ON s.id = su.spectator_id
+        JOIN user u ON su.user_id = u.id
+        """
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
     
     def close(self):
         if self.connection and self.connection.is_connected():

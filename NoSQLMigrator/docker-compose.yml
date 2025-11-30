@@ -24,8 +24,10 @@ services:
   neo4j:
     image: neo4j
     container_name: gametable-migration-database-neo4j
+    restart: unless-stopped
     environment:
-      NEO4J_AUTH: neo4j/password
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-password}
+      NEO4J_PLUGINS: '["apoc"]'
     ports:
       - "7474:7474"
       - "7687:7687"
@@ -33,9 +35,25 @@ services:
       - neo4j_data:/data
     networks:
       - migration-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "cypher-shell",
+          "-u",
+          "${NEO4J_USER:-neo4j}",
+          "-p",
+          "${NEO4J_PASSWORD:-password}",
+          "RETURN 1",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+      start_period: 60s
 
   migration-app:
     build: .
+    env_file: ".env"
     environment:
       - MYSQL_HOST=host.docker.internal
       - MONGODB_HOST=mongodbMigration
@@ -44,11 +62,13 @@ services:
     volumes:
       - .:/app
     working_dir: /app
-    command: python scripts/run_migration.py
+    command: python scripts/run_all_migrations.py
     stdin_open: true
     tty: true
     depends_on:
       mongodbMigration:
+        condition: service_healthy
+      neo4j:
         condition: service_healthy
     networks:
       - migration-network
