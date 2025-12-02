@@ -2,19 +2,34 @@ import xml.etree.ElementTree as ET
 from typing import Any
 
 import requests
-from app.models.artist_model import Artist
-from app.models.designer_model import Designer
-from app.models.game_model import Game
-from app.models.genre_model import Genre
-from app.models.mechanic_model import Mechanic
+import os
+
+from app.model.artist_model import Artist
+from app.model.designer_model import Designer
+from app.model.game_model import Game
+from app.model.genre_model import Genre
+from app.model.mechanic_model import Mechanic
+from app.model.publisher_model import Publisher
+
+from app.settings import settings
+
 from sqlalchemy.orm import Session
 
-BGG_THING_URL = "https://boardgamegeek.com/xmlapi2/thing?id={game_id}&stats=0"
+API_KEY = os.getenv("API_KEY")
 
 
 def fetch_game_xml(game_id: int) -> str:
-    url = BGG_THING_URL.format(game_id=game_id)
-    resp = requests.get(url, timeout=30)
+    url = f"{settings.base_url}/thing?id={game_id}"
+
+    headers = {"Authorization": f"Bearer {settings.api_token}"}
+
+    print(f"Calling {url} with headers: {headers}...")
+
+    resp = requests.get(url, headers=headers, timeout=30)
+
+    print("Status:", resp.status_code)
+    print("Body (first 300 chars):", resp.text[:300])
+
     resp.raise_for_status()
     return resp.text
 
@@ -31,6 +46,9 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
     # thumbnail and image
     thumbnail = item.findtext("thumbnail")
     image = item.findtext("image")
+
+    # description
+    description = item.findtext("description")
 
     # primary name
     name_primary = None
@@ -59,6 +77,7 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
     designers: list[tuple[int, str]] = []
     mechanics: list[tuple[int, str]] = []
     genres: list[tuple[int, str]] = []
+    publishers: list[tuple[int, str]] = []
 
     for link in item.findall("link"):
         link_type = link.attrib.get("type")
@@ -79,10 +98,13 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
             mechanics.append((link_id, value))
         elif link_type == "boardgamecategory":
             genres.append((link_id, value))
+        elif link_type == "boardgamepublisher":
+            publishers.append((link_id, value))
 
     return {
         "id": game_id,
         "name": name_primary or "",
+        "description": description,
         "image": image,
         "thumbnail": thumbnail,
         "year_published": year_published,
@@ -94,6 +116,7 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
         "designers": designers,
         "mechanics": mechanics,
         "genres": genres,
+        "publishers": publishers,
     }
 
 
@@ -105,6 +128,7 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
         game = Game(id=game_id)
 
     game.name = data["name"]
+    game.description = data["description"]
     game.image = data["image"]
     game.thumbnail = data["thumbnail"]
     game.year_published = data["year_published"]
@@ -158,6 +182,16 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
             if not genre.name:
                 genre.name = genre_name
         game.genres.append(genre)
+
+    # publishers
+    for publisher_id, publisher_name in data["publishers"]:
+        publisher = db.get(Publisher, publisher_id)
+        if publisher is None:
+            publisher = Publisher(id=publisher_id, name=publisher_name)
+        else:
+            if not publisher.name:
+                publisher.name = publisher_name
+        game.publishers.append(publisher)
 
     db.add(game)
     db.commit()

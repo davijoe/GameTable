@@ -1,0 +1,7 @@
+services:
+  mysql8_database:
+    image: mysql:8
+  app:
+    build: .
+    depends_on:
+      - mysql8_database

@@ -1,16 +1,16 @@
-import os
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.settings import settings
 
-from app.models.base import Base
+from app.model.base import Base
 
+DB_USER = settings.mysql_user
+DB_PASS = settings.mysql_password
+DB_HOST = settings.mysql_server
+DB_PORT = settings.mysql_port
+DB_NAME = settings.mysql_db_name
 
-DB_USER = os.getenv("MYSQL_USER")
-DB_PASS = os.getenv("MYSQL_PASSWORD")
-DB_HOST = os.getenv("MYSQL_SERVER")
-DB_PORT = os.getenv("MYSQL_PORT")
-DB_NAME = os.getenv("MYSQL_DB_NAME")
+print(f"User:{DB_USER} | host:{DB_HOST} | port:{DB_PORT} | name:{DB_NAME}")
 
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
