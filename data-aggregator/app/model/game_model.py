@@ -7,34 +7,41 @@ from .base import Base
 game_artists = Table(
     "game_artists",
     Base.metadata,
-    Column("game_id", ForeignKey("games.id"), primary_key=True),
-    Column("artist_id", ForeignKey("artists.id"), primary_key=True),
+    Column("game_id", ForeignKey("game.id"), primary_key=True),
+    Column("artist_id", ForeignKey("artist.id"), primary_key=True),
 )
 
 game_designers = Table(
     "game_designers",
     Base.metadata,
-    Column("game_id", ForeignKey("games.id"), primary_key=True),
-    Column("designer_id", ForeignKey("designers.id"), primary_key=True),
+    Column("game_id", ForeignKey("game.id"), primary_key=True),
+    Column("designer_id", ForeignKey("designer.id"), primary_key=True),
 )
 
 game_mechanics = Table(
     "game_mechanics",
     Base.metadata,
-    Column("game_id", ForeignKey("games.id"), primary_key=True),
-    Column("mechanic_id", ForeignKey("mechanics.id"), primary_key=True),
+    Column("game_id", ForeignKey("game.id"), primary_key=True),
+    Column("mechanic_id", ForeignKey("mechanic.id"), primary_key=True),
 )
 
 game_genres = Table(
     "game_genres",
     Base.metadata,
-    Column("game_id", ForeignKey("games.id"), primary_key=True),
-    Column("genre_id", ForeignKey("genres.id"), primary_key=True),
+    Column("game_id", ForeignKey("game.id"), primary_key=True),
+    Column("genre_id", ForeignKey("genre.id"), primary_key=True),
+)
+
+game_publishers = Table(
+    "game_publishers",
+    Base.metadata,
+    Column("game_id", ForeignKey("game.id"), primary_key=True),
+    Column("publisher_id", ForeignKey("publisher.id"), primary_key=True),
 )
 
 
 class Game(Base):
-    __tablename__ = "games"
+    __tablename__ = "game"
 
     id = Column(Integer, primary_key=True, index=True)
 
@@ -59,21 +66,28 @@ class Game(Base):
 
     designers = relationship(
         "Designer",
-        secondary="game_designers",
+        secondary=game_designers,
         back_populates="games",
         lazy="joined",
     )
 
     mechanics = relationship(
         "Mechanic",
-        secondary="game_mechanics",
+        secondary=game_mechanics,
         back_populates="games",
         lazy="joined",
     )
 
     genres = relationship(
         "Genre",
-        secondary="game_genres",
+        secondary=game_genres,
+        back_populates="games",
+        lazy="joined",
+    )
+
+    publishers = relationship(
+        "Publisher",
+        secondary=game_publishers,
         back_populates="games",
         lazy="joined",
     )

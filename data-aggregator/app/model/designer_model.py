@@ -5,7 +5,7 @@ from .base import Base
 
 
 class Designer(Base):
-    __tablename__ = "designers"
+    __tablename__ = "designer"
 
     # many-to-many back to Game via game_designers
     id = Column(Integer, primary_key=True, index=True)

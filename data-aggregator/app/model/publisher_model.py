@@ -5,7 +5,7 @@ from .base import Base
 
 
 class Publisher(Base):
-    __tablename__ = "publishers"
+    __tablename__ = "publisher"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False, index=True)

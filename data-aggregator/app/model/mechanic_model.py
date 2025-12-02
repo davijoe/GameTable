@@ -5,7 +5,7 @@ from .base import Base
 
 
 class Mechanic(Base):
-    __tablename__ = "mechanics"
+    __tablename__ = "mechanic"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False, index=True)
