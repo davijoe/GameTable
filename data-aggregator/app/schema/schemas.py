@@ -13,6 +13,7 @@ class PersonRef(BaseModel):
 class GameOut(BaseModel):
     id: int
     name: str
+    description: Optional[str] = None
     image: Optional[str] = None
     thumbnail: Optional[str] = None
     min_players: Optional[int] = None
@@ -25,6 +26,7 @@ class GameOut(BaseModel):
     designers: List[PersonRef] = []
     mechanics: List[PersonRef] = []
     genres: List[PersonRef] = []
+    publisher: List[PersonRef] = []
 
     class Config:
         orm_mode = True

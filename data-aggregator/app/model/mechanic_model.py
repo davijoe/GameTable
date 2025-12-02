@@ -10,6 +10,7 @@ class Mechanic(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False, index=True)
 
+    # Many-to-many back to Game via game_mechanics
     games = relationship(
         "Game",
         secondary="game_mechanics",
