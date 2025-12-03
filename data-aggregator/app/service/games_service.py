@@ -12,7 +12,7 @@ CSV_PATH = BASE_DIR / "secrets" / "games.csv"
 
 
 def load_game_ids(limit: int = 20) -> List[str]:
-    ids: List[str] = []
+    ids: List[int] = []
 
     with CSV_PATH.open(newline="") as csvfile:
         reader = csv.DictReader(csvfile)
@@ -21,18 +21,20 @@ def load_game_ids(limit: int = 20) -> List[str]:
             if len(ids) >= limit:
                 break
 
+    print("Returning som idssssssss")
     return ids
 
 
-def fetch_games_xml(ids: List[str], retries: int = 3, delay: int = 5) -> str:
-    joined = ",".join(ids)
-    url = f"{settings.base_url}/thing?id={joined}"
+def fetch_games_xml(ids: List[int], retries: int = 3, delay: int = 5) -> str:
+    joined = ",".join(str(i) for i in ids)
+    url = f"{settings.base_url}/thing?id={joined}&ratingcomments=1&videos=1"
 
     headers = {"Authorization": f"Bearer {settings.api_token}"}
 
     for attempt in range(1, retries + 1):
         try:
             with httpx.Client() as client:
+                print("FØR TIMEOUT")
                 resp = client.get(url, headers=headers, timeout=30)
                 resp.raise_for_status()
                 return resp.text

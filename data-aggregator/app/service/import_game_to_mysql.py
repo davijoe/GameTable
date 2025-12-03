@@ -20,8 +20,10 @@ from sqlalchemy.orm import Session
 API_KEY = os.getenv("API_KEY")
 
 
-def fetch_game_xml(game_id: int) -> str:
-    url = f"{settings.base_url}/thing?id={game_id}&ratingcomments=1&videos=1"
+def fetch_game_xml(game_ids: list[int]) -> str:
+    ids = ",".join(str(gid) for gid in game_ids)
+
+    url = f"{settings.base_url}/thing?id={ids}&ratingcomments=1&videos=1"
 
     headers = {"Authorization": f"Bearer {settings.api_token}"}
 
