@@ -8,9 +8,11 @@ from app.model.artist_model import Artist
 from app.model.designer_model import Designer
 from app.model.game_model import Game
 from app.model.genre_model import Genre
+from app.model.language_model import Language
 from app.model.mechanic_model import Mechanic
 from app.model.publisher_model import Publisher
 from app.model.review_model import Review
+from app.model.video_model import Video
 from app.service.user_service import get_or_create_bgg_user
 
 from app.settings import settings
@@ -83,6 +85,7 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
     genres: list[tuple[int, str]] = []
     publishers: list[tuple[int, str]] = []
     reviews: list[dict[str, Any]] = []
+    videos: list[dict[str, Any]] = []
 
     for link in item.findall("link"):
         link_type = link.attrib.get("type")
@@ -105,6 +108,31 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
             genres.append((link_id, value))
         elif link_type == "boardgamepublisher":
             publishers.append((link_id, value))
+
+    # videos
+    videos_elem = item.find("videos")
+    if videos_elem is not None:
+        for v in videos_elem.findall("video"):
+            video_id_raw = v.attrib.get("id")
+            title = v.attrib.get("title")
+            category = v.attrib.get("category")
+            link = v.attrib.get("link")
+            language_name = v.attrib.get("language")
+
+            try:
+                video_id = int(video_id_raw)
+            except ValueError:
+                continue
+
+            videos.append(
+                {
+                    "id": video_id,
+                    "title": title,
+                    "category": category or "Unknown",
+                    "link": link or "",
+                    "language": language_name or "Unknown",
+                }
+            )
 
     # BGG "comments" -> our "reviews"
     comments_elem = item.find("comments")
@@ -138,6 +166,7 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
         "name": name_primary or "",
         "description": description,
         "image": image,
+        "videos": videos,
         "thumbnail": thumbnail,
         "year_published": year_published,
         "min_players": min_players,
@@ -160,6 +189,8 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
     if game is None:
         game = Game(id=game_id)
 
+    print(f"Upserting game {game_id}...")
+
     game.name = data["name"]
     game.description = data["description"]
     game.image = data["image"]
@@ -176,6 +207,10 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
     game.mechanics.clear()
     game.genres.clear()
     game.publishers.clear()
+
+    for existing_video in list(game.videos):
+        db.delete(existing_video)
+    game.videos.clear()
 
     for existing_review in list(game.reviews):
         db.delete(existing_review)
@@ -231,6 +266,31 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
                 publisher.name = publisher_name
         game.publishers.append(publisher)
 
+    # videos
+    for v in data.get("videos", []):
+        lang_name = v.get("language") or "Unknown"
+
+        language = (
+            db.query(Language).filter(Language.language == lang_name).one_or_none()
+        )
+
+        if language is None:
+            language = Language(language=lang_name)
+            db.add(language)
+            db.flush()
+
+        video = Video(
+            id=v["id"],
+            title=v["title"],
+            category=v["category"],
+            link=v["link"],
+            game=game,
+            language=language,
+        )
+
+        game.videos.append(video)
+        db.add(video)
+
     # reviews (from XMLAPI2 "comments")
     for r in data.get("reviews", []):
         username = r["username"]
@@ -255,8 +315,10 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
         game.reviews.append(review)
         db.add(review)
 
+    print(f"Committing game {game_id}...")
     db.add(game)
     db.commit()
+    print(f"Committed game {game_id}, refreshing...")
     db.refresh(game)
-
+    print(f"Done with game {game_id}")
     return game

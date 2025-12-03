@@ -15,7 +15,7 @@ CREATE TABLE game_designers (game_id int(10) NOT NULL, designer_id int(10) NOT N
 CREATE TABLE game_artists (game_id int(10) NOT NULL, artist_id int(10) NOT NULL, PRIMARY KEY (game_id, artist_id));
 CREATE TABLE game_publishers (game_id int(10) NOT NULL, publisher_id int(10) NOT NULL, PRIMARY KEY (game_id, publisher_id));
 CREATE TABLE game_mechanics (game_id int(10) NOT NULL, mechanic_id int(10) NOT NULL, PRIMARY KEY (game_id, mechanic_id));
-CREATE TABLE video (id int(10) NOT NULL AUTO_INCREMENT, title varchar(255) NOT NULL, category varchar(255) NOT NULL, link varchar(255) NOT NULL, game_id int(10) NOT NULL, language_id int(10) NOT NULL, PRIMARY KEY (id));
+CREATE TABLE video (id int(10) NOT NULL AUTO_INCREMENT, title varchar(255) NOT NULL, category varchar(255), link varchar(255) NOT NULL, game_id int(10) NOT NULL, language_id int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE language (id int(10) NOT NULL AUTO_INCREMENT, language varchar(255) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE publisher (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id));
 ALTER TABLE game_genres ADD CONSTRAINT FKgame_genre12575 FOREIGN KEY (genre_id) REFERENCES genre (id);

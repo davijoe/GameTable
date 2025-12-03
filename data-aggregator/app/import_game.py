@@ -33,6 +33,7 @@ def import_games_from_csv(limit: str = 10) -> None:
 
             except Exception as exc:
                 print(f"Failed to import game {game_id}: {exc}")
+                db.rollback()
 
             now = time.time()
             elapsed_time = now - import_start
