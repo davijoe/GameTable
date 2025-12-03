@@ -35,6 +35,4 @@ ALTER TABLE game_mechanics ADD CONSTRAINT FKgame_mech1 FOREIGN KEY (game_id) REF
 ALTER TABLE game_mechanics ADD CONSTRAINT FKgame_mech2 FOREIGN KEY (mechanic_id) REFERENCES mechanic (id);
 ALTER TABLE video ADD CONSTRAINT FKvideo235072 FOREIGN KEY (game_id) REFERENCES game (id);
 ALTER TABLE video ADD CONSTRAINT FKvideo738401 FOREIGN KEY (language_id) REFERENCES language (id);
-ALTER TABLE review ADD CONSTRAINT FKreview880296 FOREIGN KEY (user_id) REFERENCES `user` (id);
-ALTER TABLE game_reviews ADD CONSTRAINT FKgame_revie642759 FOREIGN KEY (game_id) REFERENCES game (id);
-ALTER TABLE game_reviews ADD CONSTRAINT FKgame_revie516416 FOREIGN KEY (review_id) REFERENCES review (id);
+

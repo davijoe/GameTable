@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+
 import bcrypt
 
 from app.model.user_model import User
