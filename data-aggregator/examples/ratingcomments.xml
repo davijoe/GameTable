@@ -102,411 +102,53 @@ The game is part of what is sometimes called the Knizia tile-laying trilogy.
 			
 		
 					<link type="boardgamecategory" id="1009" value="Abstract Strategy" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamecategory" id="1035" value="Medieval" />
-		
-									
-			
-
-			      				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2080" value="Area Majority / Influence" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2043" value="Enclosure" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2040" value="Hand Management" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2026" value="Hexagon Grid" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2987" value="Hidden Victory Points" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2846" value="Once-Per-Game Abilities" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2004" value="Set Collection" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2002" value="Tile Placement" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamemechanic" id="2897" value="Variable Set-up" />
-		
-									
-			
-
-			      				
-		 			
-
-			
-		
 					<link type="boardgamefamily" id="64960" value="Components: Map (Continental / National scale)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamefamily" id="104481" value="Components: Player Screens" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamefamily" id="10634" value="Country: Japan" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamefamily" id="60111" value="Series: Euro Classics (Reiner Knizia)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamefamily" id="42" value="Series: Tile-Laying Trilogy (Reiner Knizia)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamefamily" id="28732" value="Theme: Samurai" />
-		
-									
-			
-
-			      			
-
-			      			
-
-			      			
-
-			      			
-
-			      			
-
-			      			
-
-			      				
-		 			
-
-			
-		
 					<link type="boardgameimplementation" id="450860" value="Hanami" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameimplementation" id="35634" value="Samurai: The Card Game" />
-		
-									
-			
-
-			      			
-
-			      	      	      				
-		 			
-
-			
-		
 					<link type="boardgamedesigner" id="2" value="Reiner Knizia" />
-		
-									
-			
-
-			      				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="131833" value="Miguel Valenzuela Beltrán" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="11883" value="Franz Vohwinkel" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="110401" value="徐昀享 (Xu Yunxiang)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="158240" value="李小娜 (LI Xiaona)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="158239" value="杨静雯 (Yang Jingwen)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="158242" value="谢有鑫 (Xie Youxin)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="158505" value="郭紫颖 (Guo Ziying)" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgameartist" id="158244" value="陈杰 (Chen Jie)" />
-		
-									
-			
-
-			      	      				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="17" value="Fantasy Flight Games" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="133" value="Hans im Glück" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="267" value="999 Games" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="29" value="ABACUSSPIELE" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="7340" value="Astrel Games" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="7335" value="Ceilikan Jogos" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="41" value="Descartes Editeur" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="2973" value="Edge Entertainment" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="4617" value="Galakta" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="1391" value="Hobby Japan" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="8291" value="Korea Boardgames" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="5812" value="Lacerta" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="36210" value="Lanlalen" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="3218" value="Lautapelit.fi" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="47575" value="Lighthouse Games" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="3" value="Rio Grande Games" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="3954" value="Skandinavisk  Spil Kompagni" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="8313" value="Smart Ltd" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="8759" value="Wargames Club Publishing" />
-		
-									
-				
-		 			
-
-			
-		
 					<link type="boardgamepublisher" id="54519" value="Yaofish Games" />
-		
-									
-			
 
 			
 			<videos total="52">
