@@ -17,3 +17,5 @@ class Game(Base):
     available = Column(Boolean, nullable=True)
     min_players = Column(Integer, nullable=True)
     max_players = Column(Integer, nullable=True)
+    image = Column(String(1024), nullable=True)
+    thumbnail = Column(String(1024), nullable=True)
