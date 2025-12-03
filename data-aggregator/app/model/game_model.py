@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Table, ForeignKey
+from sqlalchemy import Column, ForeignKey, Integer, String, Table, Text
 from sqlalchemy.orm import relationship
 
 from .base import Base
@@ -46,6 +46,7 @@ class Game(Base):
     id = Column(Integer, primary_key=True, index=True)
 
     name = Column(String(255), nullable=False, index=True)
+    description = Column(Text, nullable=True)
 
     image = Column(String(1024), nullable=True)
     thumbnail = Column(String(1024), nullable=True)

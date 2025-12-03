@@ -142,6 +142,7 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
     game.designers.clear()
     game.mechanics.clear()
     game.genres.clear()
+    game.publishers.clear()
 
     # artists
     for artist_id, artist_name in data["artists"]:
