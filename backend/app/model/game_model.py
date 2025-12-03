@@ -13,7 +13,7 @@ class Game(Base):
     bgg_rating = Column(Double, nullable=True)
     difficulty_rating = Column(Double, nullable=True)
     description = Column(Text, nullable=True)
-    play_time = Column(Integer, nullable=True)
+    playing_time = Column(Integer, nullable=True)
     available = Column(Boolean, nullable=True)
     min_players = Column(Integer, nullable=True)
     max_players = Column(Integer, nullable=True)
