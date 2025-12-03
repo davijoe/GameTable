@@ -21,7 +21,7 @@ API_KEY = os.getenv("API_KEY")
 
 
 def fetch_game_xml(game_id: int) -> str:
-    url = f"{settings.base_url}/thing?id={game_id}"
+    url = f"{settings.base_url}/thing?id={game_id}&ratingcomments=1&videos=1"
 
     headers = {"Authorization": f"Bearer {settings.api_token}"}
 
