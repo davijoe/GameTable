@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?><items termsofuse="https://boardgamegeek.com/xmlapi/termsofuse"><item type="boardgame" id="1">
+         <thumbnail>https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__small/img/YT6svCVsWqLrDitcMEtyazVktbQ=/fit-in/200x150/filters:strip_icc()/pic4718279.jpg</thumbnail>
+      <image>https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__original/img/yR0aoBVKNrAmmCuBeSzQnMflLYg=/0x0/filters:format(jpeg)/pic4718279.jpg</image>
+   	                                  				
+				<name type="primary" sortindex="5" value="Die Macher" />
+			
+						                               				
+				<name type="alternate" sortindex="1" value="德国大选" />
+			    				
+				<name type="alternate" sortindex="1" value="디 마허" />
+			
+						               													<description>Die Macher is a game about seven sequential political races in different regions of Germany. Players are in charge of national political parties, and must manage limited resources to help their party to victory. The winning party will have the most victory points after all the regional elections. There are four different ways of scoring victory points. First, each regional election can supply one to eighty victory points, depending on the size of the region and how well your party does in it. Second, if a party wins a regional election and has some media influence in the region, then the party will receive some media-control victory points. Third, each party has a national party membership which will grow as the game progresses and this will supply a fair number of victory points. Lastly, parties score some victory points if their party platform matches the national opinions at the end of the game.
+
+The 1986 edition featured four parties from the old West Germany and supported 3-4 players. The 1997 edition supports up to five players in the re-united Germany and updated several features of the rules as well.  The 2006 edition also supports up to five players and adds a shorter five-round variant and additional rules updates by the original designer.
+
+</description>
+										      	               				<yearpublished value="1986" />
+						               				<minplayers value="3" />
+						               				<maxplayers value="5" />
+						      			<poll name="suggested_numplayers" title="User Suggested Number of Players" totalvotes="144">
+			
+		<results numplayers="1">		
+					<result value="Best" numvotes="0" />
+					<result value="Recommended" numvotes="1" />
+					<result value="Not Recommended" numvotes="90" />
+				</results>					
+			
+		<results numplayers="2">		
+					<result value="Best" numvotes="0" />
+					<result value="Recommended" numvotes="1" />
+					<result value="Not Recommended" numvotes="94" />
+				</results>					
+			
+		<results numplayers="3">		
+					<result value="Best" numvotes="2" />
+					<result value="Recommended" numvotes="28" />
+					<result value="Not Recommended" numvotes="80" />
+				</results>					
+			
+		<results numplayers="4">		
+					<result value="Best" numvotes="27" />
+					<result value="Recommended" numvotes="91" />
+					<result value="Not Recommended" numvotes="10" />
+				</results>					
+			
+		<results numplayers="5">		
+					<result value="Best" numvotes="121" />
+					<result value="Recommended" numvotes="12" />
+					<result value="Not Recommended" numvotes="3" />
+				</results>					
+			
+		<results numplayers="5+">		
+					<result value="Best" numvotes="2" />
+					<result value="Recommended" numvotes="0" />
+					<result value="Not Recommended" numvotes="64" />
+				</results>					
+	</poll>
+<poll-summary name="suggested_numplayers"  title="User Suggested Number of Players">
+  <result name="bestwith" value="Best with 5 players" />
+  <result name="recommmendedwith" value="Recommended with 4–5 players" />
+</poll-summary> 			               				<playingtime value="240" />
+						               				<minplaytime value="240" />
+						               				<maxplaytime value="240" />
+						               				<minage value="14" />
+						      			<poll name="suggested_playerage" title="User Suggested Player Age" totalvotes="33">
+			<results>		
+					<result value="2" numvotes="0" />
+					<result value="3" numvotes="0" />
+					<result value="4" numvotes="0" />
+					<result value="5" numvotes="0" />
+					<result value="6" numvotes="0" />
+					<result value="8" numvotes="0" />
+					<result value="10" numvotes="0" />
+					<result value="12" numvotes="6" />
+					<result value="14" numvotes="19" />
+					<result value="16" numvotes="5" />
+					<result value="18" numvotes="2" />
+					<result value="21 and up" numvotes="1" />
+				</results>					
+	</poll> 			      			<poll name="language_dependence" title="Language Dependence" totalvotes="50">
+			
+		<results>		
+					<result level="1" value="No necessary in-game text" numvotes="38" />
+					<result level="2" value="Some necessary text - easily memorized or small crib sheet" numvotes="5" />
+					<result level="3" value="Moderate in-game text - needs crib sheet or paste ups" numvotes="7" />
+					<result level="4" value="Extensive use of text - massive conversion needed to be playable" numvotes="0" />
+					<result level="5" value="Unplayable in another language" numvotes="0" />
+				</results>					
+	</poll> 			      			 			      				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1021" value="Economic" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1026" value="Negotiation" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1001" value="Political" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2916" value="Alliances" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2080" value="Area Majority / Influence" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2012" value="Auction / Bidding" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2072" value="Dice Rolling" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2040" value="Hand Management" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2020" value="Simultaneous Action Selection" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="10643" value="Country: Germany" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="81575" value="Digital Implementations: VASSAL" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="34116" value="Political: Elections" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="91" value="Series: Classic Line (Valley Games)" />
+		
+									
+			
+
+			      			
+
+			      			
+
+			      			
+
+			      			
+
+			      			
+
+			      			
+
+			      			
+
+			      			
+
+			      	      	      				
+		 			
+
+			
+		
+					<link type="boardgamedesigner" id="1" value="Karl-Heinz Schmiel" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="928" value="Bernd Brunnhofer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="12517" value="Marcus Gschwendtner" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="4959" value="Harald Lieske" />
+		
+									
+			
+
+			      	      				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="133" value="Hans im Glück" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="2" value="Moskito Spiele" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="24883" value="Ediciones MasQueOca" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="2726" value="Portal Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="15108" value="Spielworxx" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="39249" value="sternenschimmermeer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="11652" value="Stronghold Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="5382" value="Valley Games, Inc." />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="8147" value="YOKA Games" />
+		
+									
+			
+
+			
+			<videos total="47">
+						<video id="539197" title="Conclusion after Session of Die Macher" category="review" language="German" link="http://www.youtube.com/watch?v=YSrn6c9192c" username="VolkoV" userid="241634" postdate="2025-02-20T05:58:16-06:00" />
+						<video id="539196" title="Session of Die Macher Part 3" category="session" language="German" link="http://www.youtube.com/watch?v=B3jp-Nl_HXM" username="VolkoV" userid="241634" postdate="2025-02-20T05:57:40-06:00" />
+						<video id="536527" title="Session of Die Macher Part 2" category="session" language="German" link="http://www.youtube.com/watch?v=o_7mUKtE1aY" username="VolkoV" userid="241634" postdate="2025-02-06T05:38:52-06:00" />
+						<video id="535313" title="Session of Die Macher Part 1" category="session" language="German" link="http://www.youtube.com/watch?v=bHWqy7WOEAc" username="VolkoV" userid="241634" postdate="2025-01-30T15:32:41-06:00" />
+						<video id="534101" title="Rules of Die Macher" category="instructional" language="German" link="http://www.youtube.com/watch?v=E4RnhMH4sZU" username="VolkoV" userid="241634" postdate="2025-01-23T05:13:59-06:00" />
+						<video id="508104" title="DIE MACHER (BGG entry n°1)" category="instructional" language="English" link="http://www.youtube.com/watch?v=zzO2jeSTAFM" username="ghavet" userid="926969" postdate="2024-08-07T08:06:33-05:00" />
+						<video id="504701" title="Die Macher - how to play, przebieg gry (mlodygiercownik.pl)" category="instructional" language="Polish" link="http://www.youtube.com/watch?v=6fcC1zxp8wg" username="tomdra" userid="1269996" postdate="2024-07-16T10:01:00-05:00" />
+						<video id="504700" title="Die Macher - unboxing (mlodygiercownik.pl)" category="unboxing" language="Polish" link="http://www.youtube.com/watch?v=EL6wmsvvR-8" username="tomdra" userid="1269996" postdate="2024-07-16T10:00:16-05:00" />
+						<video id="483618" title="Die Macher (2nd/3rd Edition) - 5p Play-through, &amp; Roundtable Discussion by Heavy Cardboard" category="session" language="English" link="http://www.youtube.com/watch?v=Vx3YiB_utT4" username="eapeas" userid="377742" postdate="2024-02-28T21:02:04-06:00" />
+						<video id="428180" title="Die Macher. Tutorial" category="instructional" language="Spanish" link="http://www.youtube.com/watch?v=ymjkl1bUD4w" username="Gostilian" userid="266115" postdate="2023-03-14T18:04:32-05:00" />
+						<video id="427418" title="Die Macher. Unboxing" category="unboxing" language="Spanish" link="http://www.youtube.com/watch?v=6E--AfEPROA" username="Gostilian" userid="266115" postdate="2023-03-10T02:03:20-06:00" />
+						<video id="390405" title="Die Macher, cómo jugar edición limitada MQO" category="instructional" language="Spanish" link="http://www.youtube.com/watch?v=QUkne_qCSIY" username="panterapicazo" userid="656636" postdate="2022-07-17T13:36:02-05:00" />
+						<video id="386300" title="Die Macher - Reseña - KludiK" category="review" language="Spanish" link="http://www.youtube.com/watch?v=HtqyVr6GdLs" username="karallan" userid="585668" postdate="2022-06-20T05:18:25-05:00" />
+						<video id="386299" title="Die Macher Versión Clásica - Tutorial - KludiK" category="instructional" language="Spanish" link="http://www.youtube.com/watch?v=T19COqg9a5A" username="karallan" userid="585668" postdate="2022-06-20T05:17:26-05:00" />
+						<video id="386298" title="Die Macher KS - Tutorial - KludiK" category="instructional" language="Spanish" link="http://www.youtube.com/watch?v=l_8ZIbLU8Pg" username="karallan" userid="585668" postdate="2022-06-20T05:16:15-05:00" />
+					</videos>
+
+	
+
+	
+		<comments page="1" totalitems="2178">
+			<comment username="goedert" rating="N/A" value="Looks very cool, but also intimidating.  Not sure I'll ever play this, but I'd like to." />
+			<comment username="zublord" rating="N/A" value="SOLD" />
+			<comment username="Number2" rating="N/A" value="Own new edition, really need to find players now..." />
+			<comment username="PatK" rating="N/A" value="Finally got my paws on this one.  Now all I need is a spare evening to run through it." />
+			<comment username="DavidT" rating="N/A" value="Original, German edition." />
+			<comment username="michael.perkins" rating="N/A" value="* Spiel des Jahres Nominee 1998 * Deutscher SpielePreis 9th place 1998 * Get yourself elected into politics in Germany.  Sound facinating! Unfortunately, I think it is out-of-print.  3-5 players." />
+			<comment username="tallike" rating="N/A" value="60€" />
+			<comment username="skytostar" rating="N/A" value="Bought it! Kept it without playing for a year and sold it!!" />
+			<comment username="stimberg" rating="N/A" value="just got from germany, cant wait to play. good thing 'geek has the english rules." />
+			<comment username="peter haslehurst" rating="N/A" value="I have no idea how this plays - one day I'll change that I hope." />
+			<comment username="sosynoid" rating="N/A" value="[판매] 3.0
+장마피해로 곰팡이 습격당함, 박스 심한 훼손, 내용물은 플레이가능한 정도, 한글화안됨(자료는 파일로 전달가능)
+사진 링크 참조 https://goo.gl/photos/DEr3E9rHHwRSBsjn8" />
+			<comment username="satzle" rating="N/A" value="Could never get anyone interested in it to even OPEN it.  I have enough games that already barely get played.  This was out of print and I sold it for slightly more than I bought it for." />
+			<comment username="Dubbelnisse" rating="N/A" value="Trade with [username=swedgamer] for Wallenstein" />
+			<comment username="NickBottom" rating="N/A" value="I have two copies. One German, one English. Need to figure out which one to trade." />
+			<comment username="ressu" rating="N/A" value="I have bought this classic a while ago and I am eager to play it. Seems like a very promising, albeit a heavy game. We really need more time to play =)" />
+			<comment username="litho" rating="N/A" value="2005, bought from someone in UK." />
+			<comment username="BaluMG" rating="N/A" value="not played yet" />
+			<comment username="shyam1houston" rating="N/A" value="Blue Box (4-player) Moskito Edition." />
+			<comment username="manowar" rating="N/A" value="Still have not played, sadness..." />
+			<comment username="alfonzos" rating="N/A" value="This game makes an appearance about once every three years. The game has a higher luck factor than I like in a long game but there is much player interaction so the game doesn't seem as long as it is." />
+			<comment username="Big BabOOn" rating="N/A" value="No plays." />
+			<comment username="Puny_Viking" rating="N/A" value="First  impressions make me think this is one great game. The fact that it's in German is no problem.
+
+" />
+			<comment username="Jonny_Lenny" rating="N/A" value="traded for Prince of Florence and Yinsh" />
+			<comment username="NikTheRake" rating="N/A" value="HiG 2nd edition plus 1st (FRG) edition" />
+			<comment username="stevecnz" rating="N/A" value="(Both editions)" />
+			<comment username="Opti" rating="N/A" value="New, in original shrink-wrap" />
+			<comment username="msaya" rating="N/A" value="[sold reluctantly, May'18]" />
+			<comment username="KANDANG" rating="N/A" value="S: 30.12.2016" />
+			<comment username="MysteryDough" rating="N/A" value="played half a game with 4 people.  so far i find it solid, but not very dynamic. reserving judgement." />
+			<comment username="davidjw" rating="N/A" value="Hans im Glück
+[13]
+Moskito
+[29]" />
+			<comment username="seppo21" rating="N/A" value="I may never get to play this one, but it won't be because I don't own a copy :)" />
+			<comment username="shang" rating="N/A" value="Played once. Still undecided about the score." />
+			<comment username="pitris" rating="N/A" value="Just two incomplete plays. Not enough to give it a fair rating. " />
+			<comment username="Onceler" rating="N/A" value="This is a mind and time consuming game . . . . two attributes which I like, but they aren't for everyone.
+
+The depth here is comparable to many wargames, but the game is more subtle in that the means to reach your goal (winning) aren't nearly as clear as attack and win.
+
+Great game, with many mechanics, and the understanding of all are relevant to success.  I love that the game offers several strategies, and that one can, and should, decide among current focus, and future strength.  Although, some limited success in current rounds is often necessary to win, so one can't completely abandon current play.
+
+In our game, the only person not to form coallitions won the game, but I think that the result was more a matter of the group not attacking the player, but that's another great asspect of the game, - the politics and the social engineering matter." />
+			<comment username="gsiegele" rating="N/A" value="this is a very long complex political simulation game that some suggest has too much luck for a game of this length. Rataes in top 10 of BGG" />
+			<comment username="Lt_Meyer" rating="N/A" value="Just received it, but still unplayed.
+Looking forward for first play!" />
+			<comment username="SpielGeld" rating="N/A" value="It think after playing this once I can dub this &quot;The King of Euros&quot;.  There are so many mechanics but they are all blended very well into the game.  It's took several rounds for me to begin to appriciate how the game plays and as we were lucky enough to be able to play the game in three hours the game the length seemed appropriate.  At least know I can say I've played it and would gladly join in another game if invited.  I would like to play this a couple of more times before giving it a rating though but at this point I'm pretty sure I can say this IS better than Caylus or Puetro Rico." />
+			<comment username="ylpatae" rating="N/A" value="2 copies.
+
+vol. 1 (Hans)
+vol. 2 (Moskito/Rio grande Games)
+vol. 3 (Valley Games) - Prev. owned" />
+			<comment username="michaelwsloat" rating="N/A" value="ON WISHLIST
+Overall Rank #7 (03-25-06)" />
+			<comment username="akrebs" rating="N/A" value="Lost in the move?" />
+			<comment username="Starsunsky" rating="N/A" value="[Moskito Spiel 2nd Edition] {German politic, economic; blind-bidding, bidding, variable-player-order, area-control} Die Macher is a very heavy game.  Players need a very good long-term planning to win.  Player interaction is very good in either cooperative (coalition) or competitive (getting media controls, etc.).  Replayability is very good - each game is different.  I am happy to own this game.
+
+However, it is not easy to teach this game effectively without a round of sample play.  And, it needs some time to understand the game; esp. to understand the use of shadow cabinet and opinion pool cards.
+
+The game component is effectively.  The German cards don't interfere the game play much.  It needs a large table space. 
+" />
+			<comment username="apecage" rating="N/A" value="Remains the only game in the Top 10 that I haven't played. Length is definitely an issue here. But maybe one of these days if it's early in the day and the mood strikes." />
+			<comment username="hakko504" rating="N/A" value="BGWS convinved me that this indeed is the ultimate EURO - if it wasn't for the 5h playing time, and the fact that everybody says that you should be 5 people to play it. Both things are turning me away from the game. Everything else says 'GET IT!'" />
+			<comment username="bacco" rating="N/A" value="I d like to test it...!" />
+			<comment username="Tarrant" rating="N/A" value="Please play this with me.  I have two copies and everyone says &quot;German Parliament?  You must be joking.&quot;  I'm not joking, please play with me." />
+			<comment username="Hedric3248" rating="N/A" value="Version: Valley Games" />
+			<comment username="pmat" rating="N/A" value="Essen 06: Second edition (HiG), signed by the designer." />
+			<comment username="fiatkid55" rating="N/A" value="I have the 2006 Valley Games Inc. English reprint." />
+			<comment username="simonh" rating="N/A" value="[Essen 2006]
+Yet to play.
+
+Finally got to play this at Meeplefest'10
+" />
+			<comment username="JoeyHemlock" rating="N/A" value="[Not yet played]" />
+			<comment username="mmarshallmd" rating="N/A" value="Haven't played yet..." />
+			<comment username="kimbo" rating="N/A" value="Valley Games reprint
+(October 2006)
+" />
+			<comment username="kuhrusty" rating="N/A" value="I was so excited to see VG reprinting this, I pre-ordered it without really considering the fact that my friends will probably never play it.
+
+The comic-book font used in the rules, combined with the, uhh, Canadian? writing style, makes this painful to read.  &quot;Unfortunately, a game of this complexity requires more than a page or two of rules to describe it and much of the rules include pictures and step-by-step examples to ensure ease of understanding the game flow.&quot;  Gargghh!!  Semicolon!  However!  Comma!
+
+Update: after running through a turn solo to figure out how to play, I think A) instead of actually trying to explain the game to new players, you're probably better off just running all the way through a turn without anyone knowing what they're doing, then starting over for real, and B) after they play through a turn, I'm not sure anyone I know is actually going to want to play this!  We'll see, though.
+
+[i]And,[/i] the comment above about the rulebook being painful to read is perhaps a bit overblown.  The first impression is not great, but the rulebook really isn't that bad.
+
+2015-04-21: succumbed to the reality that this game will [i]never hit the table[/i] except in tear-blurred solo learning games; traded for a game about zombies." />
+			<comment username="Coudloc" rating="N/A" value="Never played" />
+			<comment username="TAFMSV" rating="N/A" value="new valley games edition - look forward to playing" />
+			<comment username="Suzan" rating="N/A" value="x" />
+			<comment username="ColtsFan76" rating="N/A" value="Length is holding me back on trying this one out." />
+			<comment username="catosulla" rating="N/A" value="Just acquired new Valley Games ed. Nov.2006
+
+Sold 7/28/20." />
+			<comment username="pixmap" rating="N/A" value="wow this game is good." />
+			<comment username="seppi" rating="N/A" value="NEW shrink wrapped English third edition." />
+			<comment username="galvornman" rating="N/A" value="Know how to play now...just waiting for the chance...
+Edit: Forgot how to play again.  Been that long." />
+			<comment username="The Unbeliever" rating="N/A" value="I haven't had a chance to play it yet." />
+			<comment username="MartinU" rating="N/A" value="Never played" />
+			<comment username="Flix" rating="N/A" value="2nd edition" />
+			<comment username="hcuta" rating="N/A" value="Someday I will actually get to play this." />
+			<comment username="hholzgrafe" rating="N/A" value="Tuckboxes posted." />
+			<comment username="atorija" rating="N/A" value="Caja 23" />
+			<comment username="CDRodeffer" rating="N/A" value="Not yet played." />
+			<comment username="bryanb" rating="N/A" value="NYP" />
+			<comment username="gobbeg" rating="N/A" value="Light family game about German elections. Rules are easily digested.  Plays quickly and has enough going on to give it decent replay value." />
+			<comment username="corbettcj" rating="N/A" value="I have not played this game yet." />
+			<comment username="skrutsch" rating="N/A" value="own Valley Games version" />
+			<comment username="st1nkf15t" rating="N/A" value="Valley Games edition. Never played." />
+			<comment username="marjhan" rating="N/A" value="in shrink" />
+			<comment username="gbergs" rating="N/A" value="for me to trade this game it would have to be something super special. so only make me an offer i can't refuse." />
+			<comment username="templar" rating="N/A" value="Valley Games edition." />
+			<comment username="LetsGetTrivial" rating="N/A" value="International edition. The CGI graphics on many of the cards are unclear and many are just down-right bad. That said, this packs a whole lot of game into a medium-sized box. Wowzer! Unfortunately, I don't see it getting to the table much as it is too heavy and too long for anyone except a dedicated gamer." />
+			<comment username="Galvatron" rating="N/A" value="This has been sitting on my shelf unused for far too long.  It's hard to get enough players to commit to a big enough block of time..." />
+			<comment username="wmshub" rating="N/A" value="Don't know when I'll ever get a chance to play it, but maybe some day!" />
+			<comment username="Insertcleverthing" rating="N/A" value="I don't know why I bought this..." />
+			<comment username="davidme" rating="N/A" value="http://www.boardgamegeek.com/thread/117311
+
+Jeff details rules changes here:
+
+http://www.boardgamegeek.com/article/1247304#1247304" />
+			<comment username="p38_Lightning" rating="N/A" value="Valley Games Ed" />
+			<comment username="cdefrisco" rating="N/A" value="After one play I'm trading this game away. NOT because it's a bad game... it's actually a brilliant game. But in order for me to keep this gem, I would need 3 or 4 local gamers who were willing to invest in playing this game 4 or 5 times... and THEN the fun would begin. " />
+			<comment username="Brain" rating="N/A" value="haven't gotten to try this one yet" />
+			<comment username="Gomer" rating="N/A" value="2005 acquisition.  I'm living in the hope that I get to play this some time in my life time....hopefully soon." />
+			<comment username="vernicus" rating="N/A" value="evaluate" />
+			<comment username="cggritt" rating="N/A" value="Traded away- I don't think I'll ever get to play this!" />
+			<comment username="DJ Kuul A" rating="N/A" value="2006 Valley Games remake.
+" />
+			<comment username="kifty" rating="N/A" value="Hmmm... maybe I'll wait for a new edition. I appreciate the fact that Valley Games reprinted it, but I just can't handle the artwork (Comic Sans hurts my eyes). Maybe I'll get a chance to play it some day and be so amazed that I'll change my mind." />
+			<comment username="rcrawford" rating="N/A" value="February 2007 purchase. Haven't played yet. And I probably never will :(" />
+			<comment username="throwingmuse" rating="N/A" value="Valley Games" />
+			<comment username="gertbert" rating="N/A" value="Punched and unplayed" />
+			<comment username="beranim" rating="N/A" value="I have both versions of the game (the original by Hans Im Gluck and the reprint by Valley Games)" />
+			<comment username="KRon0508" rating="N/A" value="Too many hours to play (5 )." />
+			<comment username="abgg" rating="N/A" value="ndru" />
+			<comment username="nachete" rating="N/A" value="Valley Games edition" />
+			<comment username="teachermaniac" rating="N/A" value="Not played yet - looking forward to it." />
+			<comment username="Anarchy Ape" rating="N/A" value="While I own this game, it is rather daunting to begin playing.  There is so much to learn!  Maybe over the summer we'll sit down to play..." />
+			<comment username="SGHughes" rating="N/A" value="Die Macher (Valley Games edition) --" />
+			<comment username="The Lazy Literati" rating="N/A" value="B,10.0x3.0" />
+		</comments>
+	
+	
+   
+	
+          
+</item>
+</items>

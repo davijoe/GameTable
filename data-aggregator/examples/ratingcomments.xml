@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?><items termsofuse="https://boardgamegeek.com/xmlapi/termsofuse"><item type="boardgame" id="3">
+         <thumbnail>https://cf.geekdo-images.com/o9-sNXmFS_TLAb7ZlZ4dRA__small/img/22MSUC0-ZWgwzhi_VKIbENJik1w=/fit-in/200x150/filters:strip_icc()/pic3211873.jpg</thumbnail>
+      <image>https://cf.geekdo-images.com/o9-sNXmFS_TLAb7ZlZ4dRA__original/img/TPKZgpNxB_C73RNbhKyP6UR76X0=/0x0/filters:format(jpeg)/pic3211873.jpg</image>
+   	                                  				
+				<name type="primary" sortindex="1" value="Samurai" />
+			
+						                               				
+				<name type="alternate" sortindex="11" value="仙岛侠踪 (The Legend of Xiandao)" />
+			    				
+				<name type="alternate" sortindex="1" value="Samouraï" />
+			    				
+				<name type="alternate" sortindex="1" value="Samurái" />
+			    				
+				<name type="alternate" sortindex="1" value="Samuraj" />
+			    				
+				<name type="alternate" sortindex="1" value="Самурай" />
+			    				
+				<name type="alternate" sortindex="1" value="サムライ・ボードゲーム" />
+			    				
+				<name type="alternate" sortindex="1" value="侍" />
+			    				
+				<name type="alternate" sortindex="1" value="사무라이" />
+			
+						               													<description>Samurai is set in medieval Japan. Players compete to gain the favor of three factions: samurai, peasants, and priests, which are represented by helmet, rice paddy, and Buddha figures scattered about the board, which features the islands of Japan. The competition is waged through the use of hexagonal tiles, each of which help curry favor of one of the three factions &amp;mdash; or all three at once! Players can make lightning-quick strikes with horseback ronin and ships or approach their conquests more methodically. As each figure (helmets, rice paddies, and Buddhas) is surrounded, it is awarded to the player who has gained the most favor with the corresponding group.
+
+Gameplay continues until all the symbols of one type have been removed from the board or four figures have been removed from play due to a tie for influence.
+
+At the end of the game, players compare captured symbols of each type, competing for majorities in each of the three types. Ties are not uncommon and are broken based on the number of other, "non-majority" symbols each player has collected.
+
+The game is part of what is sometimes called the Knizia tile-laying trilogy.
+
+</description>
+										      	               				<yearpublished value="1998" />
+						               				<minplayers value="2" />
+						               				<maxplayers value="4" />
+						      			<poll name="suggested_numplayers" title="User Suggested Number of Players" totalvotes="366">
+			
+		<results numplayers="1">		
+					<result value="Best" numvotes="0" />
+					<result value="Recommended" numvotes="0" />
+					<result value="Not Recommended" numvotes="176" />
+				</results>					
+			
+		<results numplayers="2">		
+					<result value="Best" numvotes="115" />
+					<result value="Recommended" numvotes="181" />
+					<result value="Not Recommended" numvotes="24" />
+				</results>					
+			
+		<results numplayers="3">		
+					<result value="Best" numvotes="210" />
+					<result value="Recommended" numvotes="108" />
+					<result value="Not Recommended" numvotes="3" />
+				</results>					
+			
+		<results numplayers="4">		
+					<result value="Best" numvotes="92" />
+					<result value="Recommended" numvotes="166" />
+					<result value="Not Recommended" numvotes="36" />
+				</results>					
+			
+		<results numplayers="4+">		
+					<result value="Best" numvotes="0" />
+					<result value="Recommended" numvotes="1" />
+					<result value="Not Recommended" numvotes="152" />
+				</results>					
+	</poll>
+<poll-summary name="suggested_numplayers"  title="User Suggested Number of Players">
+  <result name="bestwith" value="Best with 3 players" />
+  <result name="recommmendedwith" value="Recommended with 2–4 players" />
+</poll-summary> 			               				<playingtime value="60" />
+						               				<minplaytime value="30" />
+						               				<maxplaytime value="60" />
+						               				<minage value="10" />
+						      			<poll name="suggested_playerage" title="User Suggested Player Age" totalvotes="60">
+			<results>		
+					<result value="2" numvotes="0" />
+					<result value="3" numvotes="0" />
+					<result value="4" numvotes="0" />
+					<result value="5" numvotes="0" />
+					<result value="6" numvotes="5" />
+					<result value="8" numvotes="16" />
+					<result value="10" numvotes="34" />
+					<result value="12" numvotes="5" />
+					<result value="14" numvotes="0" />
+					<result value="16" numvotes="0" />
+					<result value="18" numvotes="0" />
+					<result value="21 and up" numvotes="0" />
+				</results>					
+	</poll> 			      			<poll name="language_dependence" title="Language Dependence" totalvotes="78">
+			
+		<results>		
+					<result level="1" value="No necessary in-game text" numvotes="76" />
+					<result level="2" value="Some necessary text - easily memorized or small crib sheet" numvotes="0" />
+					<result level="3" value="Moderate in-game text - needs crib sheet or paste ups" numvotes="2" />
+					<result level="4" value="Extensive use of text - massive conversion needed to be playable" numvotes="0" />
+					<result level="5" value="Unplayable in another language" numvotes="0" />
+				</results>					
+	</poll> 			      			 			      				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1009" value="Abstract Strategy" />
+					<link type="boardgamecategory" id="1035" value="Medieval" />
+					<link type="boardgamemechanic" id="2080" value="Area Majority / Influence" />
+					<link type="boardgamemechanic" id="2043" value="Enclosure" />
+					<link type="boardgamemechanic" id="2040" value="Hand Management" />
+					<link type="boardgamemechanic" id="2026" value="Hexagon Grid" />
+					<link type="boardgamemechanic" id="2987" value="Hidden Victory Points" />
+					<link type="boardgamemechanic" id="2846" value="Once-Per-Game Abilities" />
+					<link type="boardgamemechanic" id="2004" value="Set Collection" />
+					<link type="boardgamemechanic" id="2002" value="Tile Placement" />
+					<link type="boardgamemechanic" id="2897" value="Variable Set-up" />
+					<link type="boardgamefamily" id="64960" value="Components: Map (Continental / National scale)" />
+					<link type="boardgamefamily" id="104481" value="Components: Player Screens" />
+					<link type="boardgamefamily" id="10634" value="Country: Japan" />
+					<link type="boardgamefamily" id="60111" value="Series: Euro Classics (Reiner Knizia)" />
+					<link type="boardgamefamily" id="42" value="Series: Tile-Laying Trilogy (Reiner Knizia)" />
+					<link type="boardgamefamily" id="28732" value="Theme: Samurai" />
+					<link type="boardgameimplementation" id="450860" value="Hanami" />
+					<link type="boardgameimplementation" id="35634" value="Samurai: The Card Game" />
+					<link type="boardgamedesigner" id="2" value="Reiner Knizia" />
+					<link type="boardgameartist" id="131833" value="Miguel Valenzuela Beltrán" />
+					<link type="boardgameartist" id="11883" value="Franz Vohwinkel" />
+					<link type="boardgameartist" id="110401" value="徐昀享 (Xu Yunxiang)" />
+					<link type="boardgameartist" id="158240" value="李小娜 (LI Xiaona)" />
+					<link type="boardgameartist" id="158239" value="杨静雯 (Yang Jingwen)" />
+					<link type="boardgameartist" id="158242" value="谢有鑫 (Xie Youxin)" />
+					<link type="boardgameartist" id="158505" value="郭紫颖 (Guo Ziying)" />
+					<link type="boardgameartist" id="158244" value="陈杰 (Chen Jie)" />
+					<link type="boardgamepublisher" id="17" value="Fantasy Flight Games" />
+					<link type="boardgamepublisher" id="133" value="Hans im Glück" />
+					<link type="boardgamepublisher" id="267" value="999 Games" />
+					<link type="boardgamepublisher" id="29" value="ABACUSSPIELE" />
+					<link type="boardgamepublisher" id="7340" value="Astrel Games" />
+					<link type="boardgamepublisher" id="7335" value="Ceilikan Jogos" />
+					<link type="boardgamepublisher" id="41" value="Descartes Editeur" />
+					<link type="boardgamepublisher" id="2973" value="Edge Entertainment" />
+					<link type="boardgamepublisher" id="4617" value="Galakta" />
+					<link type="boardgamepublisher" id="1391" value="Hobby Japan" />
+					<link type="boardgamepublisher" id="8291" value="Korea Boardgames" />
+					<link type="boardgamepublisher" id="5812" value="Lacerta" />
+					<link type="boardgamepublisher" id="36210" value="Lanlalen" />
+					<link type="boardgamepublisher" id="3218" value="Lautapelit.fi" />
+					<link type="boardgamepublisher" id="47575" value="Lighthouse Games" />
+					<link type="boardgamepublisher" id="3" value="Rio Grande Games" />
+					<link type="boardgamepublisher" id="3954" value="Skandinavisk  Spil Kompagni" />
+					<link type="boardgamepublisher" id="8313" value="Smart Ltd" />
+					<link type="boardgamepublisher" id="8759" value="Wargames Club Publishing" />
+					<link type="boardgamepublisher" id="54519" value="Yaofish Games" />
+
+			
+			<videos total="52">
+						<video id="570515" title="Samurai #boardgamelife #boardgames #boardgamegeek #侍 #武士" category="other" language="English" link="http://www.youtube.com/watch?v=dvM-70E-pNE" username="czeslaw6300149" userid="798383" postdate="2025-09-05T23:01:02-05:00" />
+						<video id="564344" title="First Edition Unboxing in 1 Minute" category="unboxing" language="English" link="http://www.youtube.com/watch?v=F4QFhPyCLRU" username="undiscovered_games" userid="3484540" postdate="2025-07-25T01:50:04-05:00" />
+						<video id="562257" title="Conclusion after Session of Samurai" category="review" language="German" link="http://www.youtube.com/watch?v=CMD-Acs5pHc" username="VolkoV" userid="241634" postdate="2025-07-10T06:24:31-05:00" />
+						<video id="561323" title="Session of Samurai" category="session" language="German" link="http://www.youtube.com/watch?v=kRilZaron1g" username="VolkoV" userid="241634" postdate="2025-07-03T05:59:32-05:00" />
+						<video id="560325" title="Rules of Samurai" category="instructional" language="German" link="http://www.youtube.com/watch?v=h3lrjTHSVpU" username="VolkoV" userid="241634" postdate="2025-06-26T15:34:36-05:00" />
+						<video id="545348" title="SAMURAI | Cómo se juega | TUTORIAL FÁCIL | Dominando el arte del combate" category="instructional" language="Spanish" link="http://www.youtube.com/watch?v=W_2G1WdOU24" username="Inesjuegosymas" userid="4208902" postdate="2025-03-25T05:37:12-05:00" />
+						<video id="541717" title="Side-By-Side Comparison - Chinese Edition by Yaofish + Chinese Wargames Club Edition" category="other" language="English" link="http://www.youtube.com/watch?v=pxBGF8CtoY4" username="Boardgameswithb7" userid="871700" postdate="2025-03-06T04:02:23-06:00" />
+						<video id="512865" title="UNBOXING SAMURAI BY REINER KNIZIA" category="unboxing" language="English" link="http://www.youtube.com/watch?v=-0aXuzJsSWw" username="ghosthack" userid="163019" postdate="2024-09-06T06:06:12-05:00" />
+						<video id="489078" title="Aprenda ou relembre como jogar Samurai " category="instructional" language="Portuguese" link="http://www.youtube.com/watch?v=DxE782ZalB0" username="itirosergio" userid="1329832" postdate="2024-04-05T04:42:01-05:00" />
+						<video id="445721" title="Jugando a... Samurai" category="session" language="Spanish" link="http://www.youtube.com/watch?v=sLKdkgR-JFE" username="Ushikai" userid="195924" postdate="2023-07-11T09:37:06-05:00" />
+						<video id="396076" title="Samurai how to setup play and review " category="review" language="English" link="http://www.youtube.com/watch?v=qlByguqVB50" username="AmassGames" userid="1206296" postdate="2022-08-26T10:00:44-05:00" />
+						<video id="382511" title="Samurai - 4p Teaching, Play-through, &amp; Roundtable by Heavy Cardboard" category="review" language="English" link="http://www.youtube.com/watch?v=5hi76z3v_yc" username="eapeas" userid="377742" postdate="2022-05-26T06:01:37-05:00" />
+						<video id="360075" title="Samurai - How to Play" category="instructional" language="Turkish" link="http://www.youtube.com/watch?v=85yAP8uORaw" username="ibiliss" userid="1854607" postdate="2022-01-08T07:56:31-06:00" />
+						<video id="335389" title="Samurai — How to Play, and Why It&#039;s a Gem" category="review" language="English" link="http://www.youtube.com/watch?v=JLwhR6byAD0" username="booned" userid="74675" postdate="2021-07-23T16:28:10-05:00" />
+						<video id="323454" title="How to Play (German) - Regeln &amp; Beispielrunde" category="instructional" language="German" link="http://www.youtube.com/watch?v=_mx90puRpMs" username="Bluemotion" userid="642180" postdate="2021-05-10T16:12:33-05:00" />
+					</videos>
+
+	
+		<comments page="1" totalitems="17046">
+			<comment username="monosolo" rating="1" value="" />
+			<comment username="Simon Mueller" rating="1" value="Very similar to [gameID=11901], you're trying to &quot;outthink&quot; your opponent(s), which results in an utterly boring tile-laying practice." />
+			<comment username="Cnaldo" rating="1" value="" />
+			<comment username="rchimblo" rating="1" value="" />
+			<comment username="Abner1" rating="1" value="" />
+			<comment username="kidduffah" rating="1" value="" />
+			<comment username="xphiles" rating="1" value="" />
+			<comment username="KARL GITTER" rating="1" value="" />
+			<comment username="fantasy474" rating="1" value="" />
+			<comment username="pipina" rating="1" value="" />
+			<comment username="SilverDust" rating="1" value="" />
+			<comment username="MAGICREDS" rating="1" value="" />
+			<comment username="GoddessInTriptych" rating="1" value="" />
+			<comment username="mefford76" rating="1" value="" />
+			<comment username="gimodude" rating="1" value="" />
+			<comment username="jamespisanich" rating="1" value="" />
+			<comment username="yahoo79" rating="1" value="" />
+			<comment username="bowlking" rating="1" value="" />
+			<comment username="christhomas226" rating="1" value="" />
+			<comment username="Scythius1" rating="1" value="" />
+			<comment username="wywern66" rating="1" value="" />
+			<comment username="Retiro" rating="1" value="" />
+			<comment username="chenyuyi" rating="1.1" value="" />
+			<comment username="Jacob_Heidenreich" rating="1.8" value="" />
+			<comment username="Elyah" rating="2" value="" />
+			<comment username="jtj608" rating="2" value="" />
+			<comment username="Blue Harvest" rating="2" value="It´s fun...to quit this game!" />
+			<comment username="The Jakster" rating="2" value="So dry you feel the dust in your mouth" />
+			<comment username="Serious Fungamer" rating="2" value="Boring and dry! Did I mention it´s boring?!" />
+			<comment username="dcpugh" rating="2" value="" />
+			<comment username="kirkusmaximus" rating="2" value="" />
+			<comment username="SCOBYBryant" rating="2" value="{ P - 2 [3] [4] }
+
+Reasonably short and engrossing tile-layer with one inexorable problem. People place in good locations while avoiding set-up plays, but sooner or later the game arrives at the point where everything is a set-up play. Boats can help negate this, and there is a balance to be discovered between avoiding set-up plays and avoiding inefficiently capturing too many cities by surrounding them yourself, but every game I've played between people of equivalent skill boils down to end-game uncertainty. (Or worse, who didn't get screwed over on the draw.) For what it's worth, probably the coolest and most seamless method of player scaling." />
+			<comment username="Cynical" rating="2" value="Another overrated Knizia game.  The amount of screwage makes it impossible to plan ahead, but the game doesn't move quickly enough work at a purely tactical level.  Furthermore, a player who gets many fast tiles during the early game has no chance of winning, and the last player usually gets one less turn than everyone else." />
+			<comment username="Apocryphile" rating="2" value="" />
+			<comment username="Ellelarondelle" rating="2" value="" />
+			<comment username="poifpoif" rating="2" value="" />
+			<comment username="Ruskicowboy" rating="2" value="" />
+			<comment username="toukouy" rating="2" value="boring tile placement game with no interest in it!!!" />
+			<comment username="piglingen" rating="2" value="" />
+			<comment username="Burmeister" rating="2" value="" />
+			<comment username="NPCat" rating="2" value="" />
+			<comment username="justletmedownload22" rating="2" value="" />
+			<comment username="akshayats" rating="2" value="" />
+			<comment username="Amirtari2535" rating="2" value="" />
+			<comment username="binarysky" rating="2" value="" />
+			<comment username="bilbo20033" rating="2.5" value="" />
+			<comment username="jkidd1066" rating="3" value="" />
+			<comment username="fortinm" rating="3" value="" />
+			<comment username="Numskull" rating="3" value="A $10 game in a $40 package." />
+			<comment username="Michael Ward" rating="3" value="02/22/04 Played twice the same day, the second time under duress. That just made my opinion go from mild dislike to very strong dislike. I am absolutely no good at seeing ahead in this game. It seemed every move I made just helped someone else. And all my moves got nullified. I never did understand the scoring system. I'm not saying its a bad game, just that I am and never will be any good at it, hence my low rating." />
+			<comment username="ScarletJester" rating="3" value="" />
+			<comment username="clearclaw" rating="3" value="Suffers from a very strong right/left binding (player to the left of the newbie wins).  Otherwise quite nice and tight for two players (rating goes to 5.5 with 2 players)." />
+			<comment username="iglew" rating="3" value="I liked this the first few times, but after that my interest fell quickly. Feels more like work than fun. Also, seating order is way too important in multi-player. Almost enough to call it broken." />
+			<comment username="mr. assist" rating="3" value="the game is so tightly balanced it seems that random placement could even give you a victory. " />
+			<comment username="GameCloset" rating="3" value="I really don't like this game. I was expecting something with swords or combat, basically something interesting instead of an abstract game." />
+			<comment username="Mijjy" rating="3" value="Themeless, harmless, in the running for the most mis-named game yet. Not a katana to be seen.
+
+Maybe as an abstract 2 player only it might work though I don't think I want to investigate that anyway." />
+			<comment username="thoia" rating="3" value="A good game but...what's this got to do with Fedual Japan? Not a damn thing.  Another Knizia game that doesn't do anything to wrap you up in the theme, but it's still a fun to put those pretty little shiny black plastic pieces down. The game is really made by the special tiles, take them out and it's going to be much more boring.  This is one of those from time to time played games and not a frequent returner to the table." />
+			<comment username="Ratio" rating="3" value="11/08/2007: Samurai was 1 of the 6 new games I played during the recent boardgaming meetup session. I felt that the game involved little else apart from strategizing how best to place one's pieces to obtain the different statues. Got bored quickly after one round." />
+			<comment username="WoofWarpWeft" rating="3" value="This is an abstract with a painted on theme. I have never been impressed with it in the three times I have played it. I have no desire to ever play it again." />
+			<comment username="Jeff Schulte" rating="3" value="" />
+			<comment username="MattDP" rating="3" value="2 / 5 - Fair.
+
+Some interesting concepts in a fast-playing area control game. However it's mechanical, dry and dull in the extreme. See my review for more details: http://www.boardgamegeek.com/thread/254552" />
+			<comment username="dedindahed" rating="3" value="so so game, very samey, not much fun.
+
+filed under &quot;Games I'm good at but don't find challenging or fun&quot;" />
+			<comment username="ValentineS" rating="3" value="" />
+			<comment username="Orgulas" rating="3" value="" />
+			<comment username="alexst" rating="3" value="" />
+			<comment username="TangentZ" rating="3" value="The complicated scoring is just over my head." />
+			<comment username="Sagrilarus" rating="3" value="[color=#CC0000]
+
+&quot;Too clever by half.&quot;
+
+First, in my opinion the theme is just goofy, and conflicts with the game that hides under the covers.  I can get past mercenaries being worried about defending rice fields, but aspects of the game when combined with the theme indicate the sudden relocation of buildings or even farm fields to locations hundreds of miles away.  It just doesn't make sense.  I know, it's a game, I shouldn't care.  But if you're gonna make a theme where you move something, farm fields, swampy ones in particular, are a bad choice.
+
+The geometry of the board is very carefully designed to make all conflict more or less uniform.  Every single play-space on the board borders [i]exactly[/i] two prize-spaces.  So there's no hot-spots, no places where you need to get in early or in force in order compete.  Though the artwork is beautifully illustrated, the underlying game structure is a uniform layer of gray paint.  Nothing draws the eye of a seasoned gamer in this one, no place on the board attracts attention or breeds concern.  There's not one single piece of high ground on the entire map.  That's intentional.  This is an abstract bent to fit the shape of Japan.
+
+Because no place on the board is particularly more valuable than another, fiefdoms are arbitrary.  While this would appear to be a good foundation for a game of intense mental competition, some of the playing pieces allow you to just bounce the pieces on the board at an arbitrary moment in time.  Any tactical advantage that you grind out through careful play disappears in an instant by your opponent airlifting a rice field or temple, or magically moving an already-played piece to a new location.  After careful planning and strategy, after good play, you find yourself holding an empty cup.
+
+But hey!  Random elements are good!  I LIKE working with risk!  It keeps a game fresh!  You just need to plan contingencies.  But how do you do that in Samurai?  There's no significant way to play your options.  The nature of the game means that it's virtually impossible to plan for the contingencies of someone yanking terrain out and moving it.  In theory you could move it back with [i]your[/i] yank-it piece, but it's too arbitrary a factor to make a sound assessment of risk and reward.  There simply isn't sufficient footing.  So each piece played is played in the moment, no looking forward, no hedging your bets.  So it's pretty much flat.  You can keep pieces until the end, but everyone else is doing that too.
+
+So in theory, while half of you is managing strategy and tactics in a brain-burner setup the other half is forced to come to terms with &quot;it's a whimsical game of fun and chance.&quot;  The two collided for me personally.  Throw in a complete dearth of critical or pivotal regions on the board and what results is trying to manage your few nuclear-grade options for onesie and twosie results.  I found myself not taking the time to make solid tactical decisions because they could be washed away on a moment's notice and weren't terribly valuable to begin with.  The game didn't call me to focus as others do.  At that point I became disenfranchised, the emotional immersion ended and I started looking over my shoulder to see what was being played on the table behind me.
+
+Standard Knizia scoring strategy, which in other games like Ingenious I like but here is counter to theme and kind of arbitrary.  In my game with four players it seemed to completely break down, though with three I can't help but think it HAS to be better.  With four players it's the equivalent of the last-place horse being shot out from under its rider on the back stretch while the others continue to the finish line.  Knizia loves to mess with endings and in some games it works, in this one it just seemed hokey.
+
+No clue why this game rates as high as it does.  Given the choice play Ingenious.  Ingenious is tight and unified, and produces a real narrative during play with points of high drama on the board and a need to nurture weak spots.  
+
+[/color]" />
+			<comment username="drdru82" rating="3" value="" />
+			<comment username="Raiyfe" rating="3" value="" />
+			<comment username="zosa" rating="3" value="" />
+			<comment username="Matthew_Eklund" rating="3" value="A boring tile placement game that has nothing to do with Samurai..." />
+			<comment username="fingersp" rating="3" value="" />
+			<comment username="capthowdy_00" rating="3" value="" />
+			<comment username="Chris Barnard" rating="3" value="Nice pieces. Simple rules. Lots of screwage. I'm rubbish at it." />
+			<comment username="Duke_Rufus" rating="3" value="Lame." />
+			<comment username="Auzette" rating="3" value="Watch The Last Samurai instead." />
+			<comment username="mindbomb" rating="3" value="" />
+			<comment username="Boerni72" rating="3" value="Free of Charge" />
+			<comment username="DeviantMagick" rating="3" value="" />
+			<comment username="blueatheart" rating="3" value="Might be improved with scoring bits in front of the screen, with them behind I'm not likely to ever play this again.
+
+Rather unsurprisingly, I'm not a fan of the random tile draws.  Pushing through nearly all of the &quot;free&quot; action tiles early seems like a great way to win the game.
+
+Otherwise, a very straightforward area majority game without any real interesting bits." />
+			<comment username="allstar64" rating="3" value="Lines and boxes on a bigger board. Victory depends more on the person to your right giving you plays than playing well yourself." />
+			<comment username="glitter and doom" rating="3" value="" />
+			<comment username="Tajemniczy Pan C" rating="3" value="Too long and random for what i get from play.  " />
+			<comment username="jsect" rating="3" value="" />
+			<comment username="schipa" rating="3" value="" />
+			<comment username="imoo" rating="3" value="邦題：　サムライ" />
+			<comment username="anky" rating="3" value="" />
+			<comment username="hiimjosh" rating="3" value="Samurai is a good game, but it's not a fun game. With both Babylonia and Caesar out now, I see no reason to go back to Samurai - although I might just for completion's sake at some point. I have only played at 2p and would like to try it at 3p. At 2p, I would rather play pretty much any no luck abstract over this as the randomness feels arbitrary and swingy. Overrated (at least at 2)." />
+			<comment username="quietfish" rating="3" value="" />
+			<comment username="lazycat97202" rating="3" value="" />
+			<comment username="Mystic_Mouse" rating="3" value="" />
+			<comment username="xiahouyi021" rating="3" value="" />
+			<comment username="rarce" rating="3" value="" />
+			<comment username="ROADRUNN3R" rating="3" value="" />
+			<comment username="makarren" rating="3" value="Another abstract game without any sense." />
+			<comment username="datefruit" rating="3" value="" />
+			<comment username="Snowpetal" rating="3" value="" />
+			<comment username="noizzy_dex" rating="3" value="" />
+			<comment username="monknote" rating="3" value="" />
+			<comment username="LeeJS" rating="3" value="" />
+		</comments>
+	
+</item>
+</items>

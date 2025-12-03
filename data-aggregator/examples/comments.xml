@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="utf-8"?><items termsofuse="https://boardgamegeek.com/xmlapi/termsofuse"><item type="boardgame" id="224517">
+         <thumbnail>https://cf.geekdo-images.com/x3zxjr-Vw5iU4yDPg70Jgw__small/img/o18rjEemoWaVru9Y2TyPwuIaRfE=/fit-in/200x150/filters:strip_icc()/pic3490053.jpg</thumbnail>
+      <image>https://cf.geekdo-images.com/x3zxjr-Vw5iU4yDPg70Jgw__original/img/FpyxH41Y6_ROoePAilPNEhXnzO8=/0x0/filters:format(jpeg)/pic3490053.jpg</image>
+   	                                  				
+				<name type="primary" sortindex="1" value="Brass: Birmingham" />
+			
+						                               				
+				<name type="alternate" sortindex="1" value="Brass. Бирмингем" />
+			    				
+				<name type="alternate" sortindex="1" value="Brass. Бірмінгем" />
+			    				
+				<name type="alternate" sortindex="1" value="ブラス：バーミンガム" />
+			    				
+				<name type="alternate" sortindex="1" value="工业革命：伯明翰(Chinese edition) (2018)" />
+			    				
+				<name type="alternate" sortindex="1" value="工業革命：伯明翰" />
+			    				
+				<name type="alternate" sortindex="1" value="브라스: 버밍엄" />
+			
+						               													<description>Brass: Birmingham is an economic strategy game sequel to Martin Wallace's 2007 masterpiece, Brass. Brass: Birmingham tells the story of competing entrepreneurs in Birmingham during the industrial revolution between the years of 1770 and 1870.
+
+It offers a very different story arc and experience from its predecessor. As in its predecessor, you must develop, build and establish your industries and network in an effort to exploit low or high market demands. The game is played over two halves: the canal era (years 1770-1830) and the rail era (years 1830-1870). To win the game, score the most VPs. VPs are counted at the end of each half for the canals, rails and established (flipped) industry tiles.
+
+Each round, players take turns according to the turn order track, receiving two actions to perform any of the following actions (found in the original game):
+
+1) Build - Pay required resources and place an industry tile.
+2) Network - Add a rail / canal link, expanding your network.
+3) Develop - Increase the VP value of an industry.
+4) Sell - Sell your cotton, manufactured goods and pottery.
+5) Loan - Take a &amp;pound;30 loan and reduce your income.
+
+Brass: Birmingham also features a new sixth action:
+
+6) Scout - Discard three cards and take a wild location and wild industry card. (This action replaces Double Action Build in original Brass.)
+
+</description>
+										      	               				<yearpublished value="2018" />
+						               				<minplayers value="2" />
+						               				<maxplayers value="4" />
+						      			<poll name="suggested_numplayers" title="User Suggested Number of Players" totalvotes="1319">
+			
+		<results numplayers="1">		
+					<result value="Best" numvotes="0" />
+					<result value="Recommended" numvotes="66" />
+					<result value="Not Recommended" numvotes="718" />
+				</results>					
+			
+		<results numplayers="2">		
+					<result value="Best" numvotes="128" />
+					<result value="Recommended" numvotes="831" />
+					<result value="Not Recommended" numvotes="171" />
+				</results>					
+			
+		<results numplayers="3">		
+					<result value="Best" numvotes="708" />
+					<result value="Recommended" numvotes="426" />
+					<result value="Not Recommended" numvotes="18" />
+				</results>					
+			
+		<results numplayers="4">		
+					<result value="Best" numvotes="717" />
+					<result value="Recommended" numvotes="352" />
+					<result value="Not Recommended" numvotes="54" />
+				</results>					
+			
+		<results numplayers="4+">		
+					<result value="Best" numvotes="1" />
+					<result value="Recommended" numvotes="6" />
+					<result value="Not Recommended" numvotes="596" />
+				</results>					
+	</poll>
+<poll-summary name="suggested_numplayers"  title="User Suggested Number of Players">
+  <result name="bestwith" value="Best with 3–4 players" />
+  <result name="recommmendedwith" value="Recommended with 2–4 players" />
+</poll-summary> 			               				<playingtime value="120" />
+						               				<minplaytime value="60" />
+						               				<maxplaytime value="120" />
+						               				<minage value="14" />
+						      			<poll name="suggested_playerage" title="User Suggested Player Age" totalvotes="188">
+			<results>		
+					<result value="2" numvotes="1" />
+					<result value="3" numvotes="0" />
+					<result value="4" numvotes="0" />
+					<result value="5" numvotes="0" />
+					<result value="6" numvotes="0" />
+					<result value="8" numvotes="6" />
+					<result value="10" numvotes="13" />
+					<result value="12" numvotes="42" />
+					<result value="14" numvotes="97" />
+					<result value="16" numvotes="27" />
+					<result value="18" numvotes="2" />
+					<result value="21 and up" numvotes="0" />
+				</results>					
+	</poll> 			      			<poll name="language_dependence" title="Language Dependence" totalvotes="59">
+			
+		<results>		
+					<result level="1" value="No necessary in-game text" numvotes="56" />
+					<result level="2" value="Some necessary text - easily memorized or small crib sheet" numvotes="3" />
+					<result level="3" value="Moderate in-game text - needs crib sheet or paste ups" numvotes="0" />
+					<result level="4" value="Extensive use of text - massive conversion needed to be playable" numvotes="0" />
+					<result level="5" value="Unplayable in another language" numvotes="0" />
+				</results>					
+	</poll> 			      			 			      				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="2726" value="Age of Reason" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1021" value="Economic" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1088" value="Industry / Manufacturing" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="2710" value="Post-Napoleonic" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1034" value="Trains" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamecategory" id="1011" value="Transportation" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2956" value="Chaining" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2875" value="End Game Bonuses" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2040" value="Hand Management" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2902" value="Income" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2904" value="Loans" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2900" value="Market" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="3099" value="Multi-Use Cards" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2081" value="Network and Route Building" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2911" value="Ownership" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="3100" value="Tags" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2849" value="Tech Trees / Tech Tracks" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2002" value="Tile Placement" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2826" value="Turn Order: Stat-Based" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamemechanic" id="2897" value="Variable Set-up" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="17519" value="Cities: Birmingham (England)" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="81601" value="Components: Map (Regional scale)" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="65191" value="Components: Multi-Use Cards" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="14759" value="Country: England" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="17056" value="Country: United Kingdom" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="8374" value="Crowdfunding: Kickstarter" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="22135" value="Crowdfunding: Spieleschmiede" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="77349" value="Digital Implementations: Steam" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="70948" value="Digital Implementations: Tabletopia" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="81575" value="Digital Implementations: VASSAL" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="26397" value="Food &amp; Drink: Beer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="57499" value="Game: Brass" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="50152" value="History: Industrial Revolution" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="59705" value="Misc: LongPack Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="78198" value="Misc: Watch It Played How To Videos" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="81586" value="Occupation: Engineer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="4705" value="Organizations: The Game Artisans of Canada" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamefamily" id="66445" value="Theme: Canals" />
+		
+									
+			
+
+			      			
+
+			      			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="334571" value="Brass: Birmingham / Lancashire – reDrewno Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="399634" value="Brass: Birmingham – BGExpansions Upgrade Kit" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="448612" value="Brass: Birmingham – Board Bento Organizer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="439465" value="Brass: Birmingham – Česká pravidla a nápovědy" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="447977" value="Brass: Birmingham – Deluxygames Upgrade Kit" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="309493" value="Brass: Birmingham – e-Raptor Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="347407" value="Brass: Birmingham – Game Tamer Organizer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="419962" value="Brass: Birmingham – Inserty Herman Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="430615" value="Brass: Birmingham – Iron Clays Upgrade" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="339385" value="Brass: Birmingham – Laserox Organizer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="420437" value="Brass: Birmingham – Playmat" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="373838" value="Brass: Birmingham – Spike Craft Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="350761" value="Brass: Birmingham – The Dicetroyers Organizer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="348604" value="Brass: Birmingham – The GiftForge Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="432279" value="Brass: Birmingham – Tokens Garden Metal Coins" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="340345" value="Brass: Birmingham – TowerRex Organizer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="428779" value="Brass: Birmingham – Upended Games Organizer" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="347851" value="Brass: Birmingham / Lancashire – Eurohell Design Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="306354" value="Brass: Birmingham / Lancashire – Folded Space Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="328775" value="Brass: Coin-Cases" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="349935" value="Brass: Eurohell Design 3D Locomotive &amp; Barge Upgrade" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="268234" value="Brass: Meeple Realty Insert" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameaccessory" id="233281" value="Iron Clays" />
+		
+									
+			
+
+			      			
+
+			      			
+
+			      			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgameimplementation" id="452264" value="Brass: Pittsburgh" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgameimplementation" id="28720" value="Brass: Lancashire" inbound="true"/>
+		
+									
+			
+
+			      	      	      				
+		 			
+
+			
+		
+					<link type="boardgamedesigner" id="32887" value="Gavan Brown" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamedesigner" id="32943" value="Matt Tolman" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamedesigner" id="6" value="Martin Wallace" />
+		
+									
+			
+
+			      				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="32887" value="Gavan Brown" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="70571" value="Lina Cossette" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="70568" value="David Forest" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="140907" value="Gui Landgraf" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="38179" value="Damien Mammoliti" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgameartist" id="32943" value="Matt Tolman" />
+		
+									
+			
+
+			      	      				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="21765" value="Roxley" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="3475" value="Arclight Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="44580" value="Board Game Rookie" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="25074" value="BoardM Factory" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="21608" value="CMON Global Limited" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="11043" value="Conclave Editora" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="50696" value="CoolPlay" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="34522" value="CrowD Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="31071" value="Dexker Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="8832" value="Funforge" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="8820" value="Gém Klub Kft." />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="4785" value="Ghenos Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="42147" value="Giant Roc" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="36210" value="Lanlalen" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="46500" value="Lord of Boards" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="30677" value="Maldito Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="36186" value="PHALANX" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="7466" value="Rebel Sp. z o.o." />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="41423" value="TLAMA games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="4932" value="White Goblin Games" />
+		
+									
+				
+		 			
+
+			
+		
+					<link type="boardgamepublisher" id="54777" value="盒拍工作室 Hepa Studio" />
+		
+									
+			
+
+			
+			<videos total="288">
+						<video id="583918" title="How to Play Brass: Birmingham – All You Need to Know (Rules) | Board Game Shortcut" category="instructional" language="English" link="http://www.youtube.com/watch?v=7Wl2dIBeUAo" username="EinfachLosspielen" userid="3487955" postdate="2025-11-20T07:33:09-06:00" />
+						<video id="582509" title="إنتو طلبتوا – وإحنا كملنا!Brass  Birmingham  الجزء التاني" category="instructional" language="Arabic" link="http://www.youtube.com/watch?v=Xo_tbnmk3qk" username="Deset_Dice" userid="3883700" postdate="2025-11-12T11:53:45-06:00" />
+						<video id="582508" title="وصلت إلى برمنغهام… مستعد" category="instructional" language="Arabic" link="http://www.youtube.com/watch?v=Dg6enHS1VLo" username="Deset_Dice" userid="3883700" postdate="2025-11-12T11:52:29-06:00" />
+						<video id="580373" title="WSBG 2025 - Grand Semi Final" category="session" language="English" link="http://www.youtube.com/watch?v=md5Es4bmzWk" username="ChrisCFGeorge" userid="2029481" postdate="2025-11-01T22:28:35-05:00" />
+						<video id="578007" title="7 things I wish I knew before playing Brass Birmingham + difference between deluxe and retail editions of Brass games" category="instructional" language="English" link="http://www.youtube.com/watch?v=RoFRVoMUyI4" username="thatboardgamelife" userid="4208912" postdate="2025-10-20T10:54:39-05:00" />
+						<video id="576985" title="Unboxing Brass Birmingham deluxe edition " category="unboxing" language="English" link="http://www.youtube.com/watch?v=MgDBU1i9uo0" username="thatboardgamelife" userid="4208912" postdate="2025-10-14T13:02:07-05:00" />
+						<video id="576166" title="Brass Birmingham en ESPAÑOL! " category="review" language="Spanish" link="http://www.youtube.com/watch?v=J4aQZTGabbA" username="Luisjoey" userid="169069" postdate="2025-10-09T09:49:16-05:00" />
+						<video id="576055" title="unboxing Brass Birmingham بالعربي" category="unboxing" language="English" link="http://www.youtube.com/watch?v=OAqcbuP11-U" username="hussein1" userid="1185934" postdate="2025-10-08T14:51:50-05:00" />
+						<video id="570270" title="(1334) Brass: Birmingham - recenzja (PL)" category="review" language="Polish" link="http://www.youtube.com/watch?v=W0CSDYYxI0Y" username="Jean_Leviathan" userid="234662" postdate="2025-09-04T09:30:30-05:00" />
+						<video id="570022" title="Trải nghiệm game top 1 Board Game Geek tại Mystery Room: Brass: Birmingham | K Board Game" category="unboxing" language="Vietnamese" link="http://www.youtube.com/watch?v=rKzsIStxo_M" username="kienctn15" userid="1842339" postdate="2025-09-02T14:30:11-05:00" />
+						<video id="567613" title="Brass Birmingham - Start Playing in 13 Minutes - Quick Start Board Game Tutorial" category="instructional" language="English" link="http://www.youtube.com/watch?v=KAcjslUp6Q8" username="JetSkiPopper" userid="1310667" postdate="2025-08-18T07:00:43-05:00" />
+						<video id="558500" title="Brass Birmingham Board Game Music" category="other" language="English" link="http://www.youtube.com/watch?v=zwK7yg5tyXM" username="Telcontar_BG" userid="2817490" postdate="2025-06-13T06:51:15-05:00" />
+						<video id="558443" title="How to Play Brass – بالعربي" category="instructional" language="Arabic" link="http://www.youtube.com/watch?v=2ucSXZNn-Xs" username="hussein1" userid="1185934" postdate="2025-06-12T16:20:11-05:00" />
+						<video id="556754" title="Deluxe version of Brass Birmingham really worth it? " category="unboxing" language="English" link="http://www.youtube.com/watch?v=7pz_kRZV7tA" username="Northlang" userid="3529823" postdate="2025-06-01T09:16:01-05:00" />
+						<video id="553855" title="Brass Birmingham - Does it deserve the #1 spot?" category="review" language="English" link="http://www.youtube.com/watch?v=l3EJ6M290SI" username="paul_otter" userid="2800098" postdate="2025-05-13T01:58:14-05:00" />
+					</videos>
+
+	
+
+	
+		<comments page="1" totalitems="7579">
+			<comment username="rahdo" rating="N/A" value="out of room, having to cull more games i like :( donating to dice tower west convention, maybe you'll see it there!" />
+			<comment username="Jrdunmire" rating="N/A" value="Kick-started" />
+			<comment username="epitrapezios_greece" rating="N/A" value="Kickstarter " />
+			<comment username="psuggitt" rating="N/A" value="Backed on Kickstarter" />
+			<comment username="JavaJoe96" rating="N/A" value="Kickstarter Project http://kck.st/2oFYhmV
+- Backed: 04/17/2017
+- Funded: 05/11/2017
+- Pledge Level: Pledge $132 CAD or more: &quot;CA$ 132 or more 
+About $99
+
+~ Brass ~ Full Bundle ($100 USD)
+The Complete Brass Series includes both Brass:Lancashire and Brass:Birmingham levels above. This bundle also saves you money on shipping!
+
+*Shipping charged after campaign ends. See Shipping section for details.&quot;
+- Payment: $132 CAD
+- Survey: 08/09/2017 backerkit
+- Projected Delivery: 01/2018
+- Shipped: 
+
+Status: DELIVERED 08/07/2018" />
+			<comment username="Bajahobo" rating="N/A" value="preorder cardhaus" />
+			<comment username="Mattius604" rating="N/A" value="Kickstarter 2017" />
+			<comment username="crwills" rating="N/A" value="2018-06. Kickstarter." />
+			<comment username="Ranker" rating="N/A" value="VN &amp; US" />
+			<comment username="RickyKarnage" rating="N/A" value="Kickstarter - Full Bundle" />
+			<comment username="Basiliv" rating="N/A" value="2-4 players" />
+			<comment username="oxygen204" rating="N/A" value="Kickstarter: Roxley Edition" />
+			<comment username="cserepj" rating="N/A" value="Numbered limited edition: 2499/20000" />
+			<comment username="samoan_jo" rating="N/A" value="(50)" />
+			<comment username="velvetcompadre" rating="N/A" value="sleeved(MDP) - 76(63.5x88)." />
+			<comment username="SiddGames" rating="N/A" value="[BGCOLOR=#8FBC8F][COLOR=#FFFFFF]Permanent.[/COLOR][/BGCOLOR] 
+
+g2 b3 b4
+60-120m
+
+_store_GR_Cu_2-2-1" />
+			<comment username="Cannon  Fodder" rating="N/A" value="Kickstarter" />
+			<comment username="JJWonderboy" rating="N/A" value="KS" />
+			<comment username="emezera" rating="N/A" value="2-4
+Sleeved" />
+			<comment username="Bellaatje" rating="N/A" value="KS 2 spellen voor 90,95 EUR
+Score 9 na eerste poging met 3 spelers; boeiend tot het einde, complex, maar net haalbaar.  Beperkt geluk (welke kaarten trek je), hoewel dit in vele fases van het spel nauwelijks een rol speelt.
+
+Aandachtspunten voor een volgende spelbeurt:
+- vergeet in de 2e ERA niet dat je veel coal en beer nodig hebt
+- meerdere buildings tegelijk sellen = 1 beurt
+- bouw je buildings dicht bij de juiste markt
+- niet aarzelen om te lenen in het begin van het spel als het nodig is; in het begin kost dit in feite minder dan op het einde." />
+			<comment username="natebakescakes" rating="N/A" value="Estimated Arrival Date: January 2018" />
+			<comment username="asketes" rating="N/A" value="2017 Kickstarter" />
+			<comment username="Cheelara1" rating="N/A" value="Backed Kickstarter: Was Suppose to Arrive Jan 2018. Still waiting as of May 2018. Arrived August 2018. Sold in BGG VFM 2018" />
+		</comments>
+	
+	
+   
+	
+          
+</item>
+</items>
