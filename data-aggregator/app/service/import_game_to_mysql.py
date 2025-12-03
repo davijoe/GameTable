@@ -1,8 +1,8 @@
 import xml.etree.ElementTree as ET
 from typing import Any
 
-import requests
 import os
+import requests
 
 from app.model.artist_model import Artist
 from app.model.designer_model import Designer
@@ -10,6 +10,8 @@ from app.model.game_model import Game
 from app.model.genre_model import Genre
 from app.model.mechanic_model import Mechanic
 from app.model.publisher_model import Publisher
+from app.model.review_model import Review
+from app.service.user_service import get_or_create_bgg_user
 
 from app.settings import settings
 
@@ -78,6 +80,7 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
     mechanics: list[tuple[int, str]] = []
     genres: list[tuple[int, str]] = []
     publishers: list[tuple[int, str]] = []
+    reviews: list[dict[str, Any]] = []
 
     for link in item.findall("link"):
         link_type = link.attrib.get("type")
@@ -101,6 +104,33 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
         elif link_type == "boardgamepublisher":
             publishers.append((link_id, value))
 
+    # BGG "comments" -> our "reviews"
+    comments_elem = item.find("comments")
+    if comments_elem is not None:
+        for c in comments_elem.findall("comment"):
+            username = c.attrib.get("username")
+            rating_raw = c.attrib.get("rating")
+            text = c.attrib.get("value")
+
+            if not username or not text:
+                continue
+
+            if rating_raw is None or rating_raw == "N/A":
+                rating_val: int | None = None
+            else:
+                try:
+                    rating_val = int(rating_raw)
+                except ValueError:
+                    rating_val = None
+
+            reviews.append(
+                {
+                    "username": username,
+                    "text": text,
+                    "rating": rating_val,
+                }
+            )
+
     return {
         "id": game_id,
         "name": name_primary or "",
@@ -117,6 +147,7 @@ def parse_game_xml(xml_text: str) -> dict[str, Any]:
         "mechanics": mechanics,
         "genres": genres,
         "publishers": publishers,
+        "reviews": reviews,
     }
 
 
@@ -143,6 +174,10 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
     game.mechanics.clear()
     game.genres.clear()
     game.publishers.clear()
+
+    for existing_review in list(game.reviews):
+        db.delete(existing_review)
+    game.reviews.clear()
 
     # artists
     for artist_id, artist_name in data["artists"]:
@@ -193,6 +228,30 @@ def upsert_game_from_parsed(db: Session, data: dict[str, Any]) -> Game:
             if not publisher.name:
                 publisher.name = publisher_name
         game.publishers.append(publisher)
+
+    # reviews (from XMLAPI2 "comments")
+    for r in data.get("reviews", []):
+        username = r["username"]
+        text = r["text"]
+        rating_val = r["rating"]
+
+        user = get_or_create_bgg_user(db, username)
+
+        if rating_val is None:
+            star_amount = 0
+        else:
+            star_amount = int(round(rating_val))
+
+        title = text[:70] or username
+        review = Review(
+            title=title,
+            text=text[:255],
+            star_amount=star_amount,
+            user=user,
+        )
+
+        game.reviews.append(review)
+        db.add(review)
 
     db.add(game)
     db.commit()

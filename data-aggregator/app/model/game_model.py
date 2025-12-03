@@ -39,6 +39,13 @@ game_publishers = Table(
     Column("publisher_id", ForeignKey("publisher.id"), primary_key=True),
 )
 
+game_reviews = Table(
+    "game_reviews",
+    Base.metadata,
+    Column("game_id", ForeignKey("game.id"), primary_key=True),
+    Column("review_id", ForeignKey("review.id"), primary_key=True),
+)
+
 
 class Game(Base):
     __tablename__ = "game"
@@ -89,6 +96,13 @@ class Game(Base):
     publishers = relationship(
         "Publisher",
         secondary=game_publishers,
+        back_populates="games",
+        lazy="joined",
+    )
+
+    reviews = relationship(
+        "Review",
+        secondary=game_reviews,
         back_populates="games",
         lazy="joined",
     )
