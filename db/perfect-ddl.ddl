@@ -7,7 +7,6 @@ CREATE TABLE game (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NUL
 CREATE TABLE artist (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, dob date, PRIMARY KEY (id));
 CREATE TABLE genre (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, description varchar(255), PRIMARY KEY (id));
 CREATE TABLE `user` (id int(10) NOT NULL AUTO_INCREMENT, display_name varchar(55) NOT NULL UNIQUE, username varchar(255) NOT NULL UNIQUE, dob date, password varchar(255) NOT NULL, email varchar(255) NOT NULL, PRIMARY KEY (id));
-CREATE TABLE review (id int(10) NOT NULL AUTO_INCREMENT, title varchar(255) NOT NULL, text varchar(255), star_amount int(10) NOT NULL, user_id int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE game_genres (game_id int(10) NOT NULL, genre_id int(10) NOT NULL, PRIMARY KEY (game_id, genre_id));
 CREATE TABLE review (id int(10) NOT NULL AUTO_INCREMENT, title varchar(255) NOT NULL, text varchar(255), star_amount int(10) NOT NULL, user_id int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE mechanic (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id));
@@ -16,7 +15,6 @@ CREATE TABLE game_designers (game_id int(10) NOT NULL, designer_id int(10) NOT N
 CREATE TABLE game_artists (game_id int(10) NOT NULL, artist_id int(10) NOT NULL, PRIMARY KEY (game_id, artist_id));
 CREATE TABLE game_publishers (game_id int(10) NOT NULL, publisher_id int(10) NOT NULL, PRIMARY KEY (game_id, publisher_id));
 CREATE TABLE game_mechanics (game_id int(10) NOT NULL, mechanic_id int(10) NOT NULL, PRIMARY KEY (game_id, mechanic_id));
-CREATE TABLE game_reviews (game_id int(10) NOT NULL, review_id int(10) NOT NULL, PRIMARY KEY (game_id, review_id));
 CREATE TABLE video (id int(10) NOT NULL AUTO_INCREMENT, title varchar(255) NOT NULL, category varchar(255) NOT NULL, link varchar(255) NOT NULL, game_id int(10) NOT NULL, language_id int(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE language (id int(10) NOT NULL AUTO_INCREMENT, language varchar(255) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE publisher (id int(10) NOT NULL AUTO_INCREMENT, name varchar(255) NOT NULL, PRIMARY KEY (id));
