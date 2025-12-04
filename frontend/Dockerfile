@@ -2,11 +2,10 @@ FROM oven/bun:1 AS dev
 
 WORKDIR /app
 
-COPY frontend/package.json frontend/bun.lock ./
+# Copy only deps
+COPY package.json bun.lock ./
 
 RUN bun install
-
-COPY ./frontend /app
 
 EXPOSE 3000
 
