@@ -11,7 +11,7 @@ export const GameCard = ({ game }: Props) => {
   return (
     <GameCardBase
       image={
-        <Image src="/demoGameImgThumbnail.webp" objectFit="cover" /> //hard coded right now - should use the correct when we have that in the DB
+        <Image src={game.thumbnail ?? undefined} objectFit="cover" /> //hard coded right now - should use the correct when we have that in the DB
       }
     >
       <VStack align="start" spacing={2}>
@@ -41,7 +41,7 @@ export const GameCard = ({ game }: Props) => {
           {/* Play Time */}
           <HStack spacing={2} color="gray.300">
             <Icon as={TimeIcon} />
-            <Text>{game.play_time ? `${game.play_time} min` : "—"}</Text>
+            <Text>{game.playing_time ? `${game.playing_time} min` : "—"}</Text>
           </HStack>
         </HStack>
     </GameCardBase>
