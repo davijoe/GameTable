@@ -7,8 +7,10 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/app/app
-      - ./.env:/app/env:ro
+      - ./app/.env:/app/.env:ro #maybe no need to change? time will tell after graph and neo implementaiton
     # TODO: Add tests here when time comes. ./tests:/app/tests
+    environment:
+      DB_MODE: "sql" #todo or "mongo" or "neo"
     depends_on:
       - database
 
