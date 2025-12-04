@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import Optional, Dict, Any
 
-from app.utility.db import get_db
+from app.utility.db_sql import get_db
 from app.schema.artist_schema import ArtistRead, ArtistCreate, ArtistUpdate
 from app.service.artist_service import ArtistService
 

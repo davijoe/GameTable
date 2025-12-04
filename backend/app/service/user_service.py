@@ -4,13 +4,13 @@ from typing import List, Optional, Tuple
 from sqlalchemy.orm import Session
 
 from app.model.user_model import User
-from app.repository.user_repository import UserRepository
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
+from app.repository.sql.sql_user_repository import SQLUserRepository
 
 
 class UserService:
     def __init__(self, db: Session):
-        self.repo = UserRepository(db)
+        self.repo = SQLUserRepository(db)
         self.db = db
 
     def get(self, user_id: int) -> Optional[UserRead]:

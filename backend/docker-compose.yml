@@ -10,7 +10,7 @@ services:
       - ./app/.env:/app/.env:ro #maybe no need to change? time will tell after graph and neo implementaiton
     # TODO: Add tests here when time comes. ./tests:/app/tests
     environment:
-      DB_MODE: "sql" #todo or "mongo" or "neo"
+      DB_MODE: "neo" #todo or "mongo" or "neo" # this should change what is in the .env dynamically
     depends_on:
       - database
 

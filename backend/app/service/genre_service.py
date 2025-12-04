@@ -3,13 +3,13 @@ from typing import List, Optional, Tuple
 from sqlalchemy.orm import Session
 
 from app.model.genre_model import Genre
-from app.repository.genre_repository import GenreRepository
 from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
+from app.repository.sql.sql_genre_repository import SQLGenreRepository
 
 
 class GenreService:
     def __init__(self, db: Session):
-        self.repo = GenreRepository(db)
+        self.repo = SQLGenreRepository(db)
         self.db = db
 
     def get(self, genre_id: int) -> Optional[GenreRead]:

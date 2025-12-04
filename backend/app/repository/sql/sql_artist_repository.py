@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.model.artists_model import Artists
 
 
-class ArtistRepository:
+class SQLArtistRepository:
     def __init__(self, db: Session):
         self.db = db
 

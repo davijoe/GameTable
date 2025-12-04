@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 from app.service.games_service import fetch_games_xml, load_game_ids, parse_games_xml
 from app.service.mongo_service import save_games_to_mongo
-from app.utility.db import get_mongo_collection
+from app.utility.db_sql import get_mongo_collection
 
 app = FastAPI()
 

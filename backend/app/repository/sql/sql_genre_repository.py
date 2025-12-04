@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.model.genre_model import Genre
 
 
-class GenreRepository:
+class SQLGenreRepository:
     def __init__(self, db: Session):
         self.db = db
 

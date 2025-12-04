@@ -7,7 +7,7 @@ from app.schema.auth_schema import LoginRequest, LoginResponse
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 from app.service.user_service import UserService
 from app.utility.auth import create_access_token
-from app.utility.db import get_db
+from app.utility.db_sql import get_db
 
 router = APIRouter(prefix="/api/users", tags=["users"])
 

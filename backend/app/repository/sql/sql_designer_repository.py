@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.model.designer_model import Designer
 
 
-class DesignerRepository:
+class SQLDesignerRepository:
     def __init__(self, db: Session):
         self.db = db
 

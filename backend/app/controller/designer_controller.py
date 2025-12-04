@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 from app.service.designer_service import DesignerService
-from app.utility.db import get_db
+from app.utility.db_sql import get_db
 
 router = APIRouter(prefix="/api/designers", tags=["designers"])
 
