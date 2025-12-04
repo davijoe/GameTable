@@ -35,5 +35,5 @@ def health():
     return {"status": "ok"}
 
 @app.get("/db")
-def db_health():
-    return {"db_mode": os.getenv("DB_MODE", "sql")}
+def db_info():
+    return {"active_database": os.getenv("DB_MODE", "sql")}
