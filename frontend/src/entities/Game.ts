@@ -6,8 +6,10 @@ export interface Game {
 	bgg_rating: number | null;
 	difficulty_rating: number | null;
 	description: string | null;
-	play_time: number | null;
+	playing_time: number | null;
 	available: boolean;
 	min_players: number | null;
 	max_players: number | null;
+	image: string | null;
+	thumbnail: string | null;
 }

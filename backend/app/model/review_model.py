@@ -1,0 +1,14 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+
+from app.utility.db import Base
+
+
+class Review(Base):
+    __tablename__ = "review"
+    
+    id = Column(Integer, primary_key=True)
+    title = Column(String(255), nullable=False)
+    text = Column(String(255), nullable=True)
+    star_amount = Column(Integer, nullable=False)
+    user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    

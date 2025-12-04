@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Double, Boolean, Text, Date
+
 from app.utility.db import Base
 
 class User(Base):
