@@ -13,6 +13,7 @@ dependencies = [
   "sqlalchemy>=2.0.44",
   "uvicorn>=0.38.0",
   "pymongo>=4.4",
+  "neo4j>=5.14",
 ]
 
 [dependency-groups]
