@@ -59,26 +59,14 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
-    
-    def get_games_for_review(self, review_id):
-        """Get all games associated with a review"""
-        query = "SELECT game_id FROM game_reviews WHERE review_id = %s"
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, (review_id,))
-            results = cursor.fetchall()
-            return [r['game_id'] for r in results]
-        finally:
-            cursor.close()
         
     def get_game_reviews(self, game_id):
         """Get all reviews for a game"""
         query = """
-        SELECT r.*, u.display_name 
+        SELECT r.*, u.display_name, u.username
         FROM review r
-        JOIN game_reviews gr ON r.id = gr.review_id
         JOIN user u ON r.user_id = u.id
-        WHERE gr.game_id = %s
+        WHERE r.game_id = %s  -- Direct filter on game_id, no junction table
         """
         cursor = self.connection.cursor(dictionary=True)
         try:
@@ -206,16 +194,6 @@ class MySQLConnector:
         finally:
             cursor.close()
 
-    def get_all_game_reviews(self):
-        """Get all game-review relationships"""
-        query = "SELECT * FROM game_reviews"
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query)
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-
     def get_all_publishers(self):
         """Get all publishers"""
         query = "SELECT * FROM publisher"
@@ -330,7 +308,7 @@ class MySQLConnector:
         """
         
         if game_id:
-            query += " WHERE r.id IN (SELECT review_id FROM game_reviews WHERE game_id = %s)"
+            query += " WHERE r.game_id = %s"
             params = (game_id,)
         else:
             params = None

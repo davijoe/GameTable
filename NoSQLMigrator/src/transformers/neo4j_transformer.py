@@ -303,8 +303,8 @@ class Neo4jTransformer:
         return queries
 
     @staticmethod
-    def create_review_nodes_and_relationships(reviews_data, users_data, games_data):
-        """Create Review nodes and relationships"""
+    def create_review_nodes_and_relationships(reviews_data):
+        """Create Review nodes and relationships - now with direct game_id"""
         queries = []
         
         for review in reviews_data:
@@ -335,6 +335,17 @@ class Neo4jTransformer:
                 'params': {
                     'review_id': review['id'],
                     'user_id': review['user_id']
+                }
+            })
+            
+            queries.append({
+                'query': """
+                MATCH (r:Review {id: $review_id}), (g:Game {id: $game_id})
+                CREATE (r)-[:FOR_GAME]->(g)
+                """,
+                'params': {
+                    'review_id': review['id'],
+                    'game_id': review['game_id']
                 }
             })
         

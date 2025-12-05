@@ -5,7 +5,7 @@ logger = get_logger(__name__)
 
 class ReviewTransformer:
     @staticmethod
-    def transform_review_data(review_data, user_info, game_ids):
+    def transform_review_data(review_data, user_info, game_id):
         """Transform review data into MongoDB document"""
         review_doc = {
             '_id': review_data['id'],
@@ -17,11 +17,9 @@ class ReviewTransformer:
                 'display_name': user_info.get('display_name'),
                 'username': user_info.get('username')
             },
-            'games': game_ids,
+            'game_id': game_id,
             'metadata': {
                 'source_id': review_data['id'],
-                'created_at': ReviewTransformer._serialize_date(review_data.get('created_at')),
-                'updated_at': ReviewTransformer._serialize_date(review_data.get('updated_at')),
                 'migrated_at': None
             }
         }

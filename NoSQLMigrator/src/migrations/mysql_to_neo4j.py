@@ -158,24 +158,16 @@ class MySQLToNeo4jMigration:
         logger.info("Starting reviews migration...")
         
         try:
-            reviews = self.mysql_conn.get_all_reviews()
-            game_reviews = self.mysql_conn.get_all_game_reviews()
+            reviews = self.mysql_conn.get_reviews_with_user_info()
             
-            logger.info(f"Found {len(reviews)} reviews and {len(game_reviews)} game-review relationships")
+            logger.info(f"Found {len(reviews)} reviews to migrate")
             
-            review_queries = Neo4jTransformer.create_review_nodes_and_relationships(reviews, [], [])
+            review_queries = Neo4jTransformer.create_review_nodes_and_relationships(reviews)
             
             for i, query_data in enumerate(review_queries):
                 self.neo4j_conn.execute_query(query_data['query'], query_data['params'])
                 if (i + 1) % 50 == 0:
-                    logger.info(f"Created {i + 1}/{len(review_queries)} reviews")
-            
-            game_review_queries = Neo4jTransformer.create_game_review_relationships(game_reviews)
-            
-            for i, query_data in enumerate(game_review_queries):
-                self.neo4j_conn.execute_query(query_data['query'], query_data['params'])
-                if (i + 1) % 50 == 0:
-                    logger.info(f"Created {i + 1}/{len(game_review_queries)} game-review relationships")
+                    logger.info(f"Created {i + 1}/{len(review_queries)} reviews and relationships")
             
             logger.info("Completed reviews migration")
             

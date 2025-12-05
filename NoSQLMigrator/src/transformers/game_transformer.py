@@ -4,11 +4,10 @@ logger = get_logger(__name__)
 
 class GameTransformer:
     @staticmethod
-    def transform_game_data(game_data, designers, artists, genres, publishers, mechanics, videos, review_ids):
+    def transform_game_data(game_data, designers, artists, genres, publishers, mechanics, videos, review_ids=None):
         """Transform flat game data into nested MongoDB document"""
         
-        avg_rating = 0 
-        total_reviews = len(review_ids)
+        total_reviews = len(review_ids) if review_ids else 0
         
         game_document = {
             '_id': game_data['id'],
@@ -18,7 +17,7 @@ class GameTransformer:
             'ratings': {
                 'bgg_rating': game_data['bgg_rating'],
                 'difficulty_rating': game_data['difficulty_rating'],
-                'average_user_rating': avg_rating, 
+                'average_user_rating': 0,
                 'total_reviews': total_reviews
             },
             'description': game_data['description'],
@@ -38,7 +37,7 @@ class GameTransformer:
             'publishers': publishers,
             'mechanics': mechanics,
             'videos': videos,
-            'review_ids': review_ids,
+            'review_ids': review_ids or [],
             'metadata': {
                 'source_id': game_data['id'],
                 'migrated_at': None

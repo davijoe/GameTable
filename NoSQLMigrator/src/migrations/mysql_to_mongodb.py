@@ -58,21 +58,23 @@ class MySQLToMongoDBMigration:
         try:
             games_data = self.mysql_conn.get_complete_game_data()
             
-            game_reviews_map = {}
-            all_game_reviews = self.mysql_conn.get_all_game_reviews()
+            logger.info("Collecting review IDs for all games...")
+            reviews_by_game = {}
+            all_reviews = self.mysql_conn.get_reviews_with_user_info()
             
-            for gr in all_game_reviews:
-                game_id = gr['game_id']
-                review_id = gr['review_id']
-                if game_id not in game_reviews_map:
-                    game_reviews_map[game_id] = []
-                game_reviews_map[game_id].append(review_id)
+            for review in all_reviews:
+                game_id = review['game_id']
+                if game_id not in reviews_by_game:
+                    reviews_by_game[game_id] = []
+                reviews_by_game[game_id].append(review['id'])
+            
+            logger.info(f"Collected reviews for {len(reviews_by_game)} games")
             
             for game in games_data:
                 try:
                     game_id = game['id']
                     
-                    review_ids = game_reviews_map.get(game_id, [])
+                    review_ids = reviews_by_game.get(game_id, [])
                     
                     designers = self._get_game_designers(game)
                     artists = self._get_game_artists(game)
@@ -115,7 +117,7 @@ class MySQLToMongoDBMigration:
             raise
     
     def migrate_reviews(self):
-        """Migrate reviews to separate collection"""
+        """Migrate reviews to separate collection - now with direct game_id"""
         if not getattr(settings, 'MIGRATE_REVIEWS', True):
             logger.info("Skipping reviews migration")
             return
@@ -138,13 +140,13 @@ class MySQLToMongoDBMigration:
             
             for review in reviews:
                 try:
-                    game_ids = self.mysql_conn.get_games_for_review(review['id'])
+                    game_id = review['game_id']
                     
                     user_id = review['user_id']
                     user_info = users_data.get(user_id, {})
                     
                     review_doc = ReviewTransformer.transform_review_data(
-                        review, user_info, game_ids
+                        review, user_info, game_id
                     )
                     review_doc['metadata']['migrated_at'] = self._serialize_datetime(datetime.utcnow())
                     
@@ -236,15 +238,13 @@ class MySQLToMongoDBMigration:
         
     def _update_game_ratings(self):
         """Update average ratings in games based on reviews"""
-        logger.info("Updating game ratings based on reviews...")
+        logger.info("Updating game average ratings based on reviews...")
         
         try:
             pipeline = [
-                {"$unwind": "$games"},
                 {"$group": {
-                    "_id": "$games",
-                    "avg_rating": {"$avg": "$star_amount"},
-                    "count": {"$sum": 1}
+                    "_id": "$game_id",
+                    "avg_rating": {"$avg": "$star_amount"}
                 }}
             ]
             
@@ -256,17 +256,15 @@ class MySQLToMongoDBMigration:
             for result in results:
                 game_id = result['_id']
                 avg_rating = result['avg_rating']
-                count = result['count']
                 
                 games_collection.update_one(
                     {"_id": game_id},
                     {"$set": {
-                        "ratings.average_user_rating": avg_rating,
-                        "ratings.total_reviews": count
+                        "ratings.average_user_rating": avg_rating
                     }}
                 )
             
-            logger.info(f"Updated ratings for {len(results)} games")
+            logger.info(f"Updated average ratings for {len(results)} games")
             
         except Exception as e:
             logger.error(f"Error updating ratings: {e}")
