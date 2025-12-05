@@ -14,7 +14,8 @@ class GameRepositoryMongo(IGameRepository):
 		return GameRead(**doc)
 
 	def get(self, game_id: Any) -> Optional[GameRead]:
-		doc = self.col.find_one({"_id": game_id})
+		# ensure the type matches the stored _id
+		doc = self.col.find_one({"_id": int(game_id)})
 		return self._doc_to_game(doc)
 
 	def list(self, offset: int, limit: int, search: Optional[str] = None) -> Tuple[List[GameRead], int]:
