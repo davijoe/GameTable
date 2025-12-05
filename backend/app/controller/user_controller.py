@@ -30,7 +30,6 @@ def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
         display_name=user.display_name,
     )
 
-
 @router.get("")
 def list_users(
     q: Optional[str] = Query(None, description="Search by display name or username"),
