@@ -23,7 +23,7 @@ class GameRepositoryNeo(IGameRepository):
 	def get(self, game_id: int) -> Optional[GameRead]:
 		with self.driver.session() as session:
 			query = "MATCH (g:Game) WHERE g.id = $game_id RETURN g"
-			record = session.run(query, game_id=int(game_id)).single()
+			record = session.run(query, game_id=int(game_id)).single() # casting to int is apparently important
 			if record:
 				return self._doc_to_game(record["g"])
 		return None
