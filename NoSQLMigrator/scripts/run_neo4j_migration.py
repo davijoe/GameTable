@@ -15,6 +15,7 @@ def main():
         start_time = time.time()
         
         migration = MySQLToNeo4jMigration()
+        migration.clear_existing_data()
         migration.migrate_all()
         
         end_time = time.time()
