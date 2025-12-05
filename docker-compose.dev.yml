@@ -24,18 +24,52 @@ services:
       - mysql8_data:/var/lib/mysql
 
   mongodb:
-    image: mongodb/mongodb-community-server:7.0-ubi8
-    container_name: gametable-mongodb-database
+    image: mongo:7
+    container_name: gametable-mongo-database
     restart: unless-stopped
     env_file: ".env"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - MONGO_INITDB_DATABASE=gametable
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: gametable_nosql
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  neo4j_database:
+    image: neo4j
+    container_name: gametable-neo4j-database
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-password}
+      NEO4J_PLUGINS: '["apoc"]'
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data/db
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "cypher-shell",
+          "-u",
+          "${NEO4J_USER:-neo4j}",
+          "-p",
+          "${NEO4J_PASSWORD:-password}",
+          "RETURN 1",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+      start_period: 60s
 
   frontend-server:
     container_name: gametable-frontend-server
@@ -59,3 +93,5 @@ volumes:
     name: semester_project_mysql_data
   mongo_data:
     name: semester_project_mongo_data
+  neo4j_data:
+    name: semester_project_neo4j_data
