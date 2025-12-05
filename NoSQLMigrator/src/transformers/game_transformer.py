@@ -4,22 +4,10 @@ logger = get_logger(__name__)
 
 class GameTransformer:
     @staticmethod
-    def transform_game_data(game_data, designers, artists, genres, reviews):
+    def transform_game_data(game_data, designers, artists, genres, publishers, mechanics, videos, review_ids=None):
         """Transform flat game data into nested MongoDB document"""
         
-        transformed_reviews = []
-        for review in reviews:
-            transformed_review = {
-                'id': review['id'],
-                'title': review['title'],
-                'text': review['text'],
-                'star_amount': review['star_amount'],
-                'user_id': review['user_id'],
-                'comments': []  
-            }
-            transformed_reviews.append(transformed_review)
-        
-        avg_rating = sum(review['star_amount'] for review in reviews) / len(reviews) if reviews else 0
+        total_reviews = len(review_ids) if review_ids else 0
         
         game_document = {
             '_id': game_data['id'],
@@ -29,20 +17,27 @@ class GameTransformer:
             'ratings': {
                 'bgg_rating': game_data['bgg_rating'],
                 'difficulty_rating': game_data['difficulty_rating'],
-                'average_user_rating': avg_rating,
-                'total_reviews': len(reviews)
+                'average_user_rating': 0,
+                'total_reviews': total_reviews
             },
             'description': game_data['description'],
-            'play_time': game_data['play_time'],
-            'available': bool(game_data['available']),
+            'playing_time': game_data['playing_time'],
             'player_count': {
                 'min': game_data['min_players'],
                 'max': game_data['max_players']
             },
+            'minimum_age': game_data['minimum_age'],
+            'images': {
+                'thumbnail': game_data['thumbnail'],
+                'image': game_data['image']
+            },
             'designers': designers,
             'artists': artists,
             'genres': genres,
-            'reviews': transformed_reviews,
+            'publishers': publishers,
+            'mechanics': mechanics,
+            'videos': videos,
+            'review_ids': review_ids or [],
             'metadata': {
                 'source_id': game_data['id'],
                 'migrated_at': None
@@ -50,18 +45,3 @@ class GameTransformer:
         }
         
         return game_document
-    
-    @staticmethod
-    def transform_review_comments(comments_data):
-        """Transform review comments into nested structure"""
-        transformed_comments = []
-        for comment in comments_data:
-            transformed_comment = {
-                'id': comment['id'],
-                'text': comment['text'],
-                'user_id': comment['user_id'],
-                'created_at': comment['created_at'],
-                'updated_at': comment['updated_at']
-            }
-            transformed_comments.append(transformed_comment)
-        return transformed_comments
