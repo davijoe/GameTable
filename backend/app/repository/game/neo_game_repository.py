@@ -11,7 +11,6 @@ class GameRepositoryNeo(IGameRepository):
 	def _doc_to_game(self, record: dict) -> GameRead:
 		if not record:
 			return None
-		# Neo4j nodes are returned as dict-like objects
 		data = dict(record)
 		data["id"] = data.get("id") or 0
 		return GameRead(**data)
@@ -23,11 +22,12 @@ class GameRepositoryNeo(IGameRepository):
 
 	def get(self, game_id: int) -> Optional[GameRead]:
 		with self.driver.session() as session:
-			rec = session.read_transaction(self._get_node, game_id)
-			if rec:
-				return self._doc_to_game(rec)
-			return None
-
+			query = "MATCH (g:Game) WHERE g.id = $game_id RETURN g"
+			record = session.run(query, game_id=int(game_id)).single()
+			if record:
+				return self._doc_to_game(record["g"])
+		return None
+		
 	def list(self, offset: int, limit: int, search: Optional[str] = None) -> Tuple[List[GameRead], int]:
 		with self.driver.session() as session:
 			query = "MATCH (g:Game)"

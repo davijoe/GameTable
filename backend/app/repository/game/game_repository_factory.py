@@ -17,7 +17,7 @@ def get_game_repository():
 		db = next(get_mongo_db())
 		return GameRepositoryMongo(db)
 	elif DB_MODE == "neo":
-		driver = get_neo()
-		return GameRepositoryNeo(driver)
+		db = get_neo()
+		return GameRepositoryNeo(db)
 
 	raise ValueError(f"Unknown DB_MODE: {DB_MODE}")

@@ -57,7 +57,7 @@ class GameRepositorySQL(IGameRepository):
 	
 #old repo might want to use instead?
 	'''
-	class GameRepository:
+class GameRepository:
     def __init__(self, db: Session):
         self.db = db
 
