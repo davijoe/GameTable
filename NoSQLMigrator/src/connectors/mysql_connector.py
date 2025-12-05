@@ -35,12 +35,12 @@ class MySQLConnector:
             GROUP_CONCAT(DISTINCT a.id) as artist_ids,
             GROUP_CONCAT(DISTINCT a.name) as artist_names,
             GROUP_CONCAT(DISTINCT gen.id) as genre_ids,
-            GROUP_CONCAT(DISTINCT gen.title) as genre_titles
+            GROUP_CONCAT(DISTINCT gen.name) as genre_names
         FROM game g
         LEFT JOIN game_designers gd ON g.id = gd.game_id
         LEFT JOIN designer d ON gd.designer_id = d.id
         LEFT JOIN game_artists ga ON g.id = ga.game_id
-        LEFT JOIN artists a ON ga.artists_id = a.id
+        LEFT JOIN artist a ON ga.artist_id = a.id
         LEFT JOIN game_genres gg ON g.id = gg.game_id
         LEFT JOIN genre gen ON gg.genre_id = gen.id
         """
@@ -59,15 +59,14 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
-    
+        
     def get_game_reviews(self, game_id):
         """Get all reviews for a game"""
         query = """
-        SELECT r.*, u.display_name 
+        SELECT r.*, u.display_name, u.username
         FROM review r
-        JOIN game_reviews gr ON r.id = gr.review_id
         JOIN user u ON r.user_id = u.id
-        WHERE gr.game_id = %s
+        WHERE r.game_id = %s  -- Direct filter on game_id, no junction table
         """
         cursor = self.connection.cursor(dictionary=True)
         try:
@@ -76,6 +75,29 @@ class MySQLConnector:
         finally:
             cursor.close()
     
+    def get_game_reviews_with_users(self, game_id, limit=None):
+        """Get reviews for a game with user information"""
+        query = """
+        SELECT r.*, u.display_name
+        FROM review r
+        JOIN game_reviews gr ON r.id = gr.review_id
+        JOIN user u ON r.user_id = u.id
+        WHERE gr.game_id = %s
+        """
+        
+        if limit:
+            query += " LIMIT %s"
+            params = (game_id, limit)
+        else:
+            params = (game_id,)
+        
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query, params)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+            
     def get_review_comments(self, review_id):
         """Get comments for a review"""
         query = "SELECT * FROM review_comments WHERE review_id = %s"
@@ -101,90 +123,6 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
-    
-    def get_user_friendships(self, user_id):
-        """Get all friendships for a user"""
-        query = """
-        SELECT * FROM friendship 
-        WHERE user_id_1 = %s OR user_id_2 = %s
-        """
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, (user_id, user_id))
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-    
-    def get_user_messages(self, user_id):
-        """Get all messages for a user"""
-        query = """
-        SELECT * FROM message 
-        WHERE user_id_1 = %s OR user_id_2 = %s
-        ORDER BY timestamp
-        """
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, (user_id, user_id))
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-    
-    def get_complete_matchup_data(self, matchup_id=None):
-        """Get complete matchup data with all related entities"""
-        query = "SELECT * FROM matchup"
-        params = None
-        
-        if matchup_id:
-            query += " WHERE id = %s"
-            params = (matchup_id,)
-        
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, params)
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-    
-    def get_matchup_moves(self, matchup_id):
-        """Get all moves for a matchup"""
-        query = """
-        SELECT m.* FROM move m
-        JOIN matchup_move mm ON m.id = mm.move_id
-        WHERE mm.matchup_id = %s
-        ORDER BY m.ply
-        """
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, (matchup_id,))
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-    
-    def get_matchup_comments(self, matchup_id):
-        """Get all comments for a matchup"""
-        query = "SELECT * FROM matchup_comments WHERE matchup_id = %s"
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, (matchup_id,))
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-    
-    def get_matchup_spectators(self, matchup_id):
-        """Get all spectators for a matchup"""
-        query = """
-        SELECT u.id as user_id, u.display_name 
-        FROM spectator s
-        JOIN spectator_users su ON s.id = su.spectator_id
-        JOIN user u ON su.user_id = u.id
-        WHERE s.matchup_id = %s
-        """
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query, (matchup_id,))
-            return cursor.fetchall()
-        finally:
-            cursor.close()
 
     def get_all_designers(self):
         """Get all designers"""
@@ -198,7 +136,7 @@ class MySQLConnector:
 
     def get_all_artists(self):
         """Get all artists"""
-        query = "SELECT * FROM artists"
+        query = "SELECT * FROM artist"
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query)
@@ -246,26 +184,6 @@ class MySQLConnector:
         finally:
             cursor.close()
 
-    def get_all_friendships(self):
-        """Get all friendships"""
-        query = "SELECT * FROM friendship"
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query)
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-
-    def get_all_messages(self):
-        """Get all messages"""
-        query = "SELECT * FROM message"
-        cursor = self.connection.cursor(dictionary=True)
-        try:
-            cursor.execute(query)
-            return cursor.fetchall()
-        finally:
-            cursor.close()
-
     def get_all_reviews(self):
         """Get all reviews"""
         query = "SELECT * FROM review"
@@ -276,9 +194,9 @@ class MySQLConnector:
         finally:
             cursor.close()
 
-    def get_all_game_reviews(self):
-        """Get all game-review relationships"""
-        query = "SELECT * FROM game_reviews"
+    def get_all_publishers(self):
+        """Get all publishers"""
+        query = "SELECT * FROM publisher"
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query)
@@ -286,9 +204,9 @@ class MySQLConnector:
         finally:
             cursor.close()
 
-    def get_all_moves(self):
-        """Get all moves"""
-        query = "SELECT * FROM move"
+    def get_all_mechanics(self):
+        """Get all mechanics"""
+        query = "SELECT * FROM mechanic"
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query)
@@ -296,9 +214,9 @@ class MySQLConnector:
         finally:
             cursor.close()
 
-    def get_all_matchup_moves(self):
-        """Get all matchup-move relationships"""
-        query = "SELECT * FROM matchup_move"
+    def get_all_languages(self):
+        """Get all languages"""
+        query = "SELECT * FROM language"
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query)
@@ -306,21 +224,102 @@ class MySQLConnector:
         finally:
             cursor.close()
 
-    def get_all_spectators_with_users(self):
-        """Get all spectators with user information"""
+    def get_all_videos(self):
+        """Get all videos"""
+        query = "SELECT * FROM video"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_game_publishers(self):
+        """Get all game-publisher relationships"""
+        query = "SELECT * FROM game_publishers"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_game_mechanics(self):
+        """Get all game-mechanic relationships"""
+        query = "SELECT * FROM game_mechanics"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_game_publishers(self, game_id):
+        """Get publishers for a specific game"""
         query = """
-        SELECT s.id as spectator_id, s.matchup_id, su.user_id, u.display_name
-        FROM spectator s
-        JOIN spectator_users su ON s.id = su.spectator_id
-        JOIN user u ON su.user_id = u.id
+        SELECT p.* 
+        FROM publisher p
+        JOIN game_publishers gp ON p.id = gp.publisher_id
+        WHERE gp.game_id = %s
         """
         cursor = self.connection.cursor(dictionary=True)
         try:
-            cursor.execute(query)
+            cursor.execute(query, (game_id,))
             return cursor.fetchall()
         finally:
             cursor.close()
-    
+
+    def get_game_mechanics(self, game_id):
+        """Get mechanics for a specific game"""
+        query = """
+        SELECT m.* 
+        FROM mechanic m
+        JOIN game_mechanics gm ON m.id = gm.mechanic_id
+        WHERE gm.game_id = %s
+        """
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query, (game_id,))
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_game_videos(self, game_id):
+        """Get videos for a specific game"""
+        query = """
+        SELECT v.*, l.language 
+        FROM video v
+        JOIN language l ON v.language_id = l.id
+        WHERE v.game_id = %s
+        """
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query, (game_id,))
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_reviews_with_user_info(self, game_id=None):
+        """Get reviews with user information"""
+        query = """
+        SELECT r.*, u.display_name, u.username
+        FROM review r
+        JOIN user u ON r.user_id = u.id
+        """
+        
+        if game_id:
+            query += " WHERE r.game_id = %s"
+            params = (game_id,)
+        else:
+            params = None
+            
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query, params)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+        
     def close(self):
         if self.connection and self.connection.is_connected():
             self.connection.close()
