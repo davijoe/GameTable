@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import datetime, date 
 from src.connectors.mysql_connector import MySQLConnector
 from src.connectors.mongodb_connector import MongoDBConnector
 from src.transformers.game_transformer import GameTransformer
 from src.transformers.user_transformer import UserTransformer
-from src.transformers.matchup_transformer import MatchupTransformer
+from src.transformers.review_transformer import ReviewTransformer
 from src.config.settings import settings
 from src.utils.logger import get_logger
 
@@ -25,12 +25,25 @@ class MySQLToMongoDBMigration:
             raise
     
     @staticmethod
+    def _serialize_date(date_obj):
+        """Convert date/datetime objects to ISO format string or None"""
+        if date_obj is None:
+            return None
+        if isinstance(date_obj, datetime):
+            return date_obj.isoformat()
+        if isinstance(date_obj, date):
+            return date_obj.isoformat()
+        return str(date_obj)
+
+    @staticmethod
     def _serialize_datetime(dt_obj):
         """Convert datetime to ISO format string"""
         if dt_obj is None:
             return None
         if isinstance(dt_obj, datetime):
             return dt_obj.isoformat()
+        if isinstance(dt_obj, date):
+            return dt_obj.isoformat() 
         return dt_obj
     
     def migrate_games(self):
@@ -45,44 +58,54 @@ class MySQLToMongoDBMigration:
         try:
             games_data = self.mysql_conn.get_complete_game_data()
             
+            game_reviews_map = {}
+            all_game_reviews = self.mysql_conn.get_all_game_reviews()
+            
+            for gr in all_game_reviews:
+                game_id = gr['game_id']
+                review_id = gr['review_id']
+                if game_id not in game_reviews_map:
+                    game_reviews_map[game_id] = []
+                game_reviews_map[game_id].append(review_id)
+            
             for game in games_data:
                 try:
-                    reviews = self.mysql_conn.get_game_reviews(game['id'])
+                    game_id = game['id']
                     
-                    for review in reviews:
-                        review['comments'] = self.mysql_conn.get_review_comments(review['id'])
+                    review_ids = game_reviews_map.get(game_id, [])
                     
-                    designers = []
-                    if game['designer_ids']:
-                        designer_ids = game['designer_ids'].split(',')
-                        designer_names = game['designer_names'].split(',')
-                        designers = [{'id': int(did), 'name': name} 
-                                   for did, name in zip(designer_ids, designer_names)]
+                    designers = self._get_game_designers(game)
+                    artists = self._get_game_artists(game)
+                    genres = self._get_game_genres(game)
+                    publishers = self.mysql_conn.get_game_publishers(game_id)
+                    mechanics = self.mysql_conn.get_game_mechanics(game_id)
+                    videos = self.mysql_conn.get_game_videos(game_id)
                     
-                    artists = []
-                    if game['artist_ids']:
-                        artist_ids = game['artist_ids'].split(',')
-                        artist_names = game['artist_names'].split(',')
-                        artists = [{'id': int(aid), 'name': name} 
-                                 for aid, name in zip(artist_ids, artist_names)]
+                    publisher_list = [{'id': p['id'], 'name': p['name']} for p in publishers]
+                    mechanic_list = [{'id': m['id'], 'name': m['name']} for m in mechanics]
                     
-                    genres = []
-                    if game['genre_ids']:
-                        genre_ids = game['genre_ids'].split(',')
-                        genre_titles = game['genre_titles'].split(',')
-                        genres = [{'id': int(gid), 'title': title} 
-                                for gid, title in zip(genre_ids, genre_titles)]
+                    video_list = []
+                    for video in videos:
+                        video_data = {
+                            'id': video['id'],
+                            'title': video['title'],
+                            'category': video['category'],
+                            'link': video['link'],
+                            'language': video['language']
+                        }
+                        video_list.append(video_data)
                     
                     game_document = GameTransformer.transform_game_data(
-                        game, designers, artists, genres, reviews
+                        game, designers, artists, genres, publisher_list, 
+                        mechanic_list, video_list, review_ids
                     )
                     game_document['metadata']['migrated_at'] = self._serialize_datetime(datetime.utcnow())
                     
                     self.mongodb_conn.insert_documents('games', [game_document])
-                    logger.info(f"Migrated game: {game['name']} (ID: {game['id']})")
+                    logger.info(f"Migrated game: {game['name']} (ID: {game_id}, Reviews: {len(review_ids)})")
                     
                 except Exception as e:
-                    logger.error(f"Error migrating game {game['id']}: {e}")
+                    logger.error(f"Error migrating game {game.get('id', 'unknown')}: {e}")
                     continue
             
             logger.info("Games migration completed")
@@ -91,8 +114,93 @@ class MySQLToMongoDBMigration:
             logger.error(f"Error in games migration: {e}")
             raise
     
+    def migrate_reviews(self):
+        """Migrate reviews to separate collection"""
+        if not getattr(settings, 'MIGRATE_REVIEWS', True):
+            logger.info("Skipping reviews migration")
+            return
+        
+        logger.info("Starting reviews migration")
+        self.mongodb_conn.delete_collection('reviews')
+        
+        try:
+            reviews = self.mysql_conn.get_reviews_with_user_info()
+            
+            users_data = {}
+            all_users = self.mysql_conn.get_complete_user_data()
+            for user in all_users:
+                users_data[user['id']] = {
+                    'display_name': user['display_name'],
+                    'username': user['username']
+                }
+            
+            review_documents = []
+            
+            for review in reviews:
+                try:
+                    game_ids = self.mysql_conn.get_games_for_review(review['id'])
+                    
+                    user_id = review['user_id']
+                    user_info = users_data.get(user_id, {})
+                    
+                    review_doc = ReviewTransformer.transform_review_data(
+                        review, user_info, game_ids
+                    )
+                    review_doc['metadata']['migrated_at'] = self._serialize_datetime(datetime.utcnow())
+                    
+                    review_documents.append(review_doc)
+                    
+                    if len(review_documents) >= 1000:
+                        self.mongodb_conn.insert_documents('reviews', review_documents)
+                        logger.info(f"Migrated batch of {len(review_documents)} reviews")
+                        review_documents = []
+                        
+                except Exception as e:
+                    logger.error(f"Error migrating review {review.get('id', 'unknown')}: {e}")
+                    continue
+            
+            if review_documents:
+                self.mongodb_conn.insert_documents('reviews', review_documents)
+                logger.info(f"Migrated final batch of {len(review_documents)} reviews")
+            
+            logger.info(f"Completed reviews migration")
+            
+        except Exception as e:
+            logger.error(f"Error in reviews migration: {e}")
+            raise
+    
+    def _get_game_designers(self, game):
+        """Extract designers from game data"""
+        designers = []
+        if game.get('designer_ids'):
+            designer_ids = game['designer_ids'].split(',')
+            designer_names = game['designer_names'].split(',')
+            designers = [{'id': int(did), 'name': name} 
+                    for did, name in zip(designer_ids, designer_names)]
+        return designers
+
+    def _get_game_artists(self, game):
+        """Extract artists from game data"""
+        artists = []
+        if game.get('artist_ids'):
+            artist_ids = game['artist_ids'].split(',')
+            artist_names = game['artist_names'].split(',')
+            artists = [{'id': int(aid), 'name': name} 
+                    for aid, name in zip(artist_ids, artist_names)]
+        return artists
+
+    def _get_game_genres(self, game):
+        """Extract genres from game data"""
+        genres = []
+        if game.get('genre_ids'):
+            genre_ids = game['genre_ids'].split(',')
+            genre_names = game['genre_names'].split(',')
+            genres = [{'id': int(gid), 'name': name} 
+                    for gid, name in zip(genre_ids, genre_names)]
+        return genres
+
     def migrate_users(self):
-        """Migrate users with nested social data"""
+        """Migrate users"""
         if not getattr(settings, 'MIGRATE_USERS', True):
             logger.info("Skipping users migration")
             return
@@ -102,84 +210,77 @@ class MySQLToMongoDBMigration:
         
         try:
             users_data = self.mysql_conn.get_complete_user_data()
+            user_documents = []
             
             for user in users_data:
-                try:
-                    friendships = self.mysql_conn.get_user_friendships(user['id'])
-                    messages = self.mysql_conn.get_user_messages(user['id'])
-                    
-                    sent_messages = [msg for msg in messages if msg['user_id_1'] == user['id']]
-                    received_messages = [msg for msg in messages if msg['user_id_2'] == user['id']]
-                    
-                    user_document = UserTransformer.transform_user_data(
-                        user, friendships, sent_messages, received_messages
-                    )
-                    user_document['metadata']['migrated_at'] = self._serialize_datetime(datetime.utcnow())
-                    
-                    self.mongodb_conn.insert_documents('users', [user_document])
-                    logger.info(f"Migrated user: {user['display_name']} (ID: {user['id']})")
-                    
-                except Exception as e:
-                    logger.error(f"Error migrating user {user['id']}: {e}")
-                    continue
+                user_doc = {
+                    '_id': user['id'],
+                    'display_name': user['display_name'],
+                    'username': user['username'],
+                    'email': user['email'],
+                    'dob': self._serialize_date(user['dob']),
+                    'metadata': {
+                        'source_id': user['id'],
+                        'migrated_at': self._serialize_datetime(datetime.utcnow())
+                    }
+                }
+                user_documents.append(user_doc)
             
-            logger.info("Users migration completed")
+            if user_documents:
+                self.mongodb_conn.insert_documents('users', user_documents)
+                logger.info(f"Migrated {len(user_documents)} users")
             
         except Exception as e:
             logger.error(f"Error in users migration: {e}")
             raise
-    
-    def migrate_matchups(self):
-        """Migrate matchups with complete game sessions"""
-        if not getattr(settings, 'MIGRATE_MATCHUPS', True):
-            logger.info("Skipping matchups migration")
-            return
         
-        logger.info("Starting matchups migration")
-        self.mongodb_conn.delete_collection('matchups')
+    def _update_game_ratings(self):
+        """Update average ratings in games based on reviews"""
+        logger.info("Updating game ratings based on reviews...")
         
         try:
-            matchups_data = self.mysql_conn.get_complete_matchup_data()
+            pipeline = [
+                {"$unwind": "$games"},
+                {"$group": {
+                    "_id": "$games",
+                    "avg_rating": {"$avg": "$star_amount"},
+                    "count": {"$sum": 1}
+                }}
+            ]
             
-            for matchup in matchups_data:
-                try:
-                    moves = self.mysql_conn.get_matchup_moves(matchup['id'])
-                    comments = self.mysql_conn.get_matchup_comments(matchup['id'])
-                    spectators = self.mysql_conn.get_matchup_spectators(matchup['id'])
-                    
-                    player_ids = [matchup['user_id_1'], matchup['user_id_2'], matchup['user_id_winner'], matchup['created_by_user_id']]
-                    players = self.mysql_conn.get_complete_user_data()
-                    relevant_players = [p for p in players if p['id'] in player_ids]
-                    
-                    game_data = self.mysql_conn.get_complete_game_data(matchup['game_id'])
-                    game_info = game_data[0] if game_data else None
-                    
-                    matchup_document = MatchupTransformer.transform_matchup_data(
-                        matchup, relevant_players, moves, comments, spectators, game_info
-                    )
-                    matchup_document['metadata']['migrated_at'] = self._serialize_datetime(datetime.utcnow())
-                    
-                    self.mongodb_conn.insert_documents('matchups', [matchup_document])
-                    logger.info(f"Migrated matchup: {matchup['id']}")
-                    
-                except Exception as e:
-                    logger.error(f"Error migrating matchup {matchup['id']}: {e}")
-                    continue
+            collection = self.mongodb_conn.db['reviews']
+            results = list(collection.aggregate(pipeline))
             
-            logger.info("Matchups migration completed")
+            games_collection = self.mongodb_conn.db['games']
+            
+            for result in results:
+                game_id = result['_id']
+                avg_rating = result['avg_rating']
+                count = result['count']
+                
+                games_collection.update_one(
+                    {"_id": game_id},
+                    {"$set": {
+                        "ratings.average_user_rating": avg_rating,
+                        "ratings.total_reviews": count
+                    }}
+                )
+            
+            logger.info(f"Updated ratings for {len(results)} games")
             
         except Exception as e:
-            logger.error(f"Error in matchups migration: {e}")
-            raise
+            logger.error(f"Error updating ratings: {e}")
     
     def migrate_all(self):
         """Run all migrations"""
         logger.info("Starting complete migration from MySQL to MongoDB")
         
         try:
-            self.migrate_games()
             self.migrate_users()
-            self.migrate_matchups()
+            self.migrate_reviews()
+            self.migrate_games()
+            
+            self._update_game_ratings()
             
             logger.info("All migrations completed successfully")
             
