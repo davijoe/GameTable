@@ -12,6 +12,8 @@ services:
       - ./backend/tests:/app/tests
     depends_on:
       - mysql8_database
+    networks:
+      - gametable-net
 
   mysql8_database:
     image: mysql:8.4
@@ -22,6 +24,8 @@ services:
       - "3306:3306"
     volumes:
       - mysql8_data:/var/lib/mysql
+    networks:
+      - gametable-net
 
   mongodb:
     image: mongo:7
@@ -42,6 +46,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 40s
+    networks:
+      - gametable-net
 
   neo4j_database:
     image: neo4j
@@ -70,6 +76,8 @@ services:
       timeout: 10s
       retries: 8
       start_period: 60s
+    networks:
+      - gametable-net
 
   frontend-server:
     container_name: gametable-frontend-server
@@ -87,6 +95,12 @@ services:
       CHOKIDAR_USEPOLLING: "true"
     depends_on:
       - backend-server
+    networks:
+      - gametable-net
+
+networks:
+  gametable-net:
+    name: gametable-net
 
 volumes:
   mysql8_data:
