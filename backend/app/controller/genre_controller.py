@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
 from app.service.genre_service import GenreService
-from app.utility.db_sql import get_db
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/genres", tags=["genres"])
 
@@ -15,7 +15,7 @@ def list_genres(
     q: Optional[str] = Query(None, description="Search by title"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_sql_db),
 ):
     svc = GenreService(db)
     items, total = svc.list(offset=offset, limit=limit, search=q)
@@ -23,7 +23,7 @@ def list_genres(
 
 
 @router.post("", response_model=GenreRead)
-def create_genre(payload: GenreCreate, db: Session = Depends(get_db)):
+def create_genre(payload: GenreCreate, db: Session = Depends(get_sql_db)):
     svc = GenreService(db)
     try:
         return svc.create(payload)
@@ -32,7 +32,7 @@ def create_genre(payload: GenreCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/{genre_id}", response_model=GenreRead)
-def get_genre(genre_id: int, db: Session = Depends(get_db)):
+def get_genre(genre_id: int, db: Session = Depends(get_sql_db)):
     svc = GenreService(db)
     item = svc.get(genre_id)
     if not item:
@@ -41,7 +41,7 @@ def get_genre(genre_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{genre_id}", response_model=GenreRead)
-def update_genre(genre_id: int, payload: GenreUpdate, db: Session = Depends(get_db)):
+def update_genre(genre_id: int, payload: GenreUpdate, db: Session = Depends(get_sql_db)):
     svc = GenreService(db)
     try:
         item = svc.update(genre_id, payload)
@@ -53,7 +53,7 @@ def update_genre(genre_id: int, payload: GenreUpdate, db: Session = Depends(get_
 
 
 @router.delete("/{genre_id}", status_code=204)
-def delete_genre(genre_id: int, db: Session = Depends(get_db)):
+def delete_genre(genre_id: int, db: Session = Depends(get_sql_db)):
     svc = GenreService(db)
     if not svc.delete(genre_id):
         raise HTTPException(status_code=404, detail="Genre not found")
