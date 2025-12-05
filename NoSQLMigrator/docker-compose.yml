@@ -1,82 +1,23 @@
 services:
-  mongodbMigration:
-    image: mongo:7
-    container_name: gametable-migration-database-mongodb
-    restart: unless-stopped
-    env_file: ".env"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
-      MONGO_INITDB_DATABASE: gametable_nosql
-    ports:
-      - "27018:27017"
-    volumes:
-      - mongodb_data:/data/db
-    networks:
-      - migration-network
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 40s
-
-  neo4j:
-    image: neo4j
-    container_name: gametable-migration-database-neo4j
-    restart: unless-stopped
-    environment:
-      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-password}
-      NEO4J_PLUGINS: '["apoc"]'
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    volumes:
-      - neo4j_data:/data
-    networks:
-      - migration-network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "cypher-shell",
-          "-u",
-          "${NEO4J_USER:-neo4j}",
-          "-p",
-          "${NEO4J_PASSWORD:-password}",
-          "RETURN 1",
-        ]
-      interval: 15s
-      timeout: 10s
-      retries: 8
-      start_period: 60s
-
   migration-app:
     build: .
+    container_name: gametable-nosql-migrator
     env_file: ".env"
+    networks:
+      - gametable-net
     environment:
-      - MYSQL_HOST=host.docker.internal
-      - MONGODB_HOST=mongodbMigration
+      - MYSQL_HOST=mysql8_database
+      - MONGODB_HOST=mongodb
       - MONGODB_PORT=27017
-      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_URI=bolt://neo4j_database:7687
     volumes:
       - .:/app
     working_dir: /app
     command: python scripts/run_all_migrations.py
     stdin_open: true
     tty: true
-    depends_on:
-      mongodbMigration:
-        condition: service_healthy
-      neo4j:
-        condition: service_healthy
-    networks:
-      - migration-network
-
-volumes:
-  mongodb_data:
-  neo4j_data:
 
 networks:
-  migration-network:
-    driver: bridge
+  gametable-net:
+    external: true
+    name: gametable-net
