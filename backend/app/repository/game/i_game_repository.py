@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple, Any
+from typing import Any
 from abc import ABC, abstractmethod
 
 class IGameRepository(ABC):
