@@ -3,10 +3,15 @@ from contextlib import contextmanager
 from pymongo import MongoClient
 
 MONGO_HOST = os.getenv("MONGODB_HOST")
-MONGO_PORT = int(os.getenv("MONGODB_PORT"))
-MONGO_DB   = os.getenv("MONGO_DATABASE")
+MONGO_PORT = os.getenv("MONGODB_PORT")
+MONGO_DB   = os.getenv("MONGODB_DATABASE")
+MONGO_USER = os.getenv("MONGODB_USER")
+MONGO_PASS = os.getenv("MONGODB_PASSWORD")
 
-_url = f"mongodb://{MONGO_HOST}:{MONGO_PORT}/"
+_url = (
+    f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}:{MONGO_PORT}/"
+    f"{MONGO_DB}?authSource=admin"
+)
 
 client = None
 
@@ -20,6 +25,6 @@ def get_db():
     client = get_client()
     try:
         client.admin.command("ping")
-    except Exception:
-        raise
-    yield client[MONGO_DB]
+        yield client[MONGO_DB]
+    finally:
+        pass
