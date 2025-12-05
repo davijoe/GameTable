@@ -3,40 +3,40 @@ from typing import List, Optional, Tuple
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.model.designer_model import Designer
+from app.model.genre_model import Genre
 
 
-class DesignerRepository:
+class SQLGenreRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def get(self, designer_id: int) -> Optional[Designer]:
-        return self.db.get(Designer, designer_id)
+    def get(self, genre_id: int) -> Optional[Genre]:
+        return self.db.get(Genre, genre_id)
 
     def list(
         self, offset: int = 0, limit: int = 50, search: Optional[str] = None
-    ) -> Tuple[List[Designer], int]:
-        stmt = select(Designer)
+    ) -> Tuple[List[Genre], int]:
+        stmt = select(Genre)
         if search:
             like = f"%{search}%"
-            stmt = stmt.where(Designer.name.ilike(like))
+            stmt = stmt.where(Genre.title.ilike(like))
         total = self.db.execute(
             select(func.count()).select_from(stmt.subquery())
         ).scalar_one()
         rows = self.db.execute(stmt.offset(offset).limit(limit)).scalars().all()
         return rows, total
 
-    def create(self, designer: Designer) -> Designer:
-        self.db.add(designer)
+    def create(self, genre: Genre) -> Genre:
+        self.db.add(genre)
         self.db.flush()
-        return designer
+        return genre
 
-    def update(self, designer: Designer) -> Designer:
-        self.db.merge(designer)
+    def update(self, genre: Genre) -> Genre:
+        self.db.merge(genre)
         self.db.flush()
-        return designer
+        return genre
 
-    def delete(self, designer: Designer) -> None:
-        self.db.delete(designer)
+    def delete(self, genre: Genre) -> None:
+        self.db.delete(genre)
         self.db.flush()
 

@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, Date, Double, Integer, String, Text
 
-from app.utility.db import Base
+from app.utility.db_sql import Base
 
 
 class Designer(Base):

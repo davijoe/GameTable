@@ -3,13 +3,13 @@ from typing import List, Optional, Tuple
 from sqlalchemy.orm import Session
 
 from app.model.designer_model import Designer
-from app.repository.designer_repository import DesignerRepository
 from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
+from app.repository.sql.sql_designer_repository import SQLDesignerRepository
 
 
 class DesignerService:
     def __init__(self, db: Session):
-        self.repo = DesignerRepository(db)
+        self.repo = SQLDesignerRepository(db)
         self.db = db
 
     def get(self, designer_id: int) -> Optional[DesignerRead]:

@@ -3,13 +3,13 @@ from typing import List, Optional, Tuple
 from sqlalchemy.orm import Session
 
 from app.model.artists_model import Artists
-from app.repository.artist_repository import ArtistRepository
 from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
+from app.repository.sql.sql_artist_repository import SQLArtistRepository
 
 
 class ArtistService:
     def __init__(self, db: Session):
-        self.repo = ArtistRepository(db)
+        self.repo = SQLArtistRepository(db)
         self.db = db
 
     def get(self, artist_id: int) -> Optional[ArtistRead]:

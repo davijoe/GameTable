@@ -1,6 +1,6 @@
 from sqlalchemy import Boolean, Column, Double, Integer, String, Text
 
-from app.utility.db import Base
+from app.utility.db_sql import Base
 
 
 class Genre(Base):

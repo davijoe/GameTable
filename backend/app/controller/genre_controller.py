@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
 from app.service.genre_service import GenreService
-from app.utility.db import get_db
+from app.utility.db_sql import get_db
 
 router = APIRouter(prefix="/api/genres", tags=["genres"])
 
