@@ -5,11 +5,12 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+
 class MySQLConnector:
     def __init__(self):
         self.connection = None
         self.connect()
-    
+
     def connect(self):
         try:
             self.connection = mysql.connector.connect(
@@ -18,13 +19,13 @@ class MySQLConnector:
                 database=settings.MYSQL_DATABASE,
                 user=settings.MYSQL_USER,
                 password=settings.MYSQL_PASSWORD,
-                charset='utf8mb4'
+                charset="utf8mb4",
             )
             logger.info("Connected to MySQL successfully")
         except Error as e:
             logger.error(f"Error connecting to MySQL: {e}")
             raise
-    
+
     def get_complete_game_data(self, game_id=None):
         """Get complete game data with all related entities"""
         query = """
@@ -44,22 +45,22 @@ class MySQLConnector:
         LEFT JOIN game_genres gg ON g.id = gg.game_id
         LEFT JOIN genre gen ON gg.genre_id = gen.id
         """
-        
+
         if game_id:
             query += " WHERE g.id = %s"
             params = (game_id,)
         else:
             params = None
-            
+
         query += " GROUP BY g.id"
-        
+
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query, params)
             return cursor.fetchall()
         finally:
             cursor.close()
-        
+
     def get_game_reviews(self, game_id):
         """Get all reviews for a game"""
         query = """
@@ -74,7 +75,7 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
-    
+
     def get_game_reviews_with_users(self, game_id, limit=None):
         """Get reviews for a game with user information"""
         query = """
@@ -84,20 +85,20 @@ class MySQLConnector:
         JOIN user u ON r.user_id = u.id
         WHERE gr.game_id = %s
         """
-        
+
         if limit:
             query += " LIMIT %s"
             params = (game_id, limit)
         else:
             params = (game_id,)
-        
+
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query, params)
             return cursor.fetchall()
         finally:
             cursor.close()
-            
+
     def get_review_comments(self, review_id):
         """Get comments for a review"""
         query = "SELECT * FROM review_comments WHERE review_id = %s"
@@ -107,16 +108,16 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
-    
+
     def get_complete_user_data(self, user_id=None):
         """Get user data with friendships and messages"""
         query = "SELECT * FROM user"
         params = None
-        
+
         if user_id:
             query += " WHERE id = %s"
             params = (user_id,)
-        
+
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query, params)
@@ -287,7 +288,7 @@ class MySQLConnector:
     def get_game_videos(self, game_id):
         """Get videos for a specific game"""
         query = """
-        SELECT v.*, l.language 
+        SELECT v.*, l.language
         FROM video v
         JOIN language l ON v.language_id = l.id
         WHERE v.game_id = %s
@@ -306,21 +307,22 @@ class MySQLConnector:
         FROM review r
         JOIN user u ON r.user_id = u.id
         """
-        
+
         if game_id:
             query += " WHERE r.game_id = %s"
             params = (game_id,)
         else:
             params = None
-            
+
         cursor = self.connection.cursor(dictionary=True)
         try:
             cursor.execute(query, params)
             return cursor.fetchall()
         finally:
             cursor.close()
-        
+
     def close(self):
         if self.connection and self.connection.is_connected():
             self.connection.close()
             logger.info("MySQL connection closed")
+

@@ -1,10 +1,8 @@
-from typing import List, Optional, Tuple
-
 from sqlalchemy.orm import Session
 
 from app.model.designer_model import Designer
-from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 from app.repository.sql.sql_designer_repository import SQLDesignerRepository
+from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 
 
 class DesignerService:
@@ -12,13 +10,13 @@ class DesignerService:
         self.repo = SQLDesignerRepository(db)
         self.db = db
 
-    def get(self, designer_id: int) -> Optional[DesignerRead]:
+    def get(self, designer_id: int) -> DesignerRead | None:
         obj = self.repo.get(designer_id)
         return DesignerRead.model_validate(obj) if obj else None
 
     def list(
-        self, offset: int, limit: int, search: Optional[str]
-    ) -> Tuple[List[DesignerRead], int]:
+        self, offset: int, limit: int, search: str | None
+    ) -> tuple[list[DesignerRead], int]:
         rows, total = self.repo.list(offset=offset, limit=limit, search=search)
         return [DesignerRead.model_validate(r) for r in rows], total
 
@@ -32,9 +30,7 @@ class DesignerService:
         self.db.refresh(obj)
         return DesignerRead.model_validate(obj)
 
-    def update(
-        self, designer_id: int, payload: DesignerUpdate
-    ) -> Optional[DesignerRead]:
+    def update(self, designer_id: int, payload: DesignerUpdate) -> DesignerRead | None:
         obj = self.repo.get(designer_id)
         if not obj:
             return None
@@ -61,4 +57,3 @@ class DesignerService:
         self.repo.delete(obj)
         self.db.commit()
         return True
-

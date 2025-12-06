@@ -2,6 +2,7 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
+
 class Neo4jTransformer:
     @staticmethod
     def create_user_nodes(users_data):
@@ -19,14 +20,14 @@ class Neo4jTransformer:
             })
             """
             query_dict = {
-                'query': query,
-                'params': {
-                    'id': user['id'],
-                    'display_name': user['display_name'],
-                    'username': user['username'],
-                    'email': user['email'],
-                    'dob': user.get('dob')
-                }
+                "query": query,
+                "params": {
+                    "id": user["id"],
+                    "display_name": user["display_name"],
+                    "username": user["username"],
+                    "email": user["email"],
+                    "dob": user.get("dob"),
+                },
             }
             queries.append(query_dict)
         return queries
@@ -53,23 +54,29 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': game['id'],
-                    'name': game['name'],
-                    'slug': game['slug'],
-                    'year_published': game['year_published'],
-                    'bgg_rating': float(game['bgg_rating']) if game['bgg_rating'] else 0.0,
-                    'difficulty_rating': float(game['difficulty_rating']) if game['difficulty_rating'] else 0.0,
-                    'description': game['description'],
-                    'playing_time': game['playing_time'],
-                    'min_players': game['min_players'],
-                    'max_players': game['max_players'],
-                    'thumbnail': game.get('thumbnail', ''),
-                    'image': game.get('image', '')  
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "id": game["id"],
+                        "name": game["name"],
+                        "slug": game["slug"],
+                        "year_published": game["year_published"],
+                        "bgg_rating": float(game["bgg_rating"])
+                        if game["bgg_rating"]
+                        else 0.0,
+                        "difficulty_rating": float(game["difficulty_rating"])
+                        if game["difficulty_rating"]
+                        else 0.0,
+                        "description": game["description"],
+                        "playing_time": game["playing_time"],
+                        "min_players": game["min_players"],
+                        "max_players": game["max_players"],
+                        "thumbnail": game.get("thumbnail", ""),
+                        "image": game.get("image", ""),
+                    },
                 }
-            })
+            )
         return queries
 
     @staticmethod
@@ -84,13 +91,15 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': publisher['id'],
-                    'name': publisher['name']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "id": publisher["id"],
+                        "name": publisher["name"],
+                    },
                 }
-            })
+            )
         return queries
 
     @staticmethod
@@ -105,15 +114,14 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': mechanic['id'],
-                    'name': mechanic['name']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {"id": mechanic["id"], "name": mechanic["name"]},
                 }
-            })
+            )
         return queries
-    
+
     @staticmethod
     def create_designer_nodes(designers_data):
         """Create Designer nodes"""
@@ -127,14 +135,16 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': designer['id'],
-                    'name': designer['name'],
-                    'dob': designer.get('dob')
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "id": designer["id"],
+                        "name": designer["name"],
+                        "dob": designer.get("dob"),
+                    },
                 }
-            })
+            )
         return queries
 
     @staticmethod
@@ -150,14 +160,16 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': artist['id'],
-                    'name': artist['name'],
-                    'dob': artist.get('dob')
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "id": artist["id"],
+                        "name": artist["name"],
+                        "dob": artist.get("dob"),
+                    },
                 }
-            })
+            )
         return queries
 
     @staticmethod
@@ -172,145 +184,172 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': genre['id'],
-                    'title': genre['name']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "id": genre["id"],
+                        "title": genre["name"],
+                    },
                 }
-            })
+            )
         return queries
 
     @staticmethod
-    def create_game_relationships(game_designers, game_artists, game_genres, game_publishers, game_mechanics):
-        """Create relationships between games and designers/artists/genres/publishers/mechanics"""
+    def create_game_relationships(
+        game_designers,
+        game_artists,
+        game_genres,
+        game_publishers,
+        game_mechanics,
+    ):
+        """Create relationships between games and
+        designers/artists/genres/publishers/mechanics"""
         queries = []
-        
+
         for gd in game_designers:
             query = """
             MATCH (g:Game {id: $game_id}), (d:Designer {id: $designer_id})
             CREATE (g)-[:DESIGNED_BY]->(d)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': gd['game_id'],
-                    'designer_id': gd['designer_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": gd["game_id"],
+                        "designer_id": gd["designer_id"],
+                    },
                 }
-            })
-        
+            )
+
         for ga in game_artists:
             query = """
             MATCH (g:Game {id: $game_id}), (a:Artist {id: $artist_id})
             CREATE (g)-[:ART_BY]->(a)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': ga['game_id'],
-                    'artist_id': ga['artist_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": ga["game_id"],
+                        "artist_id": ga["artist_id"],
+                    },
                 }
-            })
-        
+            )
+
         for gg in game_genres:
             query = """
             MATCH (g:Game {id: $game_id}), (gen:Genre {id: $genre_id})
             CREATE (g)-[:IN_GENRE]->(gen)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': gg['game_id'],
-                    'genre_id': gg['genre_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": gg["game_id"],
+                        "genre_id": gg["genre_id"],
+                    },
                 }
-            })
-        
+            )
+
         for gp in game_publishers:
             query = """
             MATCH (g:Game {id: $game_id}), (p:Publisher {id: $publisher_id})
             CREATE (g)-[:PUBLISHED_BY]->(p)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': gp['game_id'],
-                    'publisher_id': gp['publisher_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": gp["game_id"],
+                        "publisher_id": gp["publisher_id"],
+                    },
                 }
-            })
-        
+            )
+
         for gm in game_mechanics:
             query = """
             MATCH (g:Game {id: $game_id}), (m:Mechanic {id: $mechanic_id})
             CREATE (g)-[:USES_MECHANIC]->(m)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': gm['game_id'],
-                    'mechanic_id': gm['mechanic_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": gm["game_id"],
+                        "mechanic_id": gm["mechanic_id"],
+                    },
                 }
-            })
-            
+            )
+
         return queries
 
     @staticmethod
     def _create_player_relationships(matchup, players_data):
         """Create relationships between matchups and players"""
         queries = []
-        
-        queries.append({
-            'query': """
+
+        queries.append(
+            {
+                "query": """
             MATCH (m:Matchup {id: $matchup_id}), (u:User {id: $user_id})
             CREATE (u)-[:PARTICIPATED_IN {role: 'PLAYER1'}]->(m)
             """,
-            'params': {
-                'matchup_id': matchup['id'],
-                'user_id': matchup['user_id_1']
+                "params": {
+                    "matchup_id": matchup["id"],
+                    "user_id": matchup["user_id_1"],
+                },
             }
-        })
-        
-        queries.append({
-            'query': """
+        )
+
+        queries.append(
+            {
+                "query": """
             MATCH (m:Matchup {id: $matchup_id}), (u:User {id: $user_id})
             CREATE (u)-[:PARTICIPATED_IN {role: 'PLAYER2'}]->(m)
             """,
-            'params': {
-                'matchup_id': matchup['id'],
-                'user_id': matchup['user_id_2']
+                "params": {
+                    "matchup_id": matchup["id"],
+                    "user_id": matchup["user_id_2"],
+                },
             }
-        })
-        
-        if matchup['user_id_winner'] and matchup['user_id_winner'] != 0:
-            queries.append({
-                'query': """
+        )
+
+        if matchup["user_id_winner"] and matchup["user_id_winner"] != 0:
+            queries.append(
+                {
+                    "query": """
                 MATCH (m:Matchup {id: $matchup_id}), (u:User {id: $user_id})
                 CREATE (u)-[:WON]->(m)
                 """,
-                'params': {
-                    'matchup_id': matchup['id'],
-                    'user_id': matchup['user_id_winner']
+                    "params": {
+                        "matchup_id": matchup["id"],
+                        "user_id": matchup["user_id_winner"],
+                    },
                 }
-            })
-        
-        if matchup['created_by_user_id']:
-            queries.append({
-                'query': """
+            )
+
+        if matchup["created_by_user_id"]:
+            queries.append(
+                {
+                    "query": """
                 MATCH (m:Matchup {id: $matchup_id}), (u:User {id: $user_id})
                 CREATE (u)-[:CREATED]->(m)
                 """,
-                'params': {
-                    'matchup_id': matchup['id'],
-                    'user_id': matchup['created_by_user_id']
+                    "params": {
+                        "matchup_id": matchup["id"],
+                        "user_id": matchup["created_by_user_id"],
+                    },
                 }
-            })
-        
+            )
+
         return queries
 
     @staticmethod
     def create_review_nodes_and_relationships(reviews_data):
         """Create Review nodes and relationships - now with direct game_id"""
         queries = []
-        
+
         for review in reviews_data:
             review_query = """
             CREATE (r:Review {
@@ -321,38 +360,44 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': review_query,
-                'params': {
-                    'id': review['id'],
-                    'title': review['title'],
-                    'text': review.get('text', ''),
-                    'star_amount': review['star_amount']
+            queries.append(
+                {
+                    "query": review_query,
+                    "params": {
+                        "id": review["id"],
+                        "title": review["title"],
+                        "text": review.get("text", ""),
+                        "star_amount": review["star_amount"],
+                    },
                 }
-            })
-            
-            queries.append({
-                'query': """
+            )
+
+            queries.append(
+                {
+                    "query": """
                 MATCH (r:Review {id: $review_id}), (u:User {id: $user_id})
                 CREATE (u)-[:WROTE]->(r)
                 """,
-                'params': {
-                    'review_id': review['id'],
-                    'user_id': review['user_id']
+                    "params": {
+                        "review_id": review["id"],
+                        "user_id": review["user_id"],
+                    },
                 }
-            })
-            
-            queries.append({
-                'query': """
+            )
+
+            queries.append(
+                {
+                    "query": """
                 MATCH (r:Review {id: $review_id}), (g:Game {id: $game_id})
                 CREATE (r)-[:FOR_GAME]->(g)
                 """,
-                'params': {
-                    'review_id': review['id'],
-                    'game_id': review['game_id']
+                    "params": {
+                        "review_id": review["id"],
+                        "game_id": review["game_id"],
+                    },
                 }
-            })
-        
+            )
+
         return queries
 
     @staticmethod
@@ -364,15 +409,17 @@ class Neo4jTransformer:
             MATCH (g:Game {id: $game_id}), (r:Review {id: $review_id})
             CREATE (r)-[:FOR_GAME]->(g)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': gr['game_id'],
-                    'review_id': gr['review_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": gr["game_id"],
+                        "review_id": gr["review_id"],
+                    },
                 }
-            })
+            )
         return queries
-    
+
     @staticmethod
     def create_video_nodes(videos_data):
         """Create Video nodes"""
@@ -388,16 +435,18 @@ class Neo4jTransformer:
                 migrated_at: datetime()
             })
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'id': video['id'],
-                    'title': video['title'],
-                    'category': video.get('category'),
-                    'link': video['link'],
-                    'language': video.get('language')
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "id": video["id"],
+                        "title": video["title"],
+                        "category": video.get("category"),
+                        "link": video["link"],
+                        "language": video.get("language"),
+                    },
                 }
-            })
+            )
         return queries
 
     @staticmethod
@@ -409,11 +458,14 @@ class Neo4jTransformer:
             MATCH (g:Game {id: $game_id}), (v:Video {id: $video_id})
             CREATE (g)-[:HAS_VIDEO]->(v)
             """
-            queries.append({
-                'query': query,
-                'params': {
-                    'game_id': gv['game_id'],
-                    'video_id': gv['video_id']
+            queries.append(
+                {
+                    "query": query,
+                    "params": {
+                        "game_id": gv["game_id"],
+                        "video_id": gv["video_id"],
+                    },
                 }
-            })
+            )
         return queries
+

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
@@ -10,9 +10,9 @@ from app.utility.db_sql import get_sql_db
 router = APIRouter(prefix="/api/genres", tags=["genres"])
 
 
-@router.get("", response_model=Dict[str, Any])
+@router.get("", response_model=dict[str, Any])
 def list_genres(
-    q: Optional[str] = Query(None, description="Search by title"),
+    q: str | None = Query(None, description="Search by title"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
     db: Session = Depends(get_sql_db),
@@ -41,7 +41,9 @@ def get_genre(genre_id: int, db: Session = Depends(get_sql_db)):
 
 
 @router.put("/{genre_id}", response_model=GenreRead)
-def update_genre(genre_id: int, payload: GenreUpdate, db: Session = Depends(get_sql_db)):
+def update_genre(
+    genre_id: int, payload: GenreUpdate, db: Session = Depends(get_sql_db)
+):
     svc = GenreService(db)
     try:
         item = svc.update(genre_id, payload)
@@ -57,4 +59,3 @@ def delete_genre(genre_id: int, db: Session = Depends(get_sql_db)):
     svc = GenreService(db)
     if not svc.delete(genre_id):
         raise HTTPException(status_code=404, detail="Genre not found")
-

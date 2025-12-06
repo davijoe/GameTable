@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, EmailStr, constr
 
@@ -22,13 +21,12 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(ORMModel):
-    display_name: Optional[constr(max_length=25)] = None
-    username: Optional[constr(max_length=255)] = None
-    email: Optional[EmailStr] = None
-    dob: Optional[date] = None
-    password: Optional[constr(max_length=255)] = None
+    display_name: constr(max_length=25) | None = None
+    username: constr(max_length=255) | None = None
+    email: EmailStr | None = None
+    dob: date | None = None
+    password: constr(max_length=255) | None = None
 
 
 class UserRead(UserBase):
     id: int
-

@@ -1,10 +1,8 @@
-from typing import List, Optional, Tuple
-
 from sqlalchemy.orm import Session
 
 from app.model.artists_model import Artists
-from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 from app.repository.sql.sql_artist_repository import SQLArtistRepository
+from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 
 
 class ArtistService:
@@ -12,13 +10,13 @@ class ArtistService:
         self.repo = SQLArtistRepository(db)
         self.db = db
 
-    def get(self, artist_id: int) -> Optional[ArtistRead]:
+    def get(self, artist_id: int) -> ArtistRead | None:
         obj = self.repo.get(artist_id)
         return ArtistRead.model_validate(obj) if obj else None
 
     def list(
-        self, offset: int, limit: int, search: Optional[str]
-    ) -> Tuple[List[ArtistRead], int]:
+        self, offset: int, limit: int, search: str | None
+    ) -> tuple[list[ArtistRead], int]:
         rows, total = self.repo.list(offset=offset, limit=limit, search=search)
         return [ArtistRead.model_validate(r) for r in rows], total
 
@@ -32,7 +30,7 @@ class ArtistService:
         self.db.refresh(obj)
         return ArtistRead.model_validate(obj)
 
-    def update(self, artist_id: int, payload: ArtistUpdate) -> Optional[ArtistRead]:
+    def update(self, artist_id: int, payload: ArtistUpdate) -> ArtistRead | None:
         obj = self.repo.get(artist_id)
         if not obj:
             return None
@@ -59,4 +57,3 @@ class ArtistService:
         self.repo.delete(obj)
         self.db.commit()
         return True
-
