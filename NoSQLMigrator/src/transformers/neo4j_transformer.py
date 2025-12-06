@@ -48,6 +48,8 @@ class Neo4jTransformer:
                 playing_time: $playing_time,
                 min_players: $min_players,
                 max_players: $max_players,
+                thumbnail: $thumbnail,
+                image: $image,
                 migrated_at: datetime()
             })
             """
@@ -63,7 +65,9 @@ class Neo4jTransformer:
                     'description': game['description'],
                     'playing_time': game['playing_time'],
                     'min_players': game['min_players'],
-                    'max_players': game['max_players']
+                    'max_players': game['max_players'],
+                    'thumbnail': game.get('thumbnail', ''),
+                    'image': game.get('image', '')  
                 }
             })
         return queries
