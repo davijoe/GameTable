@@ -23,18 +23,43 @@ class MySQLToNeo4jMigration:
             raise
     
     def clear_existing_data(self):
-        """Clear existing data in Neo4j"""
-        logger.info("Clearing existing Neo4j data...")
+        """Clear ALL existing data in Neo4j including constraints"""
+        logger.info("Clearing existing Neo4j data and constraints...")
+        
         try:
-            query = "MATCH ()-[r]->() DELETE r"
-            self.neo4j_conn.execute_query(query)
+            constraints_query = "SHOW CONSTRAINTS"
+            constraints = self.neo4j_conn.execute_query(constraints_query)
             
-            query = "MATCH (n) DELETE n"
-            self.neo4j_conn.execute_query(query)
+            for constraint in constraints:
+                constraint_name = constraint['name']
+                drop_query = f"DROP CONSTRAINT {constraint_name} IF EXISTS"
+                self.neo4j_conn.execute_query(drop_query)
+                logger.info(f"Dropped constraint: {constraint_name}")
             
-            logger.info("Existing Neo4j data cleared")
+            indexes_query = "SHOW INDEXES"
+            indexes = self.neo4j_conn.execute_query(indexes_query)
+            
+            for index in indexes:
+                if index.get('name'):
+                    index_name = index['name']
+                    drop_query = f"DROP INDEX {index_name} IF EXISTS"
+                    self.neo4j_conn.execute_query(drop_query)
+                    logger.info(f"Dropped index: {index_name}")
+            
+            delete_query = """
+            MATCH (n)
+            CALL {
+                WITH n
+                DETACH DELETE n
+            } IN TRANSACTIONS OF 10000 ROWS
+            """
+            self.neo4j_conn.execute_query(delete_query)
+            
+            logger.info("Neo4j database completely cleared")
+            
         except Exception as e:
-            logger.warning(f"Could not clear existing data: {e}")
+            logger.error(f"Error clearing Neo4j data: {e}")
+            raise
     
     def create_constraints(self):
         """Create constraints for better performance and data integrity"""
