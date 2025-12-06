@@ -23,7 +23,13 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql8_data:/var/lib/mysql
+      - ./db/mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     networks:
       - gametable-net
 
@@ -39,7 +45,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo_data:/data/db
+      - ./db/mongo:/data/db
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -60,7 +66,7 @@ services:
       - "7474:7474"
       - "7687:7687"
     volumes:
-      - neo4j_data:/data
+      - ./db/neo4j:/data
     healthcheck:
       test:
         [
@@ -101,11 +107,3 @@ services:
 networks:
   gametable-net:
     name: gametable-net
-
-volumes:
-  mysql8_data:
-    name: semester_project_mysql_data
-  mongo_data:
-    name: semester_project_mongo_data
-  neo4j_data:
-    name: semester_project_neo4j_data
