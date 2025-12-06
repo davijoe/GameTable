@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from pydantic import BaseModel, ConfigDict, constr
 
 
@@ -11,7 +9,7 @@ class ORMModel(BaseModel):
 
 class GenreBase(ORMModel):
     title: constr(max_length=30)
-    description: Optional[constr(max_length=255)] = None
+    description: constr(max_length=255) | None = None
 
 
 class GenreCreate(GenreBase):
@@ -19,10 +17,9 @@ class GenreCreate(GenreBase):
 
 
 class GenreUpdate(ORMModel):
-    title: Optional[constr(max_length=30)] = None
-    description: Optional[constr(max_length=255)] = None
+    title: constr(max_length=30) | None = None
+    description: constr(max_length=255) | None = None
 
 
 class GenreRead(GenreBase):
     id: int
-

@@ -21,7 +21,7 @@ class SQLUserRepository:
 
     def list(
         self, offset: int = 0, limit: int = 50, search: Optional[str] = None
-    ) -> Tuple[List[User], int]:
+    ) -> tuple[list[User], int]:
         stmt = select(User)
         if search:
             like = f"%{search}%"
@@ -47,4 +47,3 @@ class SQLUserRepository:
     def delete(self, user: User) -> None:
         self.db.delete(user)
         self.db.flush()
-

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
@@ -10,7 +10,7 @@ from app.utility.db_sql import get_sql_db
 router = APIRouter(prefix="/api/designers", tags=["designers"])
 
 
-@router.get("", response_model=Dict[str, Any])
+@router.get("", response_model=dict[str, Any])
 def list_designers(
     q: Optional[str] = Query(None, description="Search by name"),
     offset: int = Query(0, ge=0),
@@ -59,4 +59,3 @@ def delete_designer(designer_id: int, db: Session = Depends(get_sql_db)):
     svc = DesignerService(db)
     if not svc.delete(designer_id):
         raise HTTPException(status_code=404, detail="Designer not found")
-

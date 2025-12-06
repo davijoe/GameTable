@@ -17,18 +17,19 @@ def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
     """Authenticate user and return JWT token."""
     svc = UserService(db)
     user = svc.authenticate(payload.username, payload.password)
-    
+
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    
+
     access_token = create_access_token(user_id=user.id, username=user.username)
-    
+
     return LoginResponse(
         access_token=access_token,
         user_id=user.id,
         username=user.username,
         display_name=user.display_name,
     )
+
 
 @router.get("")
 def list_users(

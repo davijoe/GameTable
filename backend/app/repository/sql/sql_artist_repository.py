@@ -15,7 +15,7 @@ class SQLArtistRepository:
 
     def list(
         self, offset: int = 0, limit: int = 50, search: Optional[str] = None
-    ) -> Tuple[List[Artists], int]:
+    ) -> tuple[list[Artists], int]:
         stmt = select(Artists)
         if search:
             like = f"%{search}%"
@@ -39,4 +39,3 @@ class SQLArtistRepository:
     def delete(self, artist: Artists) -> None:
         self.db.delete(artist)
         self.db.flush()
-

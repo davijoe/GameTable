@@ -26,4 +26,3 @@ class ArtistUpdate(ORMModel):
 
 class ArtistRead(ArtistBase):
     id: int
-

@@ -50,4 +50,3 @@ class GameRepositorySQL(IGameRepository):
         self.db.delete(obj)
         self.db.commit()
         return True
-

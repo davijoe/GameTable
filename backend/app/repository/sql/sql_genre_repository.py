@@ -15,7 +15,7 @@ class SQLGenreRepository:
 
     def list(
         self, offset: int = 0, limit: int = 50, search: Optional[str] = None
-    ) -> Tuple[List[Genre], int]:
+    ) -> tuple[list[Genre], int]:
         stmt = select(Genre)
         if search:
             like = f"%{search}%"
@@ -39,4 +39,3 @@ class SQLGenreRepository:
     def delete(self, genre: Genre) -> None:
         self.db.delete(genre)
         self.db.flush()
-

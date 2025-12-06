@@ -1,15 +1,16 @@
+from typing import Any, Optional
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional, Dict, Any
 
-from app.utility.db_sql import get_sql_db
-from app.schema.artist_schema import ArtistRead, ArtistCreate, ArtistUpdate
+from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 from app.service.artist_service import ArtistService
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/artists", tags=["artists"])
 
 
-@router.get("", response_model=Dict[str, Any])
+@router.get("", response_model=dict[str, Any])
 def list_artists(
     q: Optional[str] = Query(None, description="Search by name"),
     offset: int = Query(0, ge=0),
@@ -40,7 +41,9 @@ def get_artist(artist_id: int, db: Session = Depends(get_sql_db)):
 
 
 @router.put("/{artist_id}", response_model=ArtistRead)
-def update_artist(artist_id: int, payload: ArtistUpdate, db: Session = Depends(get_sql_db)):
+def update_artist(
+    artist_id: int, payload: ArtistUpdate, db: Session = Depends(get_sql_db)
+):
     svc = ArtistService(db)
     try:
         item = svc.update(artist_id, payload)
@@ -56,4 +59,3 @@ def delete_artist(artist_id: int, db: Session = Depends(get_sql_db)):
     svc = ArtistService(db)
     if not svc.delete(artist_id):
         raise HTTPException(status_code=404, detail="Artist not found")
-
