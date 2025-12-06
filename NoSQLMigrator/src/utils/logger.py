@@ -38,4 +38,3 @@ logger = setup_logger()
 def get_logger(name):
     """Get logger for specific module"""
     return logging.getLogger(f"data_migration.{name}")
-
