@@ -1,53 +1,59 @@
-from typing import Any, Dict, Optional
+from typing import Any
 
 from fastapi import APIRouter, HTTPException
-#from sqlalchemy.orm import Session
 
+# from sqlalchemy.orm import Session
 from app.schema.game_schema import GameCreate, GameRead, GameUpdate
 from app.service.game_service import GameService
 
 router = APIRouter(prefix="/api/games", tags=["games"])
 
-@router.get("", response_model=Dict[str, Any])
+
+@router.get("", response_model=dict[str, Any])
 def list_games(
-	q: Optional[str] = None,
-	offset: int = 0,
-	limit: int = 50,
+    q: str | None = None,
+    offset: int = 0,
+    limit: int = 50,
 ):
-	svc = GameService()
-	items, total = svc.list(offset=offset, limit=limit, search=q)
-	return {"total": total, "offset": offset, "limit": limit, "items": items}
+    svc = GameService()
+    items, total = svc.list(offset=offset, limit=limit, search=q)
+    return {"total": total, "offset": offset, "limit": limit, "items": items}
+
 
 @router.get("/{game_id}", response_model=GameRead)
 def get_game(game_id: str):
-	svc = GameService()
-	item = svc.get(game_id)
-	if not item:
-		raise HTTPException(404, "Game not found")
-	return item
+    svc = GameService()
+    item = svc.get(game_id)
+    if not item:
+        raise HTTPException(404, "Game not found")
+    return item
+
 
 @router.post("", response_model=GameRead, status_code=201)
 def create_game(payload: GameCreate):
-	svc = GameService()
-	return svc.create(payload)
+    svc = GameService()
+    return svc.create(payload)
+
 
 @router.patch("/{game_id}", response_model=GameRead)
 def update_game(game_id: str, payload: GameUpdate):
-	svc = GameService()
-	item = svc.update(game_id, payload)
-	if not item:
-		raise HTTPException(404, "Game not found")
-	return item
+    svc = GameService()
+    item = svc.update(game_id, payload)
+    if not item:
+        raise HTTPException(404, "Game not found")
+    return item
+
 
 @router.delete("/{game_id}", status_code=204)
 def delete_game(game_id: str):
-	svc = GameService()
-	ok = svc.delete(game_id)
-	if not ok:
-		raise HTTPException(404, "Game not found")
+    svc = GameService()
+    ok = svc.delete(game_id)
+    if not ok:
+        raise HTTPException(404, "Game not found")
 
-#old controller before new architecture - graveyard because might use for descriptions or other?
-'''
+
+# old controller before new architecture - graveyard because might use for descriptions or other?
+"""
 @router.get("", response_model=Dict[str, Any])
 def list_games(
     q: Optional[str] = Query(None, description="Search by name"),
@@ -90,4 +96,5 @@ def delete_game(game_id: int, db: Session = Depends(get_db)):
     ok = svc.delete(game_id)
     if not ok:
         raise HTTPException(status_code=404, detail="Game not found")
-'''
+"""
+

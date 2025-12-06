@@ -1,10 +1,8 @@
-from typing import List, Optional, Tuple
-
 from sqlalchemy.orm import Session
 
 from app.model.genre_model import Genre
-from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
 from app.repository.sql.sql_genre_repository import SQLGenreRepository
+from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
 
 
 class GenreService:
@@ -12,13 +10,13 @@ class GenreService:
         self.repo = SQLGenreRepository(db)
         self.db = db
 
-    def get(self, genre_id: int) -> Optional[GenreRead]:
+    def get(self, genre_id: int) -> GenreRead | None:
         obj = self.repo.get(genre_id)
         return GenreRead.model_validate(obj) if obj else None
 
     def list(
-        self, offset: int, limit: int, search: Optional[str]
-    ) -> Tuple[List[GenreRead], int]:
+        self, offset: int, limit: int, search: str | None
+    ) -> tuple[list[GenreRead], int]:
         rows, total = self.repo.list(offset=offset, limit=limit, search=search)
         return [GenreRead.model_validate(r) for r in rows], total
 
@@ -32,7 +30,7 @@ class GenreService:
         self.db.refresh(obj)
         return GenreRead.model_validate(obj)
 
-    def update(self, genre_id: int, payload: GenreUpdate) -> Optional[GenreRead]:
+    def update(self, genre_id: int, payload: GenreUpdate) -> GenreRead | None:
         obj = self.repo.get(genre_id)
         if not obj:
             return None
@@ -59,4 +57,3 @@ class GenreService:
         self.repo.delete(obj)
         self.db.commit()
         return True
-

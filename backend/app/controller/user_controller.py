@@ -1,5 +1,3 @@
-from typing import Optional
-
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
@@ -17,12 +15,12 @@ def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
     """Authenticate user and return JWT token."""
     svc = UserService(db)
     user = svc.authenticate(payload.username, payload.password)
-    
+
     if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    
+
     access_token = create_access_token(user_id=user.id, username=user.username)
-    
+
     return LoginResponse(
         access_token=access_token,
         user_id=user.id,
@@ -30,9 +28,13 @@ def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
         display_name=user.display_name,
     )
 
+
 @router.get("")
 def list_users(
-    q: Optional[str] = Query(None, description="Search by display name or username"),
+    q: str | None = Query(
+        None,
+        description="Search by display name or username",
+    ),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
     db: Session = Depends(get_sql_db),
@@ -47,7 +49,10 @@ def create_user(payload: UserCreate, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
 
     if svc.get_by_username(payload.username):
-        raise HTTPException(status_code=400, detail="Username already registered")
+        raise HTTPException(
+            status_code=400,
+            detail="Username already registered",
+        )
 
     if svc.get_by_email(payload.email):
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -71,12 +76,18 @@ def update_user(user_id: int, payload: UserUpdate, db: Session = Depends(get_sql
     if payload.username is not None:
         existing_user = svc.get_by_username(payload.username)
         if existing_user and existing_user.id != user_id:
-            raise HTTPException(status_code=400, detail="Username already taken")
+            raise HTTPException(
+                status_code=400,
+                detail="Username already taken",
+            )
 
     if payload.email is not None:
         existing_user = svc.get_by_email(payload.email)
         if existing_user and existing_user.id != user_id:
-            raise HTTPException(status_code=400, detail="Email already registered")
+            raise HTTPException(
+                status_code=400,
+                detail="Email already registered",
+            )
 
     item = svc.update(user_id, payload)
     if not item:

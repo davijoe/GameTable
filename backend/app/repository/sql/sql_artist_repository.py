@@ -1,5 +1,3 @@
-from typing import List, Optional, Tuple
-
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
@@ -10,12 +8,12 @@ class SQLArtistRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def get(self, artist_id: int) -> Optional[Artists]:
+    def get(self, artist_id: int) -> Artists | None:
         return self.db.get(Artists, artist_id)
 
     def list(
-        self, offset: int = 0, limit: int = 50, search: Optional[str] = None
-    ) -> Tuple[List[Artists], int]:
+        self, offset: int = 0, limit: int = 50, search: str | None = None
+    ) -> tuple[list[Artists], int]:
         stmt = select(Artists)
         if search:
             like = f"%{search}%"
@@ -39,4 +37,3 @@ class SQLArtistRepository:
     def delete(self, artist: Artists) -> None:
         self.db.delete(artist)
         self.db.flush()
-

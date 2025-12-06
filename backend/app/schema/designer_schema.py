@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from datetime import date
-from typing import Optional
 
 from pydantic import BaseModel, ConfigDict, constr
 
@@ -12,7 +11,7 @@ class ORMModel(BaseModel):
 
 class DesignerBase(ORMModel):
     name: constr(max_length=255)
-    dob: Optional[date] = None
+    dob: date | None = None
 
 
 class DesignerCreate(DesignerBase):
@@ -20,10 +19,9 @@ class DesignerCreate(DesignerBase):
 
 
 class DesignerUpdate(ORMModel):
-    name: Optional[constr(max_length=255)] = None
-    dob: Optional[date] = None
+    name: constr(max_length=255) | None = None
+    dob: date | None = None
 
 
 class DesignerRead(DesignerBase):
     id: int
-
