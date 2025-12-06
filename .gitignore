@@ -2,7 +2,7 @@
 .env
 
 ### Other
-backups/
+backups/*
 
 
 ### Database stuff
@@ -14,4 +14,4 @@ db/neo4j/*
 !db/mysql/.gitkeep
 !db/mongo/.gitkeep
 !db/neo4j/.gitkeep
-
+!backups/.gitkeep
