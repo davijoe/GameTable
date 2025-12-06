@@ -1,1 +1,17 @@
+### Environment
 .env
+
+### Other
+backups/
+
+
+### Database stuff
+db/mongo/*
+db/mysql/*
+db/neo4j/*
+
+### Keep empty folder structure
+!db/mysql/.gitkeep
+!db/mongo/.gitkeep
+!db/neo4j/.gitkeep
+
