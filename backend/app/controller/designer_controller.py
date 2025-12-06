@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 from app.service.designer_service import DesignerService
-from app.utility.db_sql import get_db
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/designers", tags=["designers"])
 
@@ -15,7 +15,7 @@ def list_designers(
     q: Optional[str] = Query(None, description="Search by name"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_sql_db),
 ):
     svc = DesignerService(db)
     items, total = svc.list(offset=offset, limit=limit, search=q)
@@ -23,7 +23,7 @@ def list_designers(
 
 
 @router.post("", response_model=DesignerRead)
-def create_designer(payload: DesignerCreate, db: Session = Depends(get_db)):
+def create_designer(payload: DesignerCreate, db: Session = Depends(get_sql_db)):
     svc = DesignerService(db)
     try:
         return svc.create(payload)
@@ -32,7 +32,7 @@ def create_designer(payload: DesignerCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/{designer_id}", response_model=DesignerRead)
-def get_designer(designer_id: int, db: Session = Depends(get_db)):
+def get_designer(designer_id: int, db: Session = Depends(get_sql_db)):
     svc = DesignerService(db)
     item = svc.get(designer_id)
     if not item:
@@ -42,7 +42,7 @@ def get_designer(designer_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{designer_id}", response_model=DesignerRead)
 def update_designer(
-    designer_id: int, payload: DesignerUpdate, db: Session = Depends(get_db)
+    designer_id: int, payload: DesignerUpdate, db: Session = Depends(get_sql_db)
 ):
     svc = DesignerService(db)
     try:
@@ -55,7 +55,7 @@ def update_designer(
 
 
 @router.delete("/{designer_id}", status_code=204)
-def delete_designer(designer_id: int, db: Session = Depends(get_db)):
+def delete_designer(designer_id: int, db: Session = Depends(get_sql_db)):
     svc = DesignerService(db)
     if not svc.delete(designer_id):
         raise HTTPException(status_code=404, detail="Designer not found")

@@ -1,11 +1,10 @@
 from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException
+#from sqlalchemy.orm import Session
 
 from app.schema.game_schema import GameCreate, GameRead, GameUpdate
 from app.service.game_service import GameService
-from app.utility.db_sql import get_db
 
 router = APIRouter(prefix="/api/games", tags=["games"])
 
@@ -47,7 +46,7 @@ def delete_game(game_id: str):
 	if not ok:
 		raise HTTPException(404, "Game not found")
 
-#old controller before new architecture - graveyard because might use 
+#old controller before new architecture - graveyard because might use for descriptions or other?
 '''
 @router.get("", response_model=Dict[str, Any])
 def list_games(

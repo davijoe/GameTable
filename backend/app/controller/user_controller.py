@@ -7,13 +7,13 @@ from app.schema.auth_schema import LoginRequest, LoginResponse
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 from app.service.user_service import UserService
 from app.utility.auth import create_access_token
-from app.utility.db_sql import get_db
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/users", tags=["users"])
 
 
 @router.post("/auth/login", response_model=LoginResponse)
-def login(payload: LoginRequest, db: Session = Depends(get_db)):
+def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
     """Authenticate user and return JWT token."""
     svc = UserService(db)
     user = svc.authenticate(payload.username, payload.password)
@@ -30,13 +30,12 @@ def login(payload: LoginRequest, db: Session = Depends(get_db)):
         display_name=user.display_name,
     )
 
-
 @router.get("")
 def list_users(
     q: Optional[str] = Query(None, description="Search by display name or username"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_db),
+    db: Session = Depends(get_sql_db),
 ):
     svc = UserService(db)
     items, total = svc.list(offset=offset, limit=limit, search=q)
@@ -44,7 +43,7 @@ def list_users(
 
 
 @router.post("", response_model=UserRead)
-def create_user(payload: UserCreate, db: Session = Depends(get_db)):
+def create_user(payload: UserCreate, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
 
     if svc.get_by_username(payload.username):
@@ -57,7 +56,7 @@ def create_user(payload: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/{user_id}", response_model=UserRead)
-def get_user(user_id: int, db: Session = Depends(get_db)):
+def get_user(user_id: int, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
     item = svc.get(user_id)
     if not item:
@@ -66,7 +65,7 @@ def get_user(user_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{user_id}", response_model=UserRead)
-def update_user(user_id: int, payload: UserUpdate, db: Session = Depends(get_db)):
+def update_user(user_id: int, payload: UserUpdate, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
 
     if payload.username is not None:
@@ -86,7 +85,7 @@ def update_user(user_id: int, payload: UserUpdate, db: Session = Depends(get_db)
 
 
 @router.delete("/{user_id}", status_code=204)
-def delete_user(user_id: int, db: Session = Depends(get_db)):
+def delete_user(user_id: int, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
     if not svc.delete(user_id):
         raise HTTPException(status_code=404, detail="User not found")
