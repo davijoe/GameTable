@@ -65,8 +65,6 @@ class GameBase(ORMModel):
         return v
 
     description: str | None = Field(None, min_length=1, max_length=65535)
-    playing_time: int | None = None
-    available: bool | None = None
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
     image: str | None = None
@@ -83,10 +81,8 @@ class GameUpdate(ORMModel):
     year_published: int | None = None
     difficulty_rating: confloat() | None = None
     description: str | None = None
-    playing_time: int | None = None
-    available: bool | None = None
-    min_players: int | None = None
-    max_players: int | None = None
+    min_players: int | None = Field(None, ge=1, le=999)
+    max_players: int | None = Field(None, ge=1, le=999)
     image: str | None = None
     thumbnail: str | None = None
 
