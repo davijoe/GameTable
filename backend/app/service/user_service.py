@@ -35,13 +35,6 @@ class UserService:
         rows, total = self.repo.list(offset=offset, limit=limit, search=search)
         return [UserRead.model_validate(r) for r in rows], total
 
-    #    def create(self, payload: UserCreate) -> UserRead:
-    #        obj = User(**payload.model_dump())
-    #        obj = self.repo.create(obj)
-    #        self.db.commit()
-    #        self.db.refresh(obj)
-    #        return UserRead.model_validate(obj)
-
     def create(self, payload: UserCreate) -> UserRead:
         data = payload.model_dump()
         data["password"] = self._hash_password(data["password"])
@@ -51,20 +44,6 @@ class UserService:
         self.db.commit()
         self.db.refresh(obj)
         return UserRead.model_validate(obj)
-
-    #    def update(self, user_id: int, payload: UserUpdate) -> UserRead | None:
-    #        obj = self.repo.get(user_id)
-    #        if not obj:
-    #            return None
-    #
-    #        update_data = payload.model_dump(exclude_unset=True)
-    #        for key, value in update_data.items():
-    #            setattr(obj, key, value)
-    #
-    #        obj = self.repo.update(obj)
-    #        self.db.commit()
-    #        self.db.refresh(obj)
-    #        return UserRead.model_validate(obj)
 
     def update(self, user_id: int, payload: UserUpdate) -> UserRead | None:
         obj = self.repo.get(user_id)
@@ -91,23 +70,6 @@ class UserService:
         self.repo.delete(obj)
         self.db.commit()
         return True
-
-    #    def authenticate(self, username: str, password: str) -> UserRead | None:
-    #        """Authenticate a user by username and password.
-    #
-    #        Returns the user if credentials are valid, None otherwise.
-    #        Password in database is hashed with SHA256.
-    #        """
-    #        user = self.repo.get_by_username(username)
-    #        if not user:
-    #            return None
-    #
-    #        # Hash the input password and compare with database password
-    #        hashed_input = hashlib.sha256(password.encode()).hexdigest()
-    #        if hashed_input != user.password:
-    #            return None
-    #
-    #        return UserRead.model_validate(user)
 
     def authenticate(self, username: str, password: str):
         user = self.repo.get_by_username(username)
