@@ -33,19 +33,24 @@ DELIMITER ;
 
 -- event updates game.bgg_rating everyday day
 DELIMITER $$
+
 CREATE EVENT update_bgg_ratings
 ON SCHEDULE EVERY 1 DAY
 STARTS '2025-12-07 16:22:00'
 DO
 BEGIN
     UPDATE game g
-    SET g.bgg_rating = (
-        SELECT AVG(r.star_amount)
-        FROM review r
-        WHERE r.game_id = g.id
-    )
+    SET g.bgg_rating = ROUND(GREATEST(
+        (
+            SELECT AVG(r.star_amount)
+            FROM review r
+            WHERE r.game_id = g.id
+        ),
+        1
+    ))
     WHERE g.id IS NOT NULL;
 END $$
+
 DELIMITER ;
 
 -- function GetGameReviewCount(game id)
