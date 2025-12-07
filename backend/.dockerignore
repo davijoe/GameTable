@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# uv cache
+.uv/
+
+# OS and editor clutter
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Docker
+docker-compose.yml
