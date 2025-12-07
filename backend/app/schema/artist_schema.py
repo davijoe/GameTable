@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import re
-
 from datetime import date
 
 from pydantic import BaseModel, ConfigDict, constr, field_validator
