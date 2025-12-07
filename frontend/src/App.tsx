@@ -3,7 +3,7 @@ import { Box } from "@chakra-ui/react";
 import GamesTab from "./components/tabs/Games";
 import FriendsTab from "./components/tabs/Friends";
 import MessagesTab from "./components/tabs/Messages";
-import LeaderboardTab from "./components/tabs/Leaderboard";
+import WeatherTab from "./components/tabs/WeatherTab";
 import ProfileTab from "./components/tabs/Profile";
 import Header from "./components/Header";
 import { AuthProvider } from "./context/AuthContext";
@@ -22,7 +22,7 @@ function App() {
           <Route path="/games/:gameId" element={<SelectedGame />} />
           <Route path="/friends" element={<FriendsTab />} />
           <Route path="/messages" element={<MessagesTab />} />
-          <Route path="/leaderboard" element={<LeaderboardTab />} />
+          <Route path="/leaderboard" element={<WeatherTab />} />
           <Route path="/profile" element={<ProfileTab />} />
           <Route path="*" element={<GamesTab />} /> {/* should maybe be error page instead? */}
         </Routes>
