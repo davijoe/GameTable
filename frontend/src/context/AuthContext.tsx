@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (username: string, password: string) => {
     const apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-    const response = await fetch(`${apiBase}/api/users/auth/login`, {
+    const response = await fetch(`${apiBase}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
