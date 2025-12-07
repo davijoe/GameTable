@@ -81,6 +81,7 @@ class GameUpdate(ORMModel):
     year_published: int | None = None
     difficulty_rating: confloat() | None = None
     description: str | None = None
+    playing_time: int | None = None
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
     image: str | None = None
