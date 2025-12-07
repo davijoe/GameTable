@@ -22,7 +22,7 @@ function App() {
           <Route path="/games/:gameId" element={<SelectedGame />} />
           <Route path="/friends" element={<FriendsTab />} />
           <Route path="/messages" element={<MessagesTab />} />
-          <Route path="/leaderboard" element={<WeatherTab />} />
+          <Route path="/weather" element={<WeatherTab />} />
           <Route path="/profile" element={<ProfileTab />} />
           <Route path="*" element={<GamesTab />} /> {/* should maybe be error page instead? */}
         </Routes>
