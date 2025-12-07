@@ -63,7 +63,7 @@ class GameBase(ORMModel):
         if len(str(v).split(".")[-1]) > 2:
             raise ValueError("Difficulty rating must have at most 2 decimal places")
         return v
-
+    playing_time: int | None = None
     description: str | None = Field(None, min_length=1, max_length=65535)
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
