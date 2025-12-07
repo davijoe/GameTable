@@ -43,4 +43,9 @@ export default class ApiClient<T> {
 		const res = await api.delete(`${this.endpoint}/${id}`);
 		return res.data;
 	}
+
+	async getOne(config?: AxiosRequestConfig): Promise<T> {
+		const res = await api.get<T>(this.endpoint, config);
+		return res.data;
+	}
 }
