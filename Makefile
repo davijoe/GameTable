@@ -42,4 +42,4 @@ build-migrator:
 	cd NoSQLMigrator/ && docker compose build --no-cache
 
 build: build-frontend build-backend build-migrator
-	@echo "Gotta build all, dockermon"
+	@echo "YAY. Since you are seeing this message, your build has definitely potentially succeeded."
