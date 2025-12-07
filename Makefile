@@ -1,5 +1,14 @@
+### Commands abbreviation
+DEV_COMPOSE=docker compose -f docker-compose.dev.yml
+
+### Env / Dev VARS
+FRONTEND-SERVICE=frontend-server
+BACKEND-SERVICE=backend-server
+
+
 .PHONY: frontend backend migrator scraper setup
 
+### Install Dependencies!
 frontend:
 	cd frontend && bun install
 
@@ -13,3 +22,24 @@ scraper:
 	cd data-aggregator && uv sync
 
 setup: frontend backend migrator scraper
+
+
+### Build and Run Docker Containers and Images
+down:
+	$(DEV_COMPOSE) down
+	cd NoSQLMigrator/ && docker compose down
+
+up:
+	$(DEV_COMPOSE) up -d
+
+build-frontend:
+	$(DEV_COMPOSE) build $(FRONTEND-SERVICE) --no-cache
+
+build-backend:
+	$(DEV_COMPOSE) build $(BACKEND-SERVICE) --no-cache
+
+build-migrator:
+	cd NoSQLMigrator/ && docker compose build --no-cache
+
+build: build-frontend build-backend build-migrator
+	@echo "Gotta build all, dockermon"
