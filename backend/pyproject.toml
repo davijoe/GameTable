@@ -15,6 +15,7 @@ dependencies = [
   "pymongo>=4.4",
   "neo4j>=5.14",
   "requests>=2.32.5",
+  "bcrypt>=5.0.0",
 ]
 
 [dependency-groups]
