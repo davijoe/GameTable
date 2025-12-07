@@ -195,6 +195,41 @@ class TestGameDifficultyRating:
         assert game.difficulty_rating == difficulty_rating
 
 
+class TestGameDescription:
+    @pytest.mark.parametrize(
+        "description",
+        [
+            "",  # empty string
+            65536,  # will build 65536-char string
+            65537,  # will build 65537-char string
+            100000,  # will build 100000-char string
+        ],
+    )
+    def test_invalid_description(self, description):
+        with pytest.raises(ValidationError):
+            GameCreate(name="Valid Name", description="A" * description if isinstance(description, int) else description)
+
+    @pytest.mark.parametrize(
+        "description",
+        [
+            "A",  # 1 character
+            "A" * 2,  # 2 characters
+            "great game!",  # special characters
+            30000,  # will build 30000-char string
+            65534,  # will build 65534-char string
+            65535,  # will build 65535-char string (max)
+        ],
+    )
+    def test_valid_description(self, description):
+        if isinstance(description, int):
+            desc = "A" * description
+            game = GameCreate(name="Valid Name", description=desc)
+            assert hash(game.description) == hash(desc)
+        else:
+            game = GameCreate(name="Valid Name", description=description)
+            assert game.description == description
+
+
 class TestGameMinPlayers:
     @pytest.mark.parametrize(
         "min_players",
