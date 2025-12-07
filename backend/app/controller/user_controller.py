@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.model.user_model import User
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 from app.service.user_service import UserService
-from app.utility.auth import get_current_user
+from app.utility.auth import get_current_user, require_admin
 from app.utility.db_sql import get_sql_db
 
 router = APIRouter(tags=["users"])
@@ -30,7 +30,10 @@ def list_users(
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
 
-@router.post("/api/users", response_model=UserRead)
+@router.post(
+    "/api/users",
+    response_model=UserRead,
+)
 def create_user(payload: UserCreate, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
 
@@ -46,7 +49,10 @@ def create_user(payload: UserCreate, db: Session = Depends(get_sql_db)):
     return svc.create(payload)
 
 
-@router.get("/api/user/{user_id}", response_model=UserRead)
+@router.get(
+    "/api/user/{user_id}",
+    response_model=UserRead,
+)
 def get_user(user_id: int, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
     item = svc.get(user_id)
@@ -56,7 +62,11 @@ def get_user(user_id: int, db: Session = Depends(get_sql_db)):
 
 
 @router.put("/api/user/{user_id}", response_model=UserRead)
-def update_user(user_id: int, payload: UserUpdate, db: Session = Depends(get_sql_db)):
+def update_user(
+    user_id: int,
+    payload: UserUpdate,
+    db: Session = Depends(get_sql_db),
+):
     svc = UserService(db)
 
     if payload.username is not None:
@@ -81,7 +91,13 @@ def update_user(user_id: int, payload: UserUpdate, db: Session = Depends(get_sql
     return item
 
 
-@router.delete("/api/user/{user_id}", status_code=204)
+@router.delete(
+    "/api/user/{user_id}",
+    status_code=204,
+    dependencies=[
+        Depends(require_admin),
+    ],
+)
 def delete_user(user_id: int, db: Session = Depends(get_sql_db)):
     svc = UserService(db)
     if not svc.delete(user_id):

@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 from app.service.artist_service import ArtistService
 from app.utility.db_sql import get_sql_db
+from app.utility.auth import require_admin
 
 router = APIRouter(prefix="/api/artists", tags=["artists"])
 
@@ -22,7 +23,11 @@ def list_artists(
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
 
-@router.post("", response_model=ArtistRead)
+@router.post(
+    "",
+    response_model=ArtistRead,
+    dependencies=[Depends(require_admin)],
+)
 def create_artist(payload: ArtistCreate, db: Session = Depends(get_sql_db)):
     svc = ArtistService(db)
     try:
@@ -40,7 +45,11 @@ def get_artist(artist_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put("/{artist_id}", response_model=ArtistRead)
+@router.put(
+    "/{artist_id}",
+    response_model=ArtistRead,
+    dependencies=[Depends(require_admin)],
+)
 def update_artist(
     artist_id: int, payload: ArtistUpdate, db: Session = Depends(get_sql_db)
 ):
@@ -54,7 +63,11 @@ def update_artist(
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.delete("/{artist_id}", status_code=204)
+@router.delete(
+    "/{artist_id}",
+    status_code=204,
+    dependencies=[Depends(require_admin)],
+)
 def delete_artist(artist_id: int, db: Session = Depends(get_sql_db)):
     svc = ArtistService(db)
     if not svc.delete(artist_id):
