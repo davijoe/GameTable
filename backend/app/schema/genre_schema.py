@@ -8,8 +8,7 @@ class ORMModel(BaseModel):
 
 
 class GenreBase(ORMModel):
-    title: constr(max_length=30)
-    description: constr(max_length=255) | None = None
+    name: constr(min_length=1, max_length=30)
 
 
 class GenreCreate(GenreBase):
@@ -17,8 +16,7 @@ class GenreCreate(GenreBase):
 
 
 class GenreUpdate(ORMModel):
-    title: constr(max_length=30) | None = None
-    description: constr(max_length=255) | None = None
+    name: constr(min_length=1, max_length=30) | None = None
 
 
 class GenreRead(GenreBase):
