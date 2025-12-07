@@ -9,6 +9,7 @@ from app.schema.designer_schema import (
     DesignerUpdate,
 )
 from app.service.designer_service import DesignerService
+from app.utility.auth import require_admin
 from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/designers", tags=["designers"])
@@ -26,8 +27,15 @@ def list_designers(
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
 
-@router.post("", response_model=DesignerRead)
-def create_designer(payload: DesignerCreate, db: Session = Depends(get_sql_db)):
+@router.post(
+    "",
+    response_model=DesignerRead,
+    dependencies=[Depends(require_admin)],
+)
+def create_designer(
+    payload: DesignerCreate,
+    db: Session = Depends(get_sql_db),
+):
     svc = DesignerService(db)
     try:
         return svc.create(payload)
@@ -44,9 +52,17 @@ def get_designer(designer_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put("/{designer_id}", response_model=DesignerRead)
+@router.put(
+    "/{designer_id}",
+    response_model=DesignerRead,
+    dependencies=[Depends(require_admin)],
+)
 def update_designer(
-    designer_id: int, payload: DesignerUpdate, db: Session = Depends(get_sql_db)
+    designer_id: int,
+    payload: DesignerUpdate,
+    db: Session = Depends(
+        get_sql_db,
+    ),
 ):
     svc = DesignerService(db)
     try:
@@ -58,8 +74,15 @@ def update_designer(
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.delete("/{designer_id}", status_code=204)
-def delete_designer(designer_id: int, db: Session = Depends(get_sql_db)):
+@router.delete(
+    "/{designer_id}",
+    status_code=204,
+    dependencies=[Depends(require_admin)],
+)
+def delete_designer(
+    designer_id: int,
+    db: Session = Depends(get_sql_db),
+):
     svc = DesignerService(db)
     if not svc.delete(designer_id):
         raise HTTPException(status_code=404, detail="Designer not found")

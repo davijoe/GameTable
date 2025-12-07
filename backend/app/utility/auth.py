@@ -80,3 +80,12 @@ def get_current_user(
         raise credentials_exception
 
     return user
+
+
+def require_admin(current_user: User = Depends(get_current_user)) -> User:
+    if not getattr(current_user, "is_admin", False):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough permissions",
+        )
+    return current_user
