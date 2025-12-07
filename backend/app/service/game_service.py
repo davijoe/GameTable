@@ -8,10 +8,13 @@ class GameService:
 
     def list(self, offset, limit, search):
         rows, total = self.repo.list(offset, limit, search)
+        for r in rows:
+            r.bgg_rating = round(r.bgg_rating, 2) # round because of validator
         return [GameRead.model_validate(r) for r in rows], total
 
     def get(self, game_id):
         obj = self.repo.get(game_id)
+        obj.bgg_rating = round(obj.bgg_rating, 2) # round because of validator
         return GameRead.model_validate(obj) if obj else None
 
     def create(self, payload: GameCreate):
