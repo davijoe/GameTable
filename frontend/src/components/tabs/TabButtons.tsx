@@ -4,7 +4,7 @@ const tabs = [
   { label: "Games", path: "/games" },
   { label: "Friends", path: "/friends" },
   { label: "Messages", path: "/messages" },
-  { label: "Leaderboard", path: "/leaderboard" },
+  { label: "Weather", path: "/weather" },
   { label: "Profile", path: "/profile" },
 ];
 

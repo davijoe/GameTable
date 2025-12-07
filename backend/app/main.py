@@ -8,13 +8,15 @@ from app.controller.designer_controller import router as designer_router
 from app.controller.game_controller import router as game_router
 from app.controller.genre_controller import router as genre_router
 from app.controller.user_controller import router as user_router
+from app.controller.weather_controller import router as weather_router
 
 app = FastAPI(title="Game API")
 
 origins = [
-    # harcoded to what vite uses standard when run with "bun run dev"
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
     "http://localhost:5173",
-    "http://localhost:3000",  # works with docker
+    "http://127.0.0.1:5173",
 ]
 
 app.add_middleware(
@@ -31,6 +33,7 @@ app.include_router(game_router)
 app.include_router(user_router)
 app.include_router(genre_router)
 app.include_router(artist_router)
+app.include_router(weather_router)
 
 
 @app.get("/healthz")
@@ -41,4 +44,3 @@ def health():
 @app.get("/db")
 def db_info():
     return {"active_database": os.getenv("DB_MODE")}
-

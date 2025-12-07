@@ -1,5 +1,4 @@
-import hashlib
-
+import bcrypt
 from sqlalchemy.orm import Session
 
 from app.model.user_model import User
@@ -11,6 +10,12 @@ class UserService:
     def __init__(self, db: Session):
         self.repo = SQLUserRepository(db)
         self.db = db
+
+    def _hash_password(self, password: str) -> str:
+        return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+    def _verify_password(self, password: str, hashed: str) -> bool:
+        return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
 
     def get(self, user_id: int) -> UserRead | None:
         obj = self.repo.get(user_id)
@@ -30,14 +35,36 @@ class UserService:
         rows, total = self.repo.list(offset=offset, limit=limit, search=search)
         return [UserRead.model_validate(r) for r in rows], total
 
+    #    def create(self, payload: UserCreate) -> UserRead:
+    #        obj = User(**payload.model_dump())
+    #        obj = self.repo.create(obj)
+    #        self.db.commit()
+    #        self.db.refresh(obj)
+    #        return UserRead.model_validate(obj)
+
     def create(self, payload: UserCreate) -> UserRead:
-        # Here we should hash the password before storing
-        # TODO: Add password hashing
-        obj = User(**payload.model_dump())
+        data = payload.model_dump()
+        data["password"] = self._hash_password(data["password"])
+
+        obj = User(**data)
         obj = self.repo.create(obj)
         self.db.commit()
         self.db.refresh(obj)
         return UserRead.model_validate(obj)
+
+    #    def update(self, user_id: int, payload: UserUpdate) -> UserRead | None:
+    #        obj = self.repo.get(user_id)
+    #        if not obj:
+    #            return None
+    #
+    #        update_data = payload.model_dump(exclude_unset=True)
+    #        for key, value in update_data.items():
+    #            setattr(obj, key, value)
+    #
+    #        obj = self.repo.update(obj)
+    #        self.db.commit()
+    #        self.db.refresh(obj)
+    #        return UserRead.model_validate(obj)
 
     def update(self, user_id: int, payload: UserUpdate) -> UserRead | None:
         obj = self.repo.get(user_id)
@@ -45,8 +72,9 @@ class UserService:
             return None
 
         update_data = payload.model_dump(exclude_unset=True)
-        # Here we should hash the password if it's being updated
-        # TODO: Add password hashing if password is in update_data
+
+        if "password" in update_data:
+            update_data["password"] = self._hash_password(update_data["password"])
 
         for key, value in update_data.items():
             setattr(obj, key, value)
@@ -64,19 +92,29 @@ class UserService:
         self.db.commit()
         return True
 
-    def authenticate(self, username: str, password: str) -> UserRead | None:
-        """Authenticate a user by username and password.
+    #    def authenticate(self, username: str, password: str) -> UserRead | None:
+    #        """Authenticate a user by username and password.
+    #
+    #        Returns the user if credentials are valid, None otherwise.
+    #        Password in database is hashed with SHA256.
+    #        """
+    #        user = self.repo.get_by_username(username)
+    #        if not user:
+    #            return None
+    #
+    #        # Hash the input password and compare with database password
+    #        hashed_input = hashlib.sha256(password.encode()).hexdigest()
+    #        if hashed_input != user.password:
+    #            return None
+    #
+    #        return UserRead.model_validate(user)
 
-        Returns the user if credentials are valid, None otherwise.
-        Password in database is hashed with SHA256.
-        """
+    def authenticate(self, username: str, password: str):
         user = self.repo.get_by_username(username)
         if not user:
             return None
 
-        # Hash the input password and compare with database password
-        hashed_input = hashlib.sha256(password.encode()).hexdigest()
-        if hashed_input != user.password:
+        if not self._verify_password(password, user.password):
             return None
 
         return UserRead.model_validate(user)
