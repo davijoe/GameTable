@@ -16,7 +16,6 @@ class DesignerBase(ORMModel):
     @field_validator("name")
     @classmethod
     def validate_name(cls, v: str) -> str:
-        """Validate that name is not only whitespace or only hyphens."""
         if not v.strip():
             raise ValueError("Name cannot be empty or only whitespace")
         if re.match(r"^-+$", v.strip()):

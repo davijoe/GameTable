@@ -8,13 +8,13 @@ class TestPublisherName:
     @pytest.mark.parametrize(
         "name",
         [
-            "",  # empty string
-            "A" * 256,  # 256 characters (just over max)
-            "A" * 257,  # 257 characters
-            "A" * 500,  # 500 characters
-            123,  # wrong data type
-            " ",  # only space
-            "-",  # only hyphens
+            "",
+            "A" * 256,
+            "A" * 257,
+            "A" * 500,
+            123,
+            " ",
+            "-",
         ],
     )
     def test_invalid_name(self, name):
@@ -24,16 +24,15 @@ class TestPublisherName:
     @pytest.mark.parametrize(
         "name",
         [
-            "A",  # 1 character (minimum)
-            "A" * 2,  # 2 characters
-            "A" * 25,  # 25 characters (middle)
-            "A" * 254,  # 254 characters
-            "A" * 255,  # 255 characters (maximum)
-            "Publisher O'Neil",  # combining characters (apostrophe)
-            "Publisher-John",  # hyphen in name
+            "A",
+            "A" * 2,
+            "A" * 125,
+            "A" * 254,
+            "A" * 255,
+            "Publisher O'Neil",
+            "Publisher-John",
         ],
     )
     def test_valid_name(self, name):
-        """Test that valid name values are accepted."""
         publisher = PublisherCreate(name=name)
         assert publisher.name == name

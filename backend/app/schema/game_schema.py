@@ -30,7 +30,6 @@ class GameBase(ORMModel):
     @field_validator("name")
     @classmethod
     def validate_name(cls, v: str) -> str:
-        """Validate that name is not only whitespace or only hyphens."""
         if not v.strip():
             raise ValueError("Name cannot be empty or only whitespace")
         if re.match(r"^-+$", v.strip()):
@@ -42,12 +41,10 @@ class GameBase(ORMModel):
     @field_validator("slug")
     @classmethod
     def validate_slug(cls, v: str | None) -> str | None:
-        """Validate and normalize slug: no empty strings, convert to lowercase, replace spaces with hyphens."""
         if v is None:
             return v
         if not v.strip():
             raise ValueError("Slug cannot be empty or only whitespace")
-        # Normalize: convert to lowercase and replace spaces with hyphens
         v = v.lower().replace(" ", "-")
         if re.match(r"^-+$", v):
             raise ValueError("Slug cannot be only hyphens")
@@ -60,7 +57,6 @@ class GameBase(ORMModel):
     @field_validator("bgg_rating")
     @classmethod
     def validate_bgg_rating(cls, v: float | None) -> float | None:
-        """Validate that bgg_rating has at most 2 decimal places."""
         if v is None:
             return v
         if len(str(v).split(".")[-1]) > 2:
@@ -72,7 +68,6 @@ class GameBase(ORMModel):
     @field_validator("difficulty_rating")
     @classmethod
     def validate_difficulty_rating(cls, v: float | None) -> float | None:
-        """Validate that difficulty_rating has at most 2 decimal places."""
         if v is None:
             return v
         if len(str(v).split(".")[-1]) > 2:
@@ -129,7 +124,6 @@ class GameRead(GameBase):
     id: int
 
 
-# GameDetail is used when end user clicks on a game - uses join table
 class GameDetail(GameRead):
     artists: list[ArtistRead] = []
     designers: list[DesignerRead] = []
