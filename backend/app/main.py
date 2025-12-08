@@ -8,6 +8,7 @@ from app.controller.auth_controller import router as auth_router
 from app.controller.designer_controller import router as designer_router
 from app.controller.game_controller import router as game_router
 from app.controller.genre_controller import router as genre_router
+from app.controller.language_controller import router as language_router
 from app.controller.user_controller import router as user_router
 
 from app.controller.review_controller import router as review_router
@@ -35,6 +36,7 @@ app.include_router(artist_router)
 app.include_router(designer_router)
 app.include_router(game_router)
 app.include_router(genre_router)
+app.include_router(language_router)
 app.include_router(user_router)
 app.include_router(weather_router)
 
