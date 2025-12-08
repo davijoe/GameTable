@@ -1,8 +1,18 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, confloat, constr, field_validator, Field
-
 import re
+
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    ValidationError,
+    confloat,
+    constr,
+    field_validator,
+)
+
+MAX_BYTES = 65535
 
 
 class ORMModel(BaseModel):
@@ -63,8 +73,20 @@ class GameBase(ORMModel):
         if len(str(v).split(".")[-1]) > 2:
             raise ValueError("Difficulty rating must have at most 2 decimal places")
         return v
+
     playing_time: int | None = None
-    description: str | None = Field(None, min_length=1, max_length=65535)
+    description: str | None = Field(None, min_length=1)
+
+    @field_validator("description")
+    @classmethod
+    def validate_desc_byte_size(cls, v: str) -> str:
+        byte_len = len(v.encode("utf-8"))
+        if byte_len > MAX_BYTES:
+            raise ValueError(
+                f"Description is too long: byte length {byte_len} exceeds {MAX_BYTES}"
+            )
+        return v
+
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
     image: str | None = None
