@@ -1,5 +1,6 @@
 import os
 
+import sentry_sdk
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,15 +9,28 @@ from app.controller.auth_controller import router as auth_router
 from app.controller.designer_controller import router as designer_router
 from app.controller.game_controller import router as game_router
 from app.controller.genre_controller import router as genre_router
-from app.controller.publisher_controller import router as publisher_router
-from app.controller.mechanic_controller import router as mechanic_router
 from app.controller.language_controller import router as language_router
+from app.controller.mechanic_controller import router as mechanic_router
+from app.controller.publisher_controller import router as publisher_router
+from app.controller.review_controller import router as review_router
 from app.controller.user_controller import router as user_router
 from app.controller.video_controller import router as video_router
-from app.controller.review_controller import router as review_router
 from app.controller.weather_controller import router as weather_router
 
+sentry_sdk.init(
+    dsn="https://44232220511edf33f1a2422be8aa5e47@o4510501532860416.ingest.de.sentry.io/4510501534498896",
+    # Add data like request headers and IP for users,
+    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+    send_default_pii=True,
+)
+
 app = FastAPI(title="Game API")
+
+
+@app.get("/sentry-debug")
+async def trigger_error():
+    division_by_zero = 1 / 0
+
 
 origins = [
     "http://localhost:3000",
