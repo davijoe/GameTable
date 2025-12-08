@@ -28,8 +28,7 @@ class ReviewService:
         return [ReviewRead.model_validate(r) for r in rows], total
 
     def create(self, payload: ReviewCreate) -> ReviewRead:
-        review = Review(**payload.model_dump())
-        review = self.repo.create(review)
+        review = self.repo.create_via_procedure(payload) # uses stored procedure
         self.db.commit()
         self.db.refresh(review)
         return ReviewRead.model_validate(review)

@@ -4,6 +4,7 @@ from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from app.model.review_model import Review
+from app.schema.review_schema import ReviewCreate
 
 
 class SQLReviewRepository:
@@ -49,3 +50,23 @@ class SQLReviewRepository:
         stmt = select(Review).where(Review.game_id == game_id)
         return self.db.execute(stmt).scalars().all()
 
+    def create_via_procedure(self, payload: ReviewCreate) -> Review:
+        stmt = text("""
+            CALL add_game_review(
+                :p_user_id,
+                :p_game_id,
+                :p_title,
+                :p_text,
+                :p_stars
+            )
+        """)
+        params = {
+            "p_user_id": payload.user_id,
+            "p_game_id": payload.game_id,
+            "p_title": payload.title,
+            "p_text": payload.text,
+            "p_stars": payload.star_amount,
+        }
+        result = self.db.execute(stmt, params)
+        new_id = result.fetchone()[0] # fetch the id from newly made review
+        return self.db.get(Review, new_id)
