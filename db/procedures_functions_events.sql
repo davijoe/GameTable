@@ -36,7 +36,7 @@ DELIMITER $$
 
 CREATE EVENT update_bgg_ratings
 ON SCHEDULE EVERY 1 DAY
-STARTS '2025-12-07 16:22:00'
+STARTS '2025-12-08 10:20:00'
 DO
 BEGIN
     UPDATE game g
@@ -47,7 +47,7 @@ BEGIN
             WHERE r.game_id = g.id
         ),
         1
-    ))
+    ), 2)
     WHERE g.id IS NOT NULL;
 END $$
 
