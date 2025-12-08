@@ -333,3 +333,37 @@ class TestGameThumbnail:
     def test_valid_thumbnail(self, thumbnail):
         game = GameCreate(name="Valid Name", thumbnail=thumbnail)
         assert game.thumbnail == thumbnail
+
+
+class TestGameImage:
+    @pytest.mark.parametrize(
+        "image",
+        [
+            "",
+            "A" * 256,
+            "A" * 257,
+            "A" * 500,
+            123,
+            " ",
+            "https://example.com/user profile",
+        ],
+    )
+    def test_invalid_image(self, image):
+        with pytest.raises(ValidationError):
+            GameCreate(name="Valid Name", image=image)
+
+    @pytest.mark.parametrize(
+        "image",
+        [
+            "A",
+            "A" * 2,
+            "A" * 125,
+            "A" * 254,
+            "A" * 255,
+            "https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__original/img/yR0aoBVKNrAmmCuBeSzQnMflLYg=/0x0/filters:format(jpeg)/pic4718279.jpg",
+        ],
+    )
+    def test_valid_image(self, image):
+        game = GameCreate(name="Valid Name", image=image)
+        assert game.image == image
+
