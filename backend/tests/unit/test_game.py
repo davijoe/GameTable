@@ -303,3 +303,36 @@ class TestGameMaxPlayers:
         game = GameCreate(name="Valid Name", max_players=max_players)
         assert game.max_players == max_players
         assert game.max_players == max_players
+
+
+class TestGameThumbnail:
+    @pytest.mark.parametrize(
+        "thumbnail",
+        [
+            "",  # empty string
+            "A" * 256,  # 256 characters
+            "A" * 257,  # 257 characters
+            "A" * 500,  # 500 characters
+            123,  # wrong data type
+            " ",  # only space
+            "https://example.com/user profile",  # contains space
+        ],
+    )
+    def test_invalid_thumbnail(self, thumbnail):
+        with pytest.raises(ValidationError):
+            GameCreate(name="Valid Name", thumbnail=thumbnail)
+
+    @pytest.mark.parametrize(
+        "thumbnail",
+        [
+            "A",  # 1 character
+            "A" * 2,  # 2 characters
+            "A" * 125,  # 25 characters
+            "A" * 254,  # 254 characters
+            "A" * 255,  # 255 characters (max)
+            "https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__small/img/YT6svCVsWqLrDitcMEtyazVktbQ=/fit-in/200x150/filters:strip_icc()/pic4718279.jpg",  # special characters
+        ],
+    )
+    def test_valid_thumbnail(self, thumbnail):
+        game = GameCreate(name="Valid Name", thumbnail=thumbnail)
+        assert game.thumbnail == thumbnail

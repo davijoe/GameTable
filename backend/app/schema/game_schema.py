@@ -95,7 +95,16 @@ class GameBase(ORMModel):
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
     image: str | None = None
-    thumbnail: str | None = None
+    thumbnail: constr(min_length=1, max_length=255) | None = None
+
+    @field_validator("thumbnail")
+    @classmethod
+    def validate_thumbnail(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if " " in v:
+            raise ValueError("Thumbnail cannot contain spaces")
+        return v
 
 
 class GameCreate(GameBase):
