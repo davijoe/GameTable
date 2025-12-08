@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.model.artists_model import Artists
+from app.model.artists_model import Artist
 from app.repository.sql.sql_artist_repository import SQLArtistRepository
 from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 
@@ -24,7 +24,7 @@ class ArtistService:
         if self.repo.get_by_name(payload.name):
             raise ValueError("Artist with this name already exists")
 
-        obj = Artists(**payload.model_dump())
+        obj = Artist(**payload.model_dump())
         obj = self.repo.create(obj)
         self.db.commit()
         self.db.refresh(obj)

@@ -1,5 +1,9 @@
 from app.repository.game.game_repository_factory import get_game_repository
-from app.schema.game_schema import GameCreate, GameRead, GameUpdate
+from app.schema.artist_schema import ArtistRead
+from app.schema.designer_schema import DesignerRead
+from app.schema.game_schema import GameCreate, GameDetail, GameRead, GameUpdate
+from app.schema.mechanic_schema import MechanicRead
+from app.schema.publisher_schema import PublisherRead
 
 
 class GameService:
@@ -17,6 +21,19 @@ class GameService:
         obj.bgg_rating = round(obj.bgg_rating, 2) # round because of validator
         return GameRead.model_validate(obj) if obj else None
 
+    def get_detail(self, game_id):
+        obj = self.repo.get_detail(game_id)
+        if not obj:
+            return None
+
+        return GameDetail.model_validate({
+            **obj.__dict__,
+            "artists": [ArtistRead.model_validate(a) for a in obj.artists],
+            "designers": [DesignerRead.model_validate(d) for d in obj.designers],
+            "publishers": [PublisherRead.model_validate(p) for p in obj.publishers],
+            "mechanics": [MechanicRead.model_validate(m) for m in obj.mechanics],
+        })
+
     def create(self, payload: GameCreate):
         return GameRead.model_validate(self.repo.create(payload.model_dump()))
 
@@ -26,3 +43,4 @@ class GameService:
 
     def delete(self, game_id):
         return self.repo.delete(game_id)
+

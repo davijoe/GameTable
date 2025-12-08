@@ -3,7 +3,7 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 
 # from sqlalchemy.orm import Session
-from app.schema.game_schema import GameCreate, GameRead, GameUpdate
+from app.schema.game_schema import GameCreate, GameDetail, GameRead, GameUpdate
 from app.service.game_service import GameService
 from app.utility.auth import require_admin
 
@@ -19,6 +19,14 @@ def list_games(
     svc = GameService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
+
+@router.get("/{game_id}/detail", response_model=GameDetail)
+def get_game_detail(game_id: str):
+    svc = GameService()
+    item = svc.get_detail(game_id)
+    if not item:
+        raise HTTPException(404, "Game not found")
+    return item
 
 
 @router.get("/{game_id}", response_model=GameRead)
