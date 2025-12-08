@@ -12,6 +12,11 @@ from pydantic import (
     field_validator,
 )
 
+from app.schema.artist_schema import ArtistRead
+from app.schema.designer_schema import DesignerRead
+from app.schema.mechanic_schema import MechanicRead
+from app.schema.publisher_schema import PublisherRead
+
 MAX_BYTES = 65535
 
 
@@ -113,3 +118,11 @@ class GameUpdate(ORMModel):
 
 class GameRead(GameBase):
     id: int
+
+
+# GameDetail is used when end user clicks on a game - uses join table
+class GameDetail(GameRead):
+    artists: list[ArtistRead] = []
+    designers: list[DesignerRead] = []
+    publishers: list[PublisherRead] = []
+    mechanics: list[MechanicRead] = []

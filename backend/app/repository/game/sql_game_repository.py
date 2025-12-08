@@ -1,4 +1,5 @@
 from sqlalchemy import func, select
+from sqlalchemy.orm import selectinload
 
 from app.model.game_model import Game
 from app.repository.game.i_game_repository import IGameRepository
@@ -50,3 +51,16 @@ class GameRepositorySQL(IGameRepository):
         self.db.delete(obj)
         self.db.commit()
         return True
+
+    def get_detail(self, game_id):
+        stmt = (
+            select(Game)
+            .options(
+                selectinload(Game.artists),
+                selectinload(Game.designers),
+                selectinload(Game.publishers),
+                selectinload(Game.mechanics),
+            )
+            .where(Game.id == game_id)
+        )
+        return self.db.execute(stmt).scalars().first()
