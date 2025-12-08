@@ -56,7 +56,7 @@ services:
       - gametable-net
 
   neo4j_database:
-    image: neo4j
+    image: neo4j:ubi9
     container_name: gametable-neo4j-database
     restart: unless-stopped
     environment:
