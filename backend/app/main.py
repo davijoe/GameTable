@@ -19,8 +19,6 @@ from app.controller.weather_controller import router as weather_router
 
 sentry_sdk.init(
     dsn="https://44232220511edf33f1a2422be8aa5e47@o4510501532860416.ingest.de.sentry.io/4510501534498896",
-    # Add data like request headers and IP for users,
-    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
     send_default_pii=True,
 )
 
