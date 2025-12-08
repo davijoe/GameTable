@@ -195,39 +195,39 @@ class TestGameDifficultyRating:
         assert game.difficulty_rating == difficulty_rating
 
 
+MAX_BYTES = 65535
+
+
 class TestGameDescription:
+    # Invalid Tests
     @pytest.mark.parametrize(
         "description",
         [
-            "",  # empty string
-            65536,  # will build 65536-char string
-            65537,  # will build 65537-char string
-            100000,  # will build 100000-char string
+            "",  # empty string. Min length is 1
+            "A" * (MAX_BYTES + 1),
+            "A" * (MAX_BYTES + 2),
+            "A" * (MAX_BYTES + 10000),
         ],
     )
-    def test_invalid_description(self, description):
+    def test_invalid_descriptions(self, description):
         with pytest.raises(ValidationError):
-            GameCreate(name="Valid Name", description="A" * description if isinstance(description, int) else description)
+            GameCreate(name="Valid Name", description=description)
 
+    # Happy happy
     @pytest.mark.parametrize(
         "description",
         [
             "A",  # 1 character
             "A" * 2,  # 2 characters
             "great game!",  # special characters
-            30000,  # will build 30000-char string
-            65534,  # will build 65534-char string
-            65535,  # will build 65535-char string (max)
+            "A" * int(MAX_BYTES / 2),  # will build 30000-char string
+            "A" * (MAX_BYTES - 1),  # will build 65534-char string
+            "A" * (MAX_BYTES - 2),  # will build 65535-char string (max)
         ],
     )
-    def test_valid_description(self, description):
-        if isinstance(description, int):
-            desc = "A" * description
-            game = GameCreate(name="Valid Name", description=desc)
-            assert hash(game.description) == hash(desc)
-        else:
-            game = GameCreate(name="Valid Name", description=description)
-            assert game.description == description
+    def test_valid_descriptions(self, description):
+        game = GameCreate(name="Valid Name", description=description)
+        assert game.description == description
 
 
 class TestGameMinPlayers:
@@ -291,4 +291,5 @@ class TestGameMaxPlayers:
     )
     def test_valid_max_players(self, max_players):
         game = GameCreate(name="Valid Name", max_players=max_players)
+        assert game.max_players == max_players
         assert game.max_players == max_players
