@@ -11,3 +11,5 @@ class Review(Base):
     text = Column(String(255), nullable=True)
     star_amount = Column(Integer, nullable=False)
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
+    game_id = Column(Integer, ForeignKey("game.id"), nullable=False)
+
