@@ -74,6 +74,8 @@ class MySQLToNeo4jMigration:
             "CREATE CONSTRAINT publisher_id IF NOT EXISTS FOR (p:Publisher) REQUIRE p.id IS UNIQUE",
             "CREATE CONSTRAINT mechanic_id IF NOT EXISTS FOR (m:Mechanic) REQUIRE m.id IS UNIQUE",
             "CREATE CONSTRAINT review_id IF NOT EXISTS FOR (r:Review) REQUIRE r.id IS UNIQUE",
+            "CREATE CONSTRAINT video_id IF NOT EXISTS FOR (v:Video) REQUIRE v.id IS UNIQUE",
+            "CREATE CONSTRAINT language_id IF NOT EXISTS FOR (l:Language) REQUIRE l.id IS UNIQUE" 
         ]
 
         for constraint in constraints:
@@ -119,15 +121,22 @@ class MySQLToNeo4jMigration:
             genres = self.mysql_conn.get_all_genres()
             publishers = self.mysql_conn.get_all_publishers()
             mechanics = self.mysql_conn.get_all_mechanics()
-            videos = self.mysql_conn.get_all_videos()
+            videos = self.mysql_conn.get_all_videos_with_language()
+            languages = self.mysql_conn.get_all_languages()
 
             logger.info(
                 f"Found {len(games)} games, {len(designers)} designers, {
                     len(artists)
                 } artists, {len(genres)} genres, {len(publishers)} publishers, {
                     len(mechanics)
-                } mechanics, {len(videos)} videos"
+                } mechanics, {len(videos)} videos, {len(languages)} languages"
             )
+            
+            if videos:
+                logger.info(f"Video fields: {list(videos[0].keys())}")
+                logger.info(f"Sample video: {videos[0]}")
+                videos_with_lang_id = sum(1 for v in videos if v.get('language_id'))
+                logger.info(f"Videos with language_id: {videos_with_lang_id}/{len(videos)}")
 
             logger.info("Creating Game nodes...")
             game_queries = Neo4jTransformer.create_game_nodes(games)
@@ -152,6 +161,14 @@ class MySQLToNeo4jMigration:
             logger.info("Creating Mechanic nodes...")
             mechanic_queries = Neo4jTransformer.create_mechanic_nodes(mechanics)
             self._execute_queries(mechanic_queries, "Mechanic nodes")
+            
+            logger.info("Creating Video nodes...")
+            video_queries = Neo4jTransformer.create_video_nodes(videos)
+            self._execute_queries(video_queries, "Video nodes")
+            
+            logger.info("Creating Language nodes...")
+            language_queries = Neo4jTransformer.create_language_nodes(languages)
+            self._execute_queries(language_queries, "Language nodes")
 
             game_designers = self.mysql_conn.get_all_game_designers()
             game_artists = self.mysql_conn.get_all_game_artists()
@@ -160,6 +177,7 @@ class MySQLToNeo4jMigration:
             game_mechanics = self.mysql_conn.get_all_game_mechanics()
 
             logger.info("Creating relationships...")
+
             relationship_queries = Neo4jTransformer.create_game_relationships(
                 game_designers,
                 game_artists,
@@ -169,6 +187,25 @@ class MySQLToNeo4jMigration:
             )
             self._execute_queries(relationship_queries, "relationships")
 
+            logger.info("Creating Game-Video relationships...")
+            game_videos_map = {}
+            for video in videos:
+                game_id = video['game_id']
+                if game_id not in game_videos_map:
+                    game_videos_map[game_id] = []
+                game_videos_map[game_id].append(video['id'])
+                    
+            game_video_queries = Neo4jTransformer.create_game_video_relationships(game_videos_map)
+            self._execute_queries(game_video_queries, "game-video relationships")
+            
+            logger.info("Creating Video-Language relationships...")
+            video_language_queries = Neo4jTransformer.create_video_language_relationships(videos)
+            if video_language_queries:
+                self._execute_queries(video_language_queries, "video-language relationships")
+                logger.info(f"Created {len(video_language_queries)} video-language relationships")
+            else:
+                logger.warning("No video-language relationships created. Check if videos have language_id field.")
+            
             logger.info("Completed games and related entities migration")
 
         except Exception as e:

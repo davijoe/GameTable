@@ -234,6 +234,30 @@ class MySQLConnector:
             return cursor.fetchall()
         finally:
             cursor.close()
+            
+    def get_all_videos_with_language(self):
+        """Get all videos with language information"""
+        query = """
+        SELECT v.*, l.language 
+        FROM video v
+        LEFT JOIN language l ON v.language_id = l.id
+        """
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+
+    def get_all_languages(self):
+        """Get all languages"""
+        query = "SELECT * FROM language"
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query)
+            return cursor.fetchall()
+        finally:
+            cursor.close()
 
     def get_all_game_publishers(self):
         """Get all game-publisher relationships"""
