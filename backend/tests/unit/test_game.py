@@ -201,33 +201,43 @@ MAX_BYTES = 65535
 class TestGameDescription:
     # Invalid Tests
     @pytest.mark.parametrize(
-        "description",
+        "param",
         [
-            "",  # empty string. Min length is 1
-            "A" * (MAX_BYTES + 1),
-            "A" * (MAX_BYTES + 2),
-            "A" * (MAX_BYTES + 10000),
+            {"type": "value", "value": ""},
+            {"type": "length","value": MAX_BYTES + 1,},
+            {"type": "length","value": MAX_BYTES + 2,},
+            {"type": "length", "value": MAX_BYTES + 10000},
         ],
     )
-    def test_invalid_descriptions(self, description):
+    def test_invalid_descriptions(self, param):
+        if param["type"] == "value":
+            desc = param["value"]
+        else:
+            desc = "A" * param["value"]
+
         with pytest.raises(ValidationError):
-            GameCreate(name="Valid Name", description=description)
+            GameCreate(name="Valid Name", description=desc)
 
     # Happy happy
     @pytest.mark.parametrize(
-        "description",
+        "param",
         [
-            "A",  # 1 character
-            "A" * 2,  # 2 characters
-            "great game!",  # special characters
-            "A" * int(MAX_BYTES / 2),  # will build 30000-char string
-            "A" * (MAX_BYTES - 1),  # will build 65534-char string
-            "A" * (MAX_BYTES - 2),  # will build 65535-char string (max)
+            {"type": "value", "value": "0"},
+            {"type": "length", "value": 1},
+            {"type": "length", "value": 2},
+            {"type": "length", "value": int(MAX_BYTES / 2)},
+            {"type": "length", "value": MAX_BYTES - 1},
+            {"type": "length", "value": MAX_BYTES - 2},
+            {"type": "length", "value": MAX_BYTES},
         ],
     )
-    def test_valid_descriptions(self, description):
-        game = GameCreate(name="Valid Name", description=description)
-        assert game.description == description
+    def test_valid_descriptions(self, param):
+        if param["type"] == "value":
+            desc = param["value"]
+        else:
+            desc = "A" * param["value"]
+        game = GameCreate(name="Valid Name", description=desc)
+        assert game.description == desc
 
 
 class TestGameMinPlayers:
