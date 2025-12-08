@@ -1,12 +1,11 @@
 from sqlalchemy import Column, Double, ForeignKey, Integer, String, Table, Text
 from sqlalchemy.orm import relationship
 
-from app.model.artists_model import Artist  #noqa: F401 # used by sqlAlchemy
-from app.model.designer_model import Designer  # noqa: F401 # used by sqlAlchemy
-from app.model.mechanic_model import Mechanic  # noqa: F401 # used by sqlAlchemy
-from app.model.publisher_model import Publisher  # noqa: F401 # used by sqlAlchemy
-from app.model.video_model import Video  # noqa: F401 # used by sqlAlchemy
-
+from app.model.artists_model import Artist
+from app.model.designer_model import Designer
+from app.model.mechanic_model import Mechanic
+from app.model.publisher_model import Publisher
+from app.model.video_model import Video
 from app.utility.db_sql import Base
 
 game_artists = Table(
