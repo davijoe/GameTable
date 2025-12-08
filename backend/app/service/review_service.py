@@ -14,6 +14,13 @@ class ReviewService:
         obj = self.repo.get(review_id)
         return ReviewRead.model_validate(obj) if obj else None
 
+    def get_review_count_for_game(self, game_id: int) -> int:
+        return self.repo.get_review_count_for_game(game_id)
+
+    def list_by_game(self, game_id: int) -> list[ReviewRead]:
+        rows = self.repo.list_by_game(game_id)
+        return [ReviewRead.model_validate(r) for r in rows]
+
     def list(
         self, offset: int = 0, limit: int = 50, search: str | None = None
     ) -> tuple[list[ReviewRead], int]:

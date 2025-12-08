@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.schema.review_schema import ReviewCreate, ReviewRead, ReviewUpdate
 from app.service.review_service import ReviewService
-from app.utility.db_sql import get_sql_db
 from app.utility.auth import require_admin
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
 
@@ -22,6 +22,20 @@ def list_reviews(
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
+@router.get("/count", response_model=dict[str, int])
+def get_review_count_for_game(
+	game_id: int = Query(..., description="ID of the game"),
+	db: Session = Depends(get_sql_db),
+):
+	svc = ReviewService(db)
+	count = svc.get_review_count_for_game(game_id)
+	return {"game_id": game_id, "review_count": count}
+
+@router.get("/by-game/{game_id}", response_model=list[ReviewRead])
+def get_reviews_by_game(game_id: int, db: Session = Depends(get_sql_db)):
+	svc = ReviewService(db)
+	items = svc.list_by_game(game_id)
+	return items
 
 @router.post(
     "",
