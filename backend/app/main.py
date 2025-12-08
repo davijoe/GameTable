@@ -10,7 +10,7 @@ from app.controller.game_controller import router as game_router
 from app.controller.genre_controller import router as genre_router
 from app.controller.language_controller import router as language_router
 from app.controller.user_controller import router as user_router
-
+from app.controller.video_controller import router as video_router
 from app.controller.review_controller import router as review_router
 from app.controller.weather_controller import router as weather_router
 
@@ -38,6 +38,7 @@ app.include_router(game_router)
 app.include_router(genre_router)
 app.include_router(language_router)
 app.include_router(user_router)
+app.include_router(video_router)
 app.include_router(weather_router)
 
 app.include_router(review_router)
