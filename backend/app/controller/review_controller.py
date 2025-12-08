@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.schema.review_schema import ReviewCreate, ReviewRead, ReviewUpdate
 from app.service.review_service import ReviewService
-from app.utility.db_sql import get_sql_db
 from app.utility.auth import require_admin
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/reviews", tags=["reviews"])
 
