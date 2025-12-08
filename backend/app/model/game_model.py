@@ -51,8 +51,8 @@ class Game(Base):
     image = Column(String(1024), nullable=True)
     thumbnail = Column(String(1024), nullable=True)
 
-    artists = relationship(Artist, secondary=game_artists, lazy="joined")
-    designers = relationship(Designer, secondary=game_designers, lazy="joined")
-    publishers = relationship(Publisher, secondary=game_publishers, lazy="joined")
-    mechanics = relationship(Mechanic, secondary=game_mechanics, lazy="joined")
-    videos = relationship(Video, back_populates="game", lazy="joined")
+    artists = relationship(Artist, secondary=game_artists, lazy="select")
+    designers = relationship(Designer, secondary=game_designers, lazy="select")
+    publishers = relationship(Publisher, secondary=game_publishers, lazy="select")
+    mechanics = relationship(Mechanic, secondary=game_mechanics, lazy="select")
+    videos = relationship(Video, back_populates="game", lazy="select")
