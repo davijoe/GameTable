@@ -16,6 +16,7 @@ class Neo4jTransformer:
                 username: $username,
                 email: $email,
                 dob: $dob,
+                is_admin: $is_admin,
                 migrated_at: datetime()
             })
             """
@@ -27,6 +28,7 @@ class Neo4jTransformer:
                     "username": user["username"],
                     "email": user["email"],
                     "dob": user.get("dob"),
+                    'is_admin': bool(user.get('is_admin', False))
                 },
             }
             queries.append(query_dict)
@@ -193,6 +195,27 @@ class Neo4jTransformer:
                     },
                 }
             )
+        return queries
+
+    @staticmethod
+    def create_language_nodes(languages_data):
+        """Create Language nodes"""
+        queries = []
+        for lang in languages_data:
+            query = """
+            CREATE (l:Language {
+                id: $id,
+                language: $language,
+                migrated_at: datetime()
+            })
+            """
+            queries.append({
+                'query': query,
+                'params': {
+                    'id': lang['id'],
+                    'language': lang['language']
+                }
+            })
         return queries
 
     @staticmethod
@@ -469,3 +492,40 @@ class Neo4jTransformer:
             )
         return queries
 
+    @staticmethod
+    def create_game_video_relationships(game_videos):
+        """Create relationships between games and videos"""
+        queries = []
+        for game_id, video_ids in game_videos.items():
+            for video_id in video_ids:
+                query = """
+                MATCH (g:Game {id: $game_id}), (v:Video {id: $video_id})
+                CREATE (g)-[:HAS_VIDEO]->(v)
+                """
+                queries.append({
+                    'query': query,
+                    'params': {
+                        'game_id': game_id,
+                        'video_id': video_id
+                    }
+                })
+        return queries
+
+    @staticmethod
+    def create_video_language_relationships(videos_data):
+        """Create relationships between videos and languages"""
+        queries = []
+        for video in videos_data:
+            if video.get('language_id'):
+                query = """
+                MATCH (v:Video {id: $video_id}), (l:Language {id: $language_id})
+                CREATE (v)-[:IN_LANGUAGE]->(l)
+                """
+                queries.append({
+                    'query': query,
+                    'params': {
+                        'video_id': video['id'],
+                        'language_id': video['language_id']
+                    }
+                })
+        return queries

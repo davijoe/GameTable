@@ -254,6 +254,7 @@ class MySQLToMongoDBMigration:
                     "username": user["username"],
                     "email": user["email"],
                     "dob": self._serialize_date(user["dob"]),
+                    'is_admin': bool(user.get('is_admin', False)),
                     "metadata": {
                         "source_id": user["id"],
                         "migrated_at": self._serialize_datetime(datetime.utcnow()),

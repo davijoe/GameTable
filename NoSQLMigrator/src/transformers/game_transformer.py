@@ -18,6 +18,17 @@ class GameTransformer:
         """Transform flat game data into nested MongoDB document"""
 
         total_reviews = len(review_ids) if review_ids else 0
+        
+        video_list = []
+        for video in videos:
+            video_data = {
+                'id': video['id'],
+                'title': video['title'],
+                'category': video.get('category'),
+                'link': video['link'],
+                'language': video.get('language', 'Unknown')
+            }
+            video_list.append(video_data)
 
         game_document = {
             "_id": game_data["id"],
@@ -46,7 +57,7 @@ class GameTransformer:
             "genres": genres,
             "publishers": publishers,
             "mechanics": mechanics,
-            "videos": videos,
+            "videos": video_list,
             "review_ids": review_ids or [],
             "metadata": {"source_id": game_data["id"], "migrated_at": None},
         }
