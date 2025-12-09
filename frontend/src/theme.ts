@@ -6,6 +6,8 @@ const config: ThemeConfig = {
 
 const colors = {
   brand: {
+    hover: "#f5f3ff14",
+    click: "#f5f3ff47",
     50: "#f5f3ff3f",
     100: "#ede9fe",
     200: "#d6c2fc",

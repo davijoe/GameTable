@@ -99,16 +99,14 @@ export default function SelectedGame() {
             borderRadius="md"
             cursor="pointer"
             onClick={() => setDescExpanded((prev) => !prev)}
+            _hover={{ bg: "brand.hover" }}
+            _active={{ bg: "brand.click" }}
           >
             <Heading size="md" mb={2}>
               Description
             </Heading>
 
-            <Collapse
-              in={descExpanded}
-              startingHeight="3rem"
-              animateOpacity
-            >
+            <Collapse in={descExpanded} startingHeight="3rem" animateOpacity>
               <Text whiteSpace="pre-wrap" lineHeight="1.5rem">
                 {data.description}
               </Text>

@@ -15,7 +15,7 @@ interface Props {
 export default function GameDetailContributerBox({
   title,
   items,
-  smallHeight = 132, //magic minimum height that "just matches"
+  smallHeight = 136, //magic minimum height that "just matches"
 }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [needsCollapse, setNeedsCollapse] = useState(false);
@@ -37,6 +37,8 @@ export default function GameDetailContributerBox({
       cursor={needsCollapse ? "pointer" : "default"}
       onClick={() => needsCollapse && setExpanded(!expanded)}
       position="relative"
+      _hover={needsCollapse ? { bg: "brand.hover" } : undefined}  // no hover color if can't collapse
+      _active={needsCollapse ? { bg: "brand.click" } : undefined}
     >
       <Text fontWeight="bold" mb={2} size="md">
         {title}
@@ -54,7 +56,6 @@ export default function GameDetailContributerBox({
         </VStack>
       </Collapse>
 
-      {/* gradient overlay for collapsed state */}
       {needsCollapse && !expanded && (
         <Box
           position="absolute"
