@@ -46,14 +46,15 @@ class SQLLanguageRepository:
             if not language:
                 return False
             
-            # Delete all associated videos
-            for video in language.videos:
-                self.db.delete(video)
+            if language.videos:
+                raise ValueError(f"Cannot delete language with id {language.id}: it has associated videos")
             
-            # Delete the language
             self.db.delete(language)
             self.db.commit()
             return True
+        except ValueError:
+            self.db.rollback()
+            raise
         except Exception:
             self.db.rollback()
             raise
