@@ -10,8 +10,8 @@ class GameService:
     def __init__(self):
         self.repo = get_game_repository()
 
-    def list(self, offset, limit, search, sort_by):
-        rows, total = self.repo.list(offset, limit, search, sort_by)
+    def list(self, offset, limit, search, sort_by, sort_order):
+        rows, total = self.repo.list(offset, limit, search, sort_by, sort_order)
 
         for r in rows:
             r.bgg_rating = round(r.bgg_rating, 2) # round because of validator

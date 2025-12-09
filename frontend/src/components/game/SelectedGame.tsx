@@ -22,7 +22,6 @@ export default function SelectedGame() {
 
   const { data, isLoading, error } = useGameDetail(gameId);
   const [descExpanded, setDescExpanded] = useState(false); //used for description
-  console.log("game detail:", data);
 
   return (
     <Box maxW="900px" mx="auto">
@@ -36,7 +35,6 @@ export default function SelectedGame() {
       {data && (
         <VStack align="stretch" spacing={8}>
           <Box display="flex" flexDir={["column", "row"]} gap={6} w="100%">
-            {/* Game Image */}
             <Box
               flexShrink={0}
               w={["100%", "350px"]}
@@ -79,6 +77,7 @@ export default function SelectedGame() {
                 <HStack wrap="wrap" spacing={2}>
                   {data.mechanics.map((m) => (
                     <Tag
+                      key={m.id}
                       size="md"
                       variant="subtle"
                       colorScheme="purple"

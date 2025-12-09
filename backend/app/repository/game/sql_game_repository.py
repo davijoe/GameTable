@@ -19,22 +19,18 @@ class GameRepositorySQL(IGameRepository):
     def get(self, game_id):
         return self.db.get(Game, game_id)
 
-    def list(self, offset, limit, search, sort_by):
+    def list(self, offset, limit, search, sort_by, sort_order = "desc"):
         stmt = select(Game)
 
         if search:
             stmt = stmt.where(Game.name.ilike(f"%{search}%"))
 
         if sort_by in self.SORT_FIELDS:
-            stmt = stmt.order_by(self.SORT_FIELDS[sort_by])
+            col = getattr(Game, sort_by)
+            stmt = stmt.order_by(col.asc() if sort_order == "desc" else col.desc())
 
-        total = self.db.execute(
-            select(func.count()).select_from(stmt.subquery())
-        ).scalar_one()
-
-        rows = self.db.execute(
-            stmt.offset(offset).limit(limit)
-        ).scalars().all()
+        total = self.db.execute(select(func.count()).select_from(stmt.subquery())).scalar_one()
+        rows = self.db.execute(stmt.offset(offset).limit(limit)).scalars().all()
         return rows, total
 
     def create(self, game_data):

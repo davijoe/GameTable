@@ -20,14 +20,13 @@ export default function GameSearchBar({ value, onChange, debounceTime = 250 }: S
   }, [localValue, onChange, debounceTime]);
 
   return (
-    <Box p={3}>
-      <InputGroup>
+      <InputGroup >
         <InputLeftElement pointerEvents="none">
           <SearchIcon color="gray.400" />
         </InputLeftElement>
 
         <Input
-          placeholder="Search games..."
+          placeholder="Search..."
           value={localValue}
           onChange={(e) => setLocalValue(e.target.value)}
           borderRadius="md"
@@ -46,6 +45,5 @@ export default function GameSearchBar({ value, onChange, debounceTime = 250 }: S
           </InputRightElement>
         )}
       </InputGroup>
-    </Box>
   );
 }
