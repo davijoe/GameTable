@@ -1,4 +1,4 @@
-import { Box, Input, InputGroup, InputLeftElement, InputRightElement, IconButton } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement, InputRightElement, IconButton } from "@chakra-ui/react";
 import { SearchIcon, CloseIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 
