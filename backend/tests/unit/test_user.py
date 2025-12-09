@@ -3,44 +3,10 @@ from datetime import date, timedelta
 import pytest
 from pydantic import ValidationError
 
-from app.schema.designer_schema import DesignerCreate
+from app.schema.user_schema import UserCreate
 
 
-class TestDesignerName:
-    @pytest.mark.parametrize(
-        "name",
-        [
-            "",
-            "A" * 256,
-            "A" * 257,
-            "A" * 500,
-            123,
-            " ",
-            "-",
-        ],
-    )
-    def test_invalid_name(self, name):
-        with pytest.raises(ValidationError):
-            DesignerCreate(name=name)
-
-    @pytest.mark.parametrize(
-        "name",
-        [
-            "A",
-            "A" * 2,
-            "A" * 125,
-            "A" * 254,
-            "A" * 255,
-            "Designer O'Neil",
-            "Designer-John",
-        ],
-    )
-    def test_valid_name(self, name):
-        designer = DesignerCreate(name=name)
-        assert designer.name == name
-
-
-class TestDesignerDob:
+class TestUserDob:
     @pytest.mark.parametrize(
         "dob",
         [
@@ -63,7 +29,13 @@ class TestDesignerDob:
     )
     def test_invalid_dob(self, dob):
         with pytest.raises(ValidationError):
-            DesignerCreate(name="Valid Name", dob=dob)
+            UserCreate(
+                display_name="Test",
+                username="testuser",
+                email="test@example.com",
+                password="password123",
+                dob=dob,
+            )
 
     @pytest.mark.parametrize(
         "dob",
@@ -77,6 +49,12 @@ class TestDesignerDob:
         ],
     )
     def test_valid_dob(self, dob):
-        designer = DesignerCreate(name="Valid Name", dob=dob)
+        user = UserCreate(
+            display_name="Test",
+            username="testuser",
+            email="test@example.com",
+            password="password123",
+            dob=dob,
+        )
         expected = dob if isinstance(dob, date) else date.fromisoformat(dob)
-        assert designer.dob == expected
+        assert user.dob == expected

@@ -8,13 +8,13 @@ class TestGameName:
     @pytest.mark.parametrize(
         "name",
         [
-            "",  # empty string
-            "A" * 256,  # 256 characters
-            "A" * 257,  # 257 characters
-            "A" * 500,  # 500 characters
-            123,  # wrong data type
-            " ",  # only space
-            "-",  # only hyphens
+            "",
+            "A" * 256,
+            "A" * 257,
+            "A" * 500, 
+            123,
+            " ",
+            "-",
         ],
     )
     def test_invalid_name(self, name):
@@ -24,13 +24,13 @@ class TestGameName:
     @pytest.mark.parametrize(
         "name",
         [
-            "A",  # 1 character
-            "A" * 2,  # 2 characters
-            "A" * 25,  # 25 characters
-            "A" * 254,  # 254 characters
-            "A" * 255,  # 255 characters (max)
-            "Formula Dé",  # combining characters
-            "Ranter-Go-Round",  # hyphen
+            "A", 
+            "A" * 2,
+            "A" * 125,
+            "A" * 254,
+            "A" * 255,
+            "Formula Dé",
+            "Ranter-Go-Round",
         ],
     )
     def test_valid_name(self, name):
@@ -42,13 +42,13 @@ class TestGameSlug:
     @pytest.mark.parametrize(
         "slug",
         [
-            "",  # empty string
-            "A" * 256,  # 256 characters
-            "A" * 257,  # 257 characters
-            "A" * 500,  # 500 characters
-            123,  # wrong data type
-            " ",  # only space
-            "-",  # only hyphens
+            "",
+            "A" * 256,
+            "A" * 257,
+            "A" * 500,
+            123,
+            " ",
+            "-",
         ],
     )
     def test_invalid_slug(self, slug):
@@ -58,13 +58,13 @@ class TestGameSlug:
     @pytest.mark.parametrize(
         "slug",
         [
-            "a",  # 1 character
-            "a" * 2,  # 2 characters
-            "a" * 25,  # 25 characters
-            "a" * 254,  # 254 characters
-            "a" * 255,  # 255 characters (max)
-            "game!",  # special characters
-            "formula-dé",  # combining characters
+            "a",
+            "a" * 2,
+            "a" * 125,
+            "a" * 254,
+            "a" * 255,
+            "game!",
+            "formula-dé",
         ],
     )
     def test_valid_slug(self, slug):
@@ -74,13 +74,12 @@ class TestGameSlug:
     @pytest.mark.parametrize(
         "input_slug,expected_slug",
         [
-            ("dragon quest", "dragon-quest"),  # spaces converted to hyphens
-            ("Catan", "catan"),  # uppercase converted to lowercase
-            ("Star Wars", "star-wars"),  # multiple conversions
+            ("dragon quest", "dragon-quest"),
+            ("Catan", "catan"),
+            ("Star Wars", "star-wars"),
         ],
     )
     def test_slug_normalization(self, input_slug, expected_slug):
-        """Test that slug automatically normalizes spaces and uppercase."""
         game = GameCreate(name="Valid Name", slug=input_slug)
         assert game.slug == expected_slug
 
@@ -89,19 +88,19 @@ class TestGameYearPublished:
     @pytest.mark.parametrize(
         "year_published",
         [
-            0,  # zero (invalid)
-            1,  # 0001
-            2,  # 0002
-            1500,  # before 1901
-            1899,  # before 1901
-            1900,  # boundary before 1901
-            2156,  # after 2155
-            2157,  # after 2155
-            2500,  # after 2155
-            "abc",  # wrong data type
-            12345,  # more than 4 digits
-            1999.5,  # decimal value
-            99,  # two-digit year
+            0,
+            1,
+            2,
+            1500,
+            1899,
+            1900,
+            2156,
+            2157,
+            2500,
+            "abc",
+            12345,
+            1999.5,
+            99,
         ],
     )
     def test_invalid_year_published(self, year_published):
@@ -111,11 +110,11 @@ class TestGameYearPublished:
     @pytest.mark.parametrize(
         "year_published",
         [
-            1901,  # boundary: earliest valid
-            1902,  # just after boundary
-            2000,  # mid-range valid
-            2154,  # just before upper boundary
-            2155,  # boundary: latest valid
+            1901,
+            1902,
+            2000,
+            2154,
+            2155,
         ],
     )
     def test_valid_year_published(self, year_published):
@@ -127,17 +126,17 @@ class TestGameBggRating:
     @pytest.mark.parametrize(
         "bgg_rating",
         [
-            0,  # 0
-            0.01,  # 0.01
-            0.5,  # 0.5
-            0.98,  # 0.98
-            0.99,  # 0.99
-            10.01,  # 10.01
-            10.02,  # 10.02
-            15,  # 15
-            "abc",  # wrong data type
-            -1,  # negative value
-            5.1234,  # too many decimals
+            0,
+            0.01,
+            0.5,
+            0.98,
+            0.99,
+            10.01,
+            10.02,
+            15,
+            "abc",
+            -1,
+            5.1234,
         ],
     )
     def test_invalid_bgg_rating(self, bgg_rating):
@@ -147,11 +146,11 @@ class TestGameBggRating:
     @pytest.mark.parametrize(
         "bgg_rating",
         [
-            1,  # boundary: lowest valid
-            1.01,  # just above boundary
-            5,  # mid-range valid
-            9.99,  # just below upper boundary
-            10,  # boundary: highest valid
+            1,
+            1.01,
+            5,
+            9.99,
+            10,
         ],
     )
     def test_valid_bgg_rating(self, bgg_rating):
@@ -163,17 +162,17 @@ class TestGameDifficultyRating:
     @pytest.mark.parametrize(
         "difficulty_rating",
         [
-            0,  # 0
-            0.01,  # 0.01
-            0.5,  # 0.5
-            0.98,  # 0.98
-            0.99,  # 0.99
-            5.01,  # 5.01
-            5.02,  # 5.02
-            7.5,  # 7.5
-            "abc",  # wrong data type
-            -1,  # negative value
-            5.1234,  # too many decimals
+            0,
+            0.01,
+            0.5,
+            0.98,
+            0.99,
+            5.01,
+            5.02,
+            7.5,
+            "abc",
+            -1,
+            5.1234,
         ],
     )
     def test_invalid_difficulty_rating(self, difficulty_rating):
@@ -183,11 +182,11 @@ class TestGameDifficultyRating:
     @pytest.mark.parametrize(
         "difficulty_rating",
         [
-            1,  # boundary: lowest valid
-            1.01,  # just above boundary
-            2.5,  # mid-range valid
-            4.99,  # just below upper boundary
-            5,  # boundary: highest valid
+            1,
+            1.01,
+            2.5,
+            4.99,
+            5,
         ],
     )
     def test_valid_difficulty_rating(self, difficulty_rating):
@@ -199,7 +198,6 @@ MAX_BYTES = 65535
 
 
 class TestGameDescription:
-    # Invalid Tests
     @pytest.mark.parametrize(
         "param",
         [
@@ -218,7 +216,6 @@ class TestGameDescription:
         with pytest.raises(ValidationError):
             GameCreate(name="Valid Name", description=desc)
 
-    # Happy happy
     @pytest.mark.parametrize(
         "param",
         [
@@ -244,13 +241,13 @@ class TestGameMinPlayers:
     @pytest.mark.parametrize(
         "min_players",
         [
-            0,  # less than 1
-            -1,  # negative value
-            1000,  # 1000 (exceeds max)
-            1001,  # 1001 (exceeds max)
-            1500,  # 1500 (exceeds max)
-            "abc",  # wrong data type
-            5.5,  # decimal
+            0,
+            -1,
+            1000,
+            1001,
+            1500,
+            "abc",
+            5.5,
         ],
     )
     def test_invalid_min_players(self, min_players):
@@ -260,11 +257,11 @@ class TestGameMinPlayers:
     @pytest.mark.parametrize(
         "min_players",
         [
-            1,  # boundary: lowest valid
-            2,  # just above boundary
-            500,  # mid-range valid
-            998,  # just below upper boundary
-            999,  # boundary: highest valid
+            1,
+            2,
+            500,
+            998,
+            999,
         ],
     )
     def test_valid_min_players(self, min_players):
@@ -276,13 +273,13 @@ class TestGameMaxPlayers:
     @pytest.mark.parametrize(
         "max_players",
         [
-            0,  # less than 1
-            -1,  # negative value
-            1000,  # 1000 (exceeds max)
-            1001,  # 1001 (exceeds max)
-            1500,  # 1500 (exceeds max)
-            "abc",  # wrong data type
-            5.5,  # decimal
+            0,
+            -1,
+            1000,
+            1001,
+            1500,
+            "abc",
+            5.5,
         ],
     )
     def test_invalid_max_players(self, max_players):
@@ -292,14 +289,81 @@ class TestGameMaxPlayers:
     @pytest.mark.parametrize(
         "max_players",
         [
-            1,  # boundary: lowest valid
-            2,  # just above boundary
-            500,  # mid-range valid
-            998,  # just below upper boundary
-            999,  # boundary: highest valid
+            1,
+            2,
+            500,
+            998,
+            999,
         ],
     )
     def test_valid_max_players(self, max_players):
         game = GameCreate(name="Valid Name", max_players=max_players)
         assert game.max_players == max_players
         assert game.max_players == max_players
+
+
+class TestGameThumbnail:
+    @pytest.mark.parametrize(
+        "thumbnail",
+        [
+            "",
+            "A" * 256,
+            "A" * 257,
+            "A" * 500,
+            123,
+            " ",
+            "https://example.com/user profile",
+        ],
+    )
+    def test_invalid_thumbnail(self, thumbnail):
+        with pytest.raises(ValidationError):
+            GameCreate(name="Valid Name", thumbnail=thumbnail)
+
+    @pytest.mark.parametrize(
+        "thumbnail",
+        [
+            "A",
+            "A" * 2,
+            "A" * 125,
+            "A" * 254,
+            "A" * 255,
+            "https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__small/img/YT6svCVsWqLrDitcMEtyazVktbQ=/fit-in/200x150/filters:strip_icc()/pic4718279.jpg",
+        ],
+    )
+    def test_valid_thumbnail(self, thumbnail):
+        game = GameCreate(name="Valid Name", thumbnail=thumbnail)
+        assert game.thumbnail == thumbnail
+
+
+class TestGameImage:
+    @pytest.mark.parametrize(
+        "image",
+        [
+            "",
+            "A" * 256,
+            "A" * 257,
+            "A" * 500,
+            123,
+            " ",
+            "https://example.com/user profile",
+        ],
+    )
+    def test_invalid_image(self, image):
+        with pytest.raises(ValidationError):
+            GameCreate(name="Valid Name", image=image)
+
+    @pytest.mark.parametrize(
+        "image",
+        [
+            "A",
+            "A" * 2,
+            "A" * 125,
+            "A" * 254,
+            "A" * 255,
+            "https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__original/img/yR0aoBVKNrAmmCuBeSzQnMflLYg=/0x0/filters:format(jpeg)/pic4718279.jpg",
+        ],
+    )
+    def test_valid_image(self, image):
+        game = GameCreate(name="Valid Name", image=image)
+        assert game.image == image
+

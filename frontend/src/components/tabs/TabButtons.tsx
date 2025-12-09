@@ -2,8 +2,6 @@ import { Box, HStack, Button } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 const tabs = [
   { label: "Games", path: "/games" },
-  { label: "Friends", path: "/friends" },
-  { label: "Messages", path: "/messages" },
   { label: "Weather", path: "/weather" },
   { label: "Profile", path: "/profile" },
 ];
@@ -23,7 +21,9 @@ export default function TabButtons() {
       >
         <HStack spacing={2}>
           {tabs.map((tab) => {
-            const isActive = location.pathname.startsWith(tab.path);
+            const isActive =
+              (location.pathname === "/" && tab.path === "/games") ||
+              location.pathname.startsWith(tab.path);
             return (
               <Button
                 key={tab.path}
