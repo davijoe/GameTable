@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.schema.language_schema import LanguageCreate, LanguageRead, LanguageUpdate
 from app.service.language_service import LanguageService
-from app.utility.db_sql import get_sql_db
 from app.utility.auth import require_admin
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/languages", tags=["languages"])
 

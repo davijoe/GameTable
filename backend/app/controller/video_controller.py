@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.schema.video_schema import VideoCreate, VideoRead, VideoUpdate
 from app.service.video_service import VideoService
-from app.utility.db_sql import get_sql_db
 from app.utility.auth import require_admin
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/videos", tags=["videos"])
 
