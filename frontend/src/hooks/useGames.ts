@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import type { PaginatedResponse } from "../services/api-client";
 import type { Game } from "../entities/Game";
-import gameService from "../services/gameService";
+import gameService from "../services/game/gameService";
 
 export const useGames = () =>
   useInfiniteQuery<PaginatedResponse<Game>, Error>({
