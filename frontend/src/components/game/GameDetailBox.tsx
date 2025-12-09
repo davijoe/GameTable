@@ -1,4 +1,4 @@
-import { Box, Text, VStack, Collapse, Button } from "@chakra-ui/react";
+import { Box, Text, VStack, Collapse } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
 
 interface Item {
@@ -9,38 +9,43 @@ interface Item {
 interface Props {
   title: string;
   items: Item[];
-  expandTriggerHeight?: number;
-  expanded?: boolean;
-  onToggle?: () => void;
+  smallHeight?: number; // collapsed height in px
 }
 
-export default function GameDetailBox({
+export default function GameDetailContributerBox({
   title,
   items,
-  expandTriggerHeight = 120,
-  expanded = false,
-  onToggle,
+  smallHeight = 150,
 }: Props) {
+  const [expanded, setExpanded] = useState(false);
   const [needsCollapse, setNeedsCollapse] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (contentRef.current) {
       const height = contentRef.current.scrollHeight;
-      setNeedsCollapse(height > expandTriggerHeight);
+      setNeedsCollapse(height > smallHeight);
     }
-  }, [items, expandTriggerHeight]);
+  }, [items, smallHeight]);
 
   return (
-    <Box p={4} borderWidth="1px" borderRadius="md" w="100%">
-      <Text align="center" fontWeight="bold" mb={2}>
+    <Box
+      p={4}
+      borderWidth="1px"
+      borderRadius="md"
+      w="100%"
+      cursor={needsCollapse ? "pointer" : "default"}
+      onClick={() => needsCollapse && setExpanded(!expanded)}
+      position="relative"
+    >
+      <Text fontWeight="bold" mb={2}>
         {title}
       </Text>
-      <Box borderBottomWidth="1px" borderColor="gray.600" mb={2} />
+
       <Collapse
-        in={!needsCollapse || expanded}
+        in={expanded || !needsCollapse}
+        startingHeight={smallHeight}
         animateOpacity
-        style={{ overflow: "hidden" }}
       >
         <VStack ref={contentRef} align="start" spacing={1}>
           {items.map((item) => (
@@ -49,16 +54,17 @@ export default function GameDetailBox({
         </VStack>
       </Collapse>
 
-      {needsCollapse && (
-        <Button
-          size="sm"
-          mt={2}
-          variant="link"
-          colorScheme="blue"
-          onClick={onToggle}
-        >
-          {expanded ? "Show Less" : "Show More"}
-        </Button>
+      {/* Gradient overlay for collapsed state */}
+      {needsCollapse && !expanded && (
+        <Box
+          position="absolute"
+          bottom={0}
+          left={0}
+          right={0}
+          h="40px"
+          bgGradient="linear(to-b, rgba(255, 255, 255, 0), rgba(255,255,255,0.10))"
+          pointerEvents="none"
+        />
       )}
     </Box>
   );

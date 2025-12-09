@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   VStack,
   Heading,
@@ -6,17 +6,12 @@ import {
   Box,
   HStack,
   Spinner,
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   SimpleGrid,
   Tag,
   Collapse,
 } from "@chakra-ui/react";
 import { useGameDetail } from "../../hooks/useGameDetail";
-import GameDetailBox from "./GameDetailBox";
+import GameDetailContributerBox from "./GameDetailBox";
 import BackArrow from "../reusable/BackArrow";
 import { useState } from "react";
 
@@ -24,7 +19,6 @@ export default function SelectedGame() {
   const { gameId } = useParams<{ gameId: string }>();
 
   const { data, isLoading, error } = useGameDetail(gameId);
-  const [expanded, setExpanded] = useState(false); //used for contributer
   const [descExpanded, setDescExpanded] = useState(false); //used for description
   console.log("game detail:", data);
 
@@ -35,7 +29,6 @@ export default function SelectedGame() {
       {error && <Text color="red.500">{error.message}</Text>}
       {data && (
         <VStack align="stretch" spacing={8}>
-          {/* Header Section */}
           <Box display="flex" flexDir={["column", "row"]} gap={6} w="100%">
             {/* Game Image */}
             <Box
@@ -95,6 +88,9 @@ export default function SelectedGame() {
 
           {"description"}
           <Box
+            p={4}
+            borderWidth="1px"
+            borderRadius="md"
             cursor="pointer"
             onClick={() => setDescExpanded((prev) => !prev)}
           >
@@ -102,38 +98,26 @@ export default function SelectedGame() {
               Description
             </Heading>
 
-            <Collapse in={descExpanded} animateOpacity>
-              <Text whiteSpace="pre-wrap">{data.description}</Text>
-            </Collapse>
-
-            {!descExpanded && (
-              <Text
-                noOfLines={2} // Chakra will clamp to 2 lines with ellipsis
-                whiteSpace="pre-wrap"
-              >
+            <Collapse
+              in={descExpanded}
+              startingHeight="3rem" // height for ~2 lines (adjust based on your lineHeight)
+              animateOpacity
+            >
+              <Text whiteSpace="pre-wrap" lineHeight="1.5rem">
                 {data.description}
               </Text>
-            )}
+            </Collapse>
           </Box>
 
-          <SimpleGrid columns={[1, 3]} spacing={4}>
-            <GameDetailBox
+          <SimpleGrid columns={[1, 3]} spacing={4} alignItems={"start"}>
+            <GameDetailContributerBox
               title="Designers"
               items={data.designers}
-              expanded={expanded}
-              onToggle={() => setExpanded(!expanded)}
             />
-            <GameDetailBox
-              title="Artists"
-              items={data.artists}
-              expanded={expanded}
-              onToggle={() => setExpanded(!expanded)}
-            />
-            <GameDetailBox
+            <GameDetailContributerBox title="Artists" items={data.artists} />
+            <GameDetailContributerBox
               title="Publishers"
               items={data.publishers}
-              expanded={expanded}
-              onToggle={() => setExpanded(!expanded)}
             />
           </SimpleGrid>
         </VStack>
