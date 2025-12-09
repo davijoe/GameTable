@@ -26,14 +26,14 @@ class SQLDesignerRepository:
 
     def create(self, designer: Designer) -> Designer:
         self.db.add(designer)
-        self.db.flush()
+        self.db.commit()
         return designer
 
     def update(self, designer: Designer) -> Designer:
         self.db.merge(designer)
-        self.db.flush()
+        self.db.commit()
         return designer
 
     def delete(self, designer: Designer) -> None:
         self.db.delete(designer)
-        self.db.flush()
+        self.db.commit()

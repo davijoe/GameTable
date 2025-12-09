@@ -34,12 +34,12 @@ class SQLUserRepository:
 
     def create(self, user: User) -> User:
         self.db.add(user)
-        self.db.flush()
+        self.db.commit()
         return user
 
     def update(self, user: User) -> User:
         self.db.merge(user)
-        self.db.flush()
+        self.db.commit()
         return user
 
     def delete(self, user: User) -> bool:
