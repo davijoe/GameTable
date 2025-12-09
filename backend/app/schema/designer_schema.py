@@ -24,6 +24,18 @@ class DesignerBase(ORMModel):
 
     dob: date | None = None
 
+    @field_validator("dob")
+    @classmethod
+    def validate_dob(cls, v: date | None) -> date | None:
+        if v is None:
+            return v
+        min_date = date(1900, 1, 1)
+        if v < min_date:
+            raise ValueError("DOB must be on or after 1900-01-01")
+        if v > date.today():
+            raise ValueError("DOB cannot be in the future")
+        return v
+
 
 class DesignerCreate(DesignerBase):
     pass
