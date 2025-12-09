@@ -10,10 +10,20 @@ class GameService:
     def __init__(self):
         self.repo = get_game_repository()
 
-    def list(self, offset, limit, search):
-        rows, total = self.repo.list(offset, limit, search)
+    def list(self, offset, limit, search, sort_by, sort_order):
+        rows, total = self.repo.list(offset, limit, search, sort_by, sort_order)
+
         for r in rows:
             r.bgg_rating = round(r.bgg_rating, 2) # round because of validator
+
+            #clean data before validation
+            if r.year_published < 1901:
+                r.year_published = 1901
+            if r.min_players < 1:
+                r.min_players = 1
+            if r.max_players < 1:
+                r.max_players = 1
+
         return [GameRead.model_validate(r) for r in rows], total
 
     def get(self, game_id):
