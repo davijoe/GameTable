@@ -11,6 +11,11 @@ class SQLGenreRepository:
     def get(self, genre_id: int) -> Genre | None:
         return self.db.get(Genre, genre_id)
 
+    def get_by_name(self, name: str) -> Genre | None:
+        return self.db.execute(
+            select(Genre).where(Genre.name == name)
+        ).scalar_one_or_none()
+
     def list(
         self, offset: int = 0, limit: int = 50, search: str | None = None
     ) -> tuple[list[Genre], int]:

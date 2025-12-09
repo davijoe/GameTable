@@ -11,6 +11,11 @@ class SQLDesignerRepository:
     def get(self, designer_id: int) -> Designer | None:
         return self.db.get(Designer, designer_id)
 
+    def get_by_name(self, name: str) -> Designer | None:
+        return self.db.execute(
+            select(Designer).where(Designer.name == name)
+        ).scalar_one_or_none()
+
     def list(
         self, offset: int = 0, limit: int = 50, search: str | None = None
     ) -> tuple[list[Designer], int]:
