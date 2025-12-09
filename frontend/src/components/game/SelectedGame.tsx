@@ -9,6 +9,7 @@ import {
   SimpleGrid,
   Tag,
   Collapse,
+  Center,
 } from "@chakra-ui/react";
 import { useGameDetail } from "../../hooks/useGameDetail";
 import GameDetailContributerBox from "./GameDetailBox";
@@ -25,7 +26,9 @@ export default function SelectedGame() {
   return (
     <Box maxW="900px" mx="auto">
       <BackArrow label="Back to Games" />
-      {isLoading && <Spinner size="xl" />}
+      {isLoading && <Center>
+        <Spinner size="xl" />
+      </Center>}
       {error && <Text color="red.500">{error.message}</Text>}
       {data && (
         <VStack align="stretch" spacing={8}>

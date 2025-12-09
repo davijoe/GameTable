@@ -15,7 +15,7 @@ interface Props {
 export default function GameDetailContributerBox({
   title,
   items,
-  smallHeight = 150,
+  smallHeight = 132, //magic minimum height that "just matches"
 }: Props) {
   const [expanded, setExpanded] = useState(false);
   const [needsCollapse, setNeedsCollapse] = useState(false);
