@@ -31,14 +31,29 @@ class SQLLanguageRepository:
 
     def create(self, language: Language) -> Language:
         self.db.add(language)
-        self.db.flush()
+        self.db.commit()
+        self.db.refresh(language)
         return language
 
     def update(self, language: Language) -> Language:
         self.db.merge(language)
-        self.db.flush()
+        self.db.commit()
+        self.db.refresh(language)
         return language
 
-    def delete(self, language: Language) -> None:
-        self.db.delete(language)
-        self.db.flush()
+    def delete(self, language: Language) -> bool:
+        try:
+            if not language:
+                return False
+            
+            # Delete all associated videos
+            for video in language.videos:
+                self.db.delete(video)
+            
+            # Delete the language
+            self.db.delete(language)
+            self.db.commit()
+            return True
+        except Exception:
+            self.db.rollback()
+            raise
