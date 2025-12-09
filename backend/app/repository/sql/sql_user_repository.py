@@ -42,6 +42,17 @@ class SQLUserRepository:
         self.db.flush()
         return user
 
-    def delete(self, user: User) -> None:
-        self.db.delete(user)
-        self.db.flush()
+    def delete(self, user: User) -> bool:
+        try:
+            if not user:
+                return False
+            
+            for review in user.reviews:
+                self.db.delete(review)
+            
+            self.db.delete(user)
+            self.db.commit()
+            return True
+        except Exception:
+            self.db.rollback()
+            raise
