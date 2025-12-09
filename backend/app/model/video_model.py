@@ -16,3 +16,4 @@ class Video(Base):
     language_id = Column(Integer, ForeignKey("language.id"), nullable=False)
 
     game = relationship("Game", back_populates="videos")
+    language = relationship("Language", back_populates="videos")

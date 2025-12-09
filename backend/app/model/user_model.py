@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Date, Integer, String
+from sqlalchemy.orm import relationship
 
 from app.utility.db_sql import Base
 
@@ -12,3 +13,5 @@ class User(Base):
     password = Column(String(255), nullable=False)
     dob = Column(Date, nullable=False)
     email = Column(String(255), nullable=False)
+
+    reviews = relationship("Review", lazy="select")
