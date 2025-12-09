@@ -71,5 +71,8 @@ def update_language(
 )
 def delete_language(language_id: int, db: Session = Depends(get_sql_db)):
     svc = LanguageService(db)
-    if not svc.delete(language_id):
-        raise HTTPException(status_code=404, detail="Language not found")
+    try:
+        if not svc.delete(language_id):
+            raise HTTPException(status_code=404, detail="Language not found")
+    except ValueError as e:
+        raise HTTPException(status_code=409, detail=str(e))
