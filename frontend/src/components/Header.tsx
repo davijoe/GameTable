@@ -50,19 +50,13 @@ export default function Header({ height = "80px" }: HeaderProps) {
       </Box>
 
       <Flex align="center" gap={5}>
-        <IconButton
-          aria-label="Notifications"
-          icon={<BellIcon />}
-          variant="ghost"
-          size="md"
-        />
         {user ? (
           <>
             <Box
               borderRadius="full"
               bg="blackAlpha.400"
               display="flex"
-              padding="10px"
+              padding={"10px"}
             >
               <Text fontSize="sm" fontWeight="semibold" color="white">
                 {user.display_name}
