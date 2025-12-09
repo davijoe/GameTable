@@ -26,14 +26,14 @@ class SQLVideoRepository:
 
     def create(self, video: Video) -> Video:
         self.db.add(video)
-        self.db.flush()
+        self.db.commit()
         return video
 
     def update(self, video: Video) -> Video:
         self.db.merge(video)
-        self.db.flush()
+        self.db.commit()
         return video
 
     def delete(self, video: Video) -> None:
         self.db.delete(video)
-        self.db.flush()
+        self.db.commit()

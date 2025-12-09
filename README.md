@@ -7,6 +7,7 @@ This application is developed for the courses "Full Stack Development", "Databas
 - DevOps: Docker (compose), GitHub (actions), Azure VPS,
 - Backend: UV, Python, FastAPI, MySQL
 - Frontend: React, Chakra (perhaps), TypeScript, Bun
+- Database Migration: NoSQLMigrator
 
 ### Pre-Requirements
 
@@ -15,31 +16,37 @@ This application is developed for the courses "Full Stack Development", "Databas
 - Bun
 - Patience
 
-Also remember to populate a .env in the backend. Use .env.example
+## Quick Start (3 Steps)
 
-## NEW Usage Guidelines (3 Steps!)
+### Step 1: Configure Environment Variables
 
-1. Create .env file in /backend from the .env.example
+Create a `.env` file in the `/backend` folder using `.env.example` as a template:
+
+```bash
+cp backend/.env.example backend/.env
+```
 
 Don't change any values unless you intend to manually create a different user for the database.
 
-2. Build and run the 3 containers with docker compose.
+### Step 2: Start the Containers
 
-from the root folder:
+From the root folder, build and run all 5 containers:
 
 ```bat
 docker compose -f docker-compose.dev.yml up -d
 ```
 
-Your should now have these 3 containers running
+You should now have these containers running:
 
-| Container       | Port |
-| :-------------- | :--: |
-| Backend Server  | 8000 |
-| Frontend Server | 3000 |
-| MySQL 8.4       | 3306 |
+| Container       |     Port      |
+| :-------------- | :-----------: |
+| Backend Server  |     8000      |
+| Frontend Server |     3000      |
+| MySQL 8.4       |     3306      |
+| mongo 7         |     27017     |
+| neo4j           | 7474 and 7687 |
 
-3. Create schema + tables + triggers + functions + procedures
+### Step 3: Create schema + tables + triggers + functions + procedures
 
 IF YOU HAVE NOT CREATED A DATABASE WITH TEST DATA YET:
 
@@ -85,28 +92,33 @@ The frontend should now be running at port 3000
 
 1. "Command not found" when using docker compose
 
-You are probably using Docker Compose V1. Use docker-compose instead
+You're using Docker Compose V1. Use `docker-compose` instead:
 
 ```bash
 docker-compose -f docker-compose.dev.yml up -d
 ```
 
-2. Internal Server Error:
+### 2. Internal Server Error
 
-Probably you just build a new container and now need to populate \
-your database
+Likely cause: Database hasn't been initialized yet. Run Step 3 above to populate your database.
 
-3. \[Insert a lot of different python errors here\] \
+### 3. Python library errors
 
-Try and make sure all the python libraries are correctly \
-installed. (only relevant when working with the files locally \
-and not inside the docker container mentioned above)
+Ensure all Python dependencies are installed:
 
 ```bash
 cd backend
 uv sync
 ```
 
-## This these top-tier advice not work for you?
+### 4. Database connection errors
 
-Contact Wenmin Ye for free technical support support
+Verify that:
+
+- The MySQL container is running: `docker ps`
+- The `.env` file in `/backend` has correct database credentials
+- Port 3306 is not blocked by another service
+
+## Need Help?
+
+Contact Wenmin Ye for technical support

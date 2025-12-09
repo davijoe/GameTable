@@ -29,17 +29,17 @@ class SQLReviewRepository:
 
     def create(self, review: Review) -> Review:
         self.db.add(review)
-        self.db.flush()
+        self.db.commit()
         return review
 
     def update(self, review: Review) -> Review:
         self.db.merge(review)
-        self.db.flush()
+        self.db.commit()
         return review
 
     def delete(self, review: Review) -> None:
         self.db.delete(review)
-        self.db.flush()
+        self.db.commit()
 
     def get_review_count_for_game(self, game_id: int) -> int:
         stmt = text("SELECT GetGameReviewCount(:game_id)")

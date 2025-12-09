@@ -27,14 +27,14 @@ class SQLMechanicRepository:
 
     def create(self, mechanic: Mechanic) -> Mechanic:
         self.db.add(mechanic)
-        self.db.flush()
+        self.db.commit()
         return mechanic
 
     def update(self, mechanic: Mechanic) -> Mechanic:
         self.db.merge(mechanic)
-        self.db.flush()
+        self.db.commit()
         return mechanic
 
     def delete(self, mechanic: Mechanic) -> None:
         self.db.delete(mechanic)
-        self.db.flush()
+        self.db.commit()

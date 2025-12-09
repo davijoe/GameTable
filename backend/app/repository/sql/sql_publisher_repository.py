@@ -27,14 +27,14 @@ class SQLPublisherRepository:
 
     def create(self, publisher: Publisher) -> Publisher:
         self.db.add(publisher)
-        self.db.flush()
+        self.db.commit()
         return publisher
 
     def update(self, publisher: Publisher) -> Publisher:
         self.db.merge(publisher)
-        self.db.flush()
+        self.db.commit()
         return publisher
 
     def delete(self, publisher: Publisher) -> None:
         self.db.delete(publisher)
-        self.db.flush()
+        self.db.commit()
