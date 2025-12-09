@@ -45,12 +45,29 @@ class GameRepositorySQL(IGameRepository):
         return obj
 
     def delete(self, game_id):
-        obj = self.get(game_id)
-        if not obj:
-            return False
-        self.db.delete(obj)
-        self.db.commit()
-        return True
+        try:
+            obj = self.get(game_id)
+            if not obj:
+                return False
+            
+            for review in obj.reviews:
+                self.db.delete(review)
+            
+            for video in obj.videos:
+                self.db.delete(video)
+            
+            obj.artists.clear()
+            obj.designers.clear()
+            obj.publishers.clear()
+            obj.mechanics.clear()
+            obj.genres.clear()
+            
+            self.db.delete(obj)
+            self.db.commit()
+            return True
+        except Exception:
+            self.db.rollback()
+            raise
 
     def get_detail(self, game_id):
         stmt = (

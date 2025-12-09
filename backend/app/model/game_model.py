@@ -3,8 +3,10 @@ from sqlalchemy.orm import relationship
 
 from app.model.artists_model import Artist
 from app.model.designer_model import Designer
+from app.model.genre_model import Genre
 from app.model.mechanic_model import Mechanic
 from app.model.publisher_model import Publisher
+from app.model.review_model import Review
 from app.model.video_model import Video
 from app.utility.db_sql import Base
 
@@ -35,6 +37,13 @@ game_mechanics = Table(
     Column("mechanic_id", Integer, ForeignKey("mechanic.id"), primary_key=True),
 )
 
+game_genres = Table(
+    "game_genres",
+    Base.metadata,
+    Column("game_id", Integer, ForeignKey("game.id"), primary_key=True),
+    Column("genre_id", Integer, ForeignKey("genre.id"), primary_key=True),
+)
+
 class Game(Base):
     __tablename__ = "game"
 
@@ -55,4 +64,6 @@ class Game(Base):
     designers = relationship(Designer, secondary=game_designers, lazy="select")
     publishers = relationship(Publisher, secondary=game_publishers, lazy="select")
     mechanics = relationship(Mechanic, secondary=game_mechanics, lazy="select")
+    genres = relationship(Genre, secondary=game_genres, lazy="select")
     videos = relationship(Video, back_populates="game", lazy="select")
+    reviews = relationship(Review, lazy="select")
