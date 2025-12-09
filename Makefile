@@ -51,4 +51,4 @@ build: build-frontend build-backend build-migrator
 ### Install EVERYTHING LETSA GOOOO
 install: gp, frontend, backend, migrator, scraper, build-frontend, build-backend, build-migrator
 	@echo "Wow! You did it. You successfully (maybe) installed all the dependencies and successfully (maybe) build all the images."
-@echo "Now try using 'make up' to start all the containers!"
+	@echo "Now try using 'make up' to start all the containers!"
