@@ -11,6 +11,11 @@ class SQLArtistRepository:
     def get(self, artist_id: int) -> Artist | None:
         return self.db.get(Artist, artist_id)
 
+    def get_by_name(self, name: str) -> Artist | None:
+        return self.db.execute(
+            select(Artist).where(Artist.name == name)
+        ).scalar_one_or_none()
+
     def list(
         self, offset: int = 0, limit: int = 50, search: str | None = None
     ) -> tuple[list[Artist], int]:
@@ -26,14 +31,14 @@ class SQLArtistRepository:
 
     def create(self, artist: Artist) -> Artist:
         self.db.add(artist)
-        self.db.flush()
+        self.db.commit()
         return artist
 
     def update(self, artist: Artist) -> Artist:
         self.db.merge(artist)
-        self.db.flush()
+        self.db.commit()
         return artist
 
     def delete(self, artist: Artist) -> None:
         self.db.delete(artist)
-        self.db.flush()
+        self.db.commit()

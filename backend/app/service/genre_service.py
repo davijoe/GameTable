@@ -21,8 +21,8 @@ class GenreService:
         return [GenreRead.model_validate(r) for r in rows], total
 
     def create(self, payload: GenreCreate) -> GenreRead:
-        if self.repo.get_by_title(payload.title):
-            raise ValueError("Genre with this title already exists")
+        if self.repo.get_by_name(payload.name):
+            raise ValueError("Genre with this name already exists")
 
         obj = Genre(**payload.model_dump())
         obj = self.repo.create(obj)
