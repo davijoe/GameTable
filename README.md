@@ -20,10 +20,10 @@ This application is developed for the courses "Full Stack Development", "Databas
 
 ### Step 1: Configure Environment Variables
 
-Create a `.env` file in the `/backend` folder using `.env.example` as a template:
+Create a `.env` file in the root folder using the root `.env.example` as a template:
 
 ```bash
-cp backend/.env.example backend/.env
+cp .env.example .env
 ```
 
 Don't change any values unless you intend to manually create a different user for the database.
@@ -57,36 +57,31 @@ The first one (the ddl file) creates that Database / schema, the tables, a trigg
 
 The second one (the sql file) populates the database with real testing data
 
-### OLD Usage guidelines
+### Step 4: Run NoSQLMigrator (Optional)
 
-To run the backend application and a MySQL docker container, \
-run the following command from repository root folder
+To migrate your MySQL data to MongoDB and Neo4j:
 
-```bash
-docker compose -f docker-compose.dev.yml up -d
-```
-
-The backend will now be run at localhost:8000 and you endpoints \
-can be seen at: \
-localhost:8000/docs
-
-The MySQL Database runs at port 3306
-
-If you want to run the frontend as well, then switch to the \
-fronted folder and install the node modules with bun:
+1. Navigate to the NoSQLMigrator folder:
 
 ```bash
-cd frontend
-bun i
+cd NoSQLMigrator
 ```
 
-Lastly, run your development server with:
+2. Create a `.env` file using the `.env.example` as a template:
 
 ```bash
-bun run dev
+cp .env.example .env
 ```
 
-The frontend should now be running at port 3000
+Ensure the credentials match your root `.env` file and the running containers.
+
+3. Build and run the migrator:
+
+```bash
+docker-compose up --build
+```
+
+The migrator will automatically run and migrate data from MySQL to MongoDB and Neo4j based on the `MIGRATE_*` settings in your `.env` file.
 
 ### Errors You Might Encounter
 
