@@ -54,7 +54,7 @@ export default function GameDetailContributerBox({
         </VStack>
       </Collapse>
 
-      {/* Gradient overlay for collapsed state */}
+      {/* gradient overlay for collapsed state */}
       {needsCollapse && !expanded && (
         <Box
           position="absolute"

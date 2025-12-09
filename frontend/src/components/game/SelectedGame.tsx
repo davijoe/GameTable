@@ -106,7 +106,7 @@ export default function SelectedGame() {
 
             <Collapse
               in={descExpanded}
-              startingHeight="3rem" // height for ~2 lines (adjust based on your lineHeight)
+              startingHeight="3rem"
               animateOpacity
             >
               <Text whiteSpace="pre-wrap" lineHeight="1.5rem">
