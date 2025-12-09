@@ -3,14 +3,16 @@ import type { PaginatedResponse } from "../services/api-client";
 import type { Game } from "../entities/Game";
 import gameService from "../services/game/gameService";
 
-export const useGames = () =>
+export const useGames = (q?: string, sortBy?: string) =>
   useInfiniteQuery<PaginatedResponse<Game>, Error>({
-    queryKey: ["games"],
+    queryKey: ["games", q, sortBy],
     queryFn: ({ pageParam = 0 }) =>
       gameService.getAll({
         params: {
           offset: pageParam,
           limit: 10,
+          q,
+          sort_by: sortBy,
         },
       }),
     getNextPageParam: (lastPage) => {

@@ -6,23 +6,35 @@ from app.repository.game.i_game_repository import IGameRepository
 
 
 class GameRepositorySQL(IGameRepository):
+    SORT_FIELDS = {
+        "bgg_rating": Game.bgg_rating.desc(),
+        "year_published": Game.year_published.desc(),
+        "playing_time": Game.playing_time.asc(),
+        "name": Game.name.asc(),
+    }
+
     def __init__(self, db):
         self.db = db
 
     def get(self, game_id):
         return self.db.get(Game, game_id)
 
-    def list(self, offset, limit, search):
+    def list(self, offset, limit, search, sort_by):
         stmt = select(Game)
+
         if search:
             stmt = stmt.where(Game.name.ilike(f"%{search}%"))
+
+        if sort_by in self.SORT_FIELDS:
+            stmt = stmt.order_by(self.SORT_FIELDS[sort_by])
 
         total = self.db.execute(
             select(func.count()).select_from(stmt.subquery())
         ).scalar_one()
 
-        rows = self.db.execute(stmt.offset(offset).limit(limit)).scalars().all()
-
+        rows = self.db.execute(
+            stmt.offset(offset).limit(limit)
+        ).scalars().all()
         return rows, total
 
     def create(self, game_data):

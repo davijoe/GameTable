@@ -13,11 +13,12 @@ router = APIRouter(prefix="/api/games", tags=["games"])
 @router.get("", response_model=dict[str, Any])
 def list_games(
     q: str | None = None,
+    sort_by: str | None = None,
     offset: int = 0,
     limit: int = 50,
 ):
     svc = GameService()
-    items, total = svc.list(offset=offset, limit=limit, search=q)
+    items, total = svc.list(offset=offset, limit=limit, search=q, sort_by=sort_by)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
 @router.get("/{game_id}/detail", response_model=GameDetail)

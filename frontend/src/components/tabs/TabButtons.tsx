@@ -21,7 +21,9 @@ export default function TabButtons() {
       >
         <HStack spacing={2}>
           {tabs.map((tab) => {
-            const isActive = location.pathname.startsWith(tab.path);
+            const isActive =
+              (location.pathname === "/" && tab.path === "/games") ||
+              location.pathname.startsWith(tab.path);
             return (
               <Button
                 key={tab.path}
