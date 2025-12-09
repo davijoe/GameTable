@@ -2,8 +2,6 @@ import { Box, HStack, Button } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 const tabs = [
   { label: "Games", path: "/games" },
-  { label: "Friends", path: "/friends" },
-  { label: "Messages", path: "/messages" },
   { label: "Weather", path: "/weather" },
   { label: "Profile", path: "/profile" },
 ];

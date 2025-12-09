@@ -15,6 +15,7 @@ import { useGameDetail } from "../../hooks/useGameDetail";
 import GameDetailContributerBox from "./GameDetailBox";
 import BackArrow from "../reusable/BackArrow";
 import { useState } from "react";
+import GameReview from "./GameReview";
 
 export default function SelectedGame() {
   const { gameId } = useParams<{ gameId: string }>();
@@ -25,10 +26,12 @@ export default function SelectedGame() {
 
   return (
     <Box maxW="900px" mx="auto">
-      <BackArrow label="Back to Games" />
-      {isLoading && <Center>
-        <Spinner size="xl" />
-      </Center>}
+      <BackArrow label="Back" />
+      {isLoading && (
+        <Center>
+          <Spinner size="xl" />
+        </Center>
+      )}
       {error && <Text color="red.500">{error.message}</Text>}
       {data && (
         <VStack align="stretch" spacing={8}>
@@ -123,6 +126,7 @@ export default function SelectedGame() {
               items={data.publishers}
             />
           </SimpleGrid>
+          <GameReview />
         </VStack>
       )}
     </Box>

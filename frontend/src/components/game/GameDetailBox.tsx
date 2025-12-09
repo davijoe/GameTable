@@ -38,7 +38,7 @@ export default function GameDetailContributerBox({
       onClick={() => needsCollapse && setExpanded(!expanded)}
       position="relative"
     >
-      <Text fontWeight="bold" mb={2}>
+      <Text fontWeight="bold" mb={2} size="md">
         {title}
       </Text>
 
