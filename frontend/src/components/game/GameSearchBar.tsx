@@ -8,7 +8,7 @@ interface SearchBarProps {
   debounceTime?: number; // in ms
 }
 
-export default function GameSearchBar({ value, onChange, debounceTime = 250 }: SearchBarProps) {
+export default function GameSearchBar({ value, onChange, debounceTime = 350 }: SearchBarProps) {
   const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {
