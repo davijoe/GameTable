@@ -8,6 +8,9 @@ BACKEND-SERVICE=backend-server
 
 .PHONY: frontend backend migrator scraper setup
 
+gp:
+	git pull
+
 ### Install Dependencies!
 frontend:
 	cd frontend && bun install
@@ -43,3 +46,9 @@ build-migrator:
 
 build: build-frontend build-backend build-migrator
 	@echo "YAY. Since you are seeing this message, your build has definitely potentially succeeded."
+
+
+### Install EVERYTHING LETSA GOOOO
+install: gp, frontend, backend, migrator, scraper, build-frontend, build-backend, build-migrator
+	@echo "Wow! You did it. You successfully (maybe) installed all the dependencies and successfully (maybe) build all the images."
+	@echo "Now try using 'make up' to start all the containers!"

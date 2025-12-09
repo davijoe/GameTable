@@ -22,7 +22,11 @@ def list_games(
     items, total = svc.list(offset=offset, limit=limit, search=q, sort_by=sort_by, sort_order=sort_order,)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
-@router.get("/{game_id}/detail", response_model=GameDetail)
+
+@router.get(
+    "/{game_id}/detail",
+    response_model=GameDetail,
+)
 def get_game_detail(game_id: str):
     svc = GameService()
     item = svc.get_detail(game_id)

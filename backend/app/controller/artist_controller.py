@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 
 from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 from app.service.artist_service import ArtistService
-from app.utility.db_sql import get_sql_db
 from app.utility.auth import require_admin
+from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/artists", tags=["artists"])
 
@@ -28,7 +28,10 @@ def list_artists(
     response_model=ArtistRead,
     dependencies=[Depends(require_admin)],
 )
-def create_artist(payload: ArtistCreate, db: Session = Depends(get_sql_db)):
+def create_artist(
+    payload: ArtistCreate,
+    db: Session = Depends(get_sql_db),
+):
     svc = ArtistService(db)
     try:
         return svc.create(payload)
@@ -37,7 +40,10 @@ def create_artist(payload: ArtistCreate, db: Session = Depends(get_sql_db)):
 
 
 @router.get("/{artist_id}", response_model=ArtistRead)
-def get_artist(artist_id: int, db: Session = Depends(get_sql_db)):
+def get_artist(
+    artist_id: int,
+    db: Session = Depends(get_sql_db),
+):
     svc = ArtistService(db)
     item = svc.get(artist_id)
     if not item:
@@ -68,7 +74,10 @@ def update_artist(
     status_code=204,
     dependencies=[Depends(require_admin)],
 )
-def delete_artist(artist_id: int, db: Session = Depends(get_sql_db)):
+def delete_artist(
+    artist_id: int,
+    db: Session = Depends(get_sql_db),
+):
     svc = ArtistService(db)
     if not svc.delete(artist_id):
         raise HTTPException(status_code=404, detail="Artist not found")
