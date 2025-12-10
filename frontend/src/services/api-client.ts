@@ -19,11 +19,11 @@ export default class ApiClient<T> {
 		this.endpoint = endpoint;
 	}
 
-	async getAll(config?: AxiosRequestConfig) {
-		const res = await api.get<PaginatedResponse<T>>(this.endpoint, config);
+	async getAll(config?: AxiosRequestConfig & { path?: string }) {
+		const url = config?.path ? `${this.endpoint}${config.path}` : this.endpoint;
+		const res = await api.get<PaginatedResponse<T>>(url, config);
 		return res.data;
 	}
-
 	async get(id: number | string) {
 		const res = await api.get<T>(`${this.endpoint}/${id}`);
 		return res.data;
