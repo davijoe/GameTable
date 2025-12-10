@@ -4,4 +4,8 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.12.12"
-dependencies = ["bandit>=1.9.2"]
+dependencies = [
+    "bandit>=1.9.2",
+    "pydantic[email]>=2.12.5",
+    "pytest>=9.0.2",
+]
