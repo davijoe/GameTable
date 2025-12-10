@@ -34,4 +34,7 @@ jobs:
         run: uv run pytest
 
       - name: Run Bandit
-        run: uv run bandit -c bandit.yaml -r . --severity-level high confidence-level high
+        run: |
+          uv run bandit -c bandit.yaml \
+            -r backend NoSQLMigrator data-aggregator \
+            --severity-level high
