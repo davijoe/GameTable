@@ -89,7 +89,7 @@ class GameBase(ORMModel):
 
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
-    image: constr(min_length=1, max_length=255) | None = None
+    image: constr(min_length=1, max_length=1024) | None = None
 
     @field_validator("image")
     @classmethod
@@ -100,7 +100,7 @@ class GameBase(ORMModel):
             raise ValueError("Image cannot contain spaces")
         return v
 
-    thumbnail: constr(min_length=1, max_length=255) | None = None
+    thumbnail: constr(min_length=1, max_length=1024) | None = None
 
     @field_validator("thumbnail")
     @classmethod
