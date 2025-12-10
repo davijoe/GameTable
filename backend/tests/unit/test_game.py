@@ -307,9 +307,9 @@ class TestGameThumbnail:
         "thumbnail",
         [
             "",
-            "A" * 256,
-            "A" * 257,
-            "A" * 500,
+            "A" * 1025,
+            "A" * 1026,
+            "A" * 1500,
             123,
             " ",
             "https://example.com/user profile",
@@ -324,9 +324,9 @@ class TestGameThumbnail:
         [
             "A",
             "A" * 2,
-            "A" * 125,
-            "A" * 254,
-            "A" * 255,
+            "A" * 500,
+            "A" * 1023,
+            "A" * 1024,
             "https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__small/img/YT6svCVsWqLrDitcMEtyazVktbQ=/fit-in/200x150/filters:strip_icc()/pic4718279.jpg",
         ],
     )
@@ -340,9 +340,9 @@ class TestGameImage:
         "image",
         [
             "",
-            "A" * 256,
-            "A" * 257,
-            "A" * 500,
+            "A" * 1025,
+            "A" * 1026,
+            "A" * 1500,
             123,
             " ",
             "https://example.com/user profile",
@@ -357,9 +357,9 @@ class TestGameImage:
         [
             "A",
             "A" * 2,
-            "A" * 125,
-            "A" * 254,
-            "A" * 255,
+            "A" * 500,
+            "A" * 1023,
+            "A" * 1024,
             "https://cf.geekdo-images.com/rpwCZAjYLD940NWwP3SRoA__original/img/yR0aoBVKNrAmmCuBeSzQnMflLYg=/0x0/filters:format(jpeg)/pic4718279.jpg",
         ],
     )
