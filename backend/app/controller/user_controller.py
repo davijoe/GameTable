@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.model.user_model import User
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 from app.service.user_service import UserService
-from app.utility.auth import get_current_user, require_admin
+from app.utility.auth import get_current_user, require_admin, require_self_or_admin
 from app.utility.db_sql import get_sql_db
 
 router = APIRouter(tags=["users"])
@@ -66,6 +66,7 @@ def update_user(
     user_id: int,
     payload: UserUpdate,
     db: Session = Depends(get_sql_db),
+    _: User = Depends(require_self_or_admin),
 ):
     svc = UserService(db)
 
