@@ -1,6 +1,6 @@
+
 from sqlalchemy.orm import Session
 
-from app.model.review_model import Review
 from app.repository.sql.sql_review_repository import SQLReviewRepository
 from app.schema.review_schema import ReviewCreate, ReviewRead, ReviewUpdate
 
@@ -17,9 +17,9 @@ class ReviewService:
     def get_review_count_for_game(self, game_id: int) -> int:
         return self.repo.get_review_count_for_game(game_id)
 
-    def list_by_game(self, game_id: int) -> list[ReviewRead]:
-        rows = self.repo.list_by_game(game_id)
-        return [ReviewRead.model_validate(r) for r in rows]
+    def list_by_game(self, game_id: int, offset: int = 0, limit: int = 5) -> tuple[list[ReviewRead], int]:
+        rows, total = self.repo.list_by_game(game_id=game_id, offset=offset, limit=limit)
+        return [ReviewRead.model_validate(r) for r in rows], total
 
     def list(
         self, offset: int = 0, limit: int = 50, search: str | None = None
