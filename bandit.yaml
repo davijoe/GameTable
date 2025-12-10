@@ -1,0 +1,115 @@
+targets:
+  - backend
+  - NoSQLMigrator
+  - data-aggregator
+
+exclude_dirs:
+  - .git
+  - .venv
+  - venv
+  - env
+  - db
+  - backups
+  - frontend
+  - node_modules
+  - __pycache__
+  - .mypy_cache
+  - .pytest_cache
+  - .tox
+  - dist
+  - build
+
+tests:
+  # B1xx - Crypto and hashing
+  - B101 # assert used - can disable production checks or hide logic
+  - B102 # exec used - dangerous code execution
+  - B103 # set_bad_file_permissions - insecure file perms
+  - B104 # hardcoded_bind_all_interfaces - open network exposure
+  - B105 # hardcoded_password_string
+  - B106 # hardcoded_password_funcarg
+  - B107 # hardcoded_password_default
+  - B108 # hardcoded_tmp_directory
+  # - B109 # password_config_option
+  - B110 # try_except_pass - swallowed exceptions
+  # - B111 # execute_with_run - unsafe execution helper
+  - B112 # try_except_continue - swallowed exceptions
+  - B113 # request_without_timeout - possible hang
+  # - B114 # request_with_no_cert_validation - insecure HTTPS
+  # - B115 # using xml.etree - vulnerable XML parser selection
+
+  # B2xx - Input handling, shell calls, subprocess risks
+  - B201 # flask_debug_true
+  - B202 # tarfile_extractall - path traversal possibility
+  - B301 # pickle - unsafe deserialization
+  - B302 # marshal - unsafe serialization
+  - B303 # md5 - weak hash
+  - B304 # ciphers - weak crypto usage
+  - B305 # cipher_modes - insecure block modes
+  - B306 # mktemp - insecure temp file creation
+  - B307 # eval - dangerous execution
+  - B308 # mark_safe - unsafe HTML marking
+  # - B309 # httpsconnection - insecure HTTPS usage
+  - B310 # urllib_urlopen - risk of injection or no TLS validation
+  - B311 # random - weak RNG for security contexts
+  - B312 # telnetlib - plaintext connection
+  - B313 # xml_bad_etree - insecure XML parser
+  - B314 # xml_bad_elemtree
+  - B315 # xml_bad_sax
+  - B316 # xml_bad_expatreader
+  - B317 # xml_bad_expatbuilder
+  - B318 # libyaml_load - unsafe YAML loader
+  - B319 # ftplib - plaintext FTP
+  # - B320 # lxml - potential XML vulns depending on configuration
+  - B321 # fstring_sql - SQL injection via f-strings
+  # - B322 # input - dangerous use in CLI tools
+  - B323 # unverified_context - unverified SSL context
+  - B324 # hashlib_new_insecure_functions
+  # - B325 # tempnam/tempfile - unsafe temporary names
+
+  # B4xx - Misc vulnerabilities
+  - B401 # import_telnetlib
+  - B402 # import_ftplib
+  - B403 # import_pickle
+  - B404 # import_subprocess
+  - B405 # import_xmlrpclib
+  - B406 # import_pycrypto
+  - B407 # import_pycryptodome
+  - B408 # import_lxml
+  - B409 # import_yaml
+  # - B410 # import_httpoxy - legacy issue with CGI env vars
+  - B411 # import_xml_libs - insecure XML libraries
+  - B412 # import_ftplib_module
+  - B413 # import_crypt - weak crypto lib
+  # - B414 # import_random
+  - B415 # import_md5_hash
+  # - B416 # import_sha1_hash
+  # - B417 # import_request_with_no_cert_validation
+
+  # B5xx - Web framework issues
+  - B501 # request_without_timeout (requests) - repeated check
+  - B502 # ssl_with_bad_defaults
+  - B503 # ssl_without_version
+  - B504 # ssl_with_bad_protocol
+  - B505 # weak_cryptographic_key
+  - B506 # yaml_load - unsafe loader
+  - B507 # ssh_no_host_key_verification
+  - B508 # snmp_insecure_version
+  - B509 # snmp_insecure_write
+  - B510 # insecure_temp_file
+
+  # B6xx - Config, hardcoded secrets, environment issues
+  - B601 # paramiko_hostkey_not_checked
+  - B602 # subprocess_popen_with_shell_equals_true
+  - B603 # subprocess_without_shell_equals_true
+  - B604 # subprocess_with_bad_defaults
+  - B605 # start_process_with_a_shell
+  - B606 # start_process_with_no_shell
+  - B607 # start_process_with_partial_path
+  - B608 # hardcoded_sql_expressions
+  - B609 # linux_exec
+  - B610 # django_extra_used
+  - B611 # django_rawsql_used
+  - B612 # logging_config_insecure
+  - B613 # django_jsonfield_insecure
+  - B701 # jinja2_autoescape_false
+  - B702 # jinja2_autoescape_disabled
