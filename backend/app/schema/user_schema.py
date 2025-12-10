@@ -11,7 +11,7 @@ class ORMModel(BaseModel):
 
 
 class UserBase(ORMModel):
-    display_name: constr(max_length=25)
+    display_name: constr(max_length=55)
 
     @field_validator("display_name")
     @classmethod
