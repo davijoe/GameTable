@@ -83,7 +83,17 @@ def get_current_user(
 
 
 def require_admin(current_user: User = Depends(get_current_user)) -> User:
-    if not getattr(current_user, "is_admin", False):
+    print("DEBUG current_user:", current_user.id, current_user.username)
+    print("DEBUG is_admin attr:", hasattr(current_user, "is_admin"))
+    print(
+        "DEBUG is_admin value:",
+        getattr(current_user, "is_admin", None),
+        type(getattr(current_user, "is_admin", None)),
+    )
+
+    is_admin = bool(getattr(current_user, "is_admin", False))
+
+    if not is_admin:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Not enough permissions",
