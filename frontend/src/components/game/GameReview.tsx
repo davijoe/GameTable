@@ -6,8 +6,10 @@ import {
   Button,
   Spinner,
   Center,
+  Icon,
 } from "@chakra-ui/react";
 import { useReviewsByGame } from "../../hooks/useReviewByGame";
+import { StarIcon } from "@chakra-ui/icons/Star";
 
 interface GameReviewProps {
   gameId: string;
@@ -46,8 +48,14 @@ export default function GameReview({ gameId }: GameReviewProps) {
             >
               <HStack justify="space-between" mb={2}>
                 <Text fontWeight="bold">{review.user.display_name}</Text>
-                <Text>{review.star_amount ?? "N/A"}/10</Text>
-
+                <HStack>
+                  {review.star_amount && (
+                    <>
+                      <Text>{review.star_amount}</Text>
+                      <Icon as={StarIcon} color="yellow.300" />
+                    </>
+                  )}
+                </HStack>
               </HStack>
               <Text whiteSpace="pre-wrap">{review.text}</Text>
               <Text fontSize="sm" color="gray.500" mt={2}></Text>
