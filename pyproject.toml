@@ -8,4 +8,5 @@ dependencies = [
     "bandit>=1.9.2",
     "pydantic[email]>=2.12.5",
     "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
 ]

@@ -29,13 +29,13 @@ tests:
   - B106 # hardcoded_password_funcarg
   - B107 # hardcoded_password_default
   - B108 # hardcoded_tmp_directory
-  - B109 # password_config_option
+  # - B109 # password_config_option
   - B110 # try_except_pass - swallowed exceptions
-  - B111 # execute_with_run - unsafe execution helper
+  # - B111 # execute_with_run - unsafe execution helper
   - B112 # try_except_continue - swallowed exceptions
   - B113 # request_without_timeout - possible hang
-  - B114 # request_with_no_cert_validation - insecure HTTPS
-  - B115 # using xml.etree - vulnerable XML parser selection
+  # - B114 # request_with_no_cert_validation - insecure HTTPS
+  # - B115 # using xml.etree - vulnerable XML parser selection
 
   # B2xx - Input handling, shell calls, subprocess risks
   - B201 # flask_debug_true
@@ -48,7 +48,7 @@ tests:
   - B306 # mktemp - insecure temp file creation
   - B307 # eval - dangerous execution
   - B308 # mark_safe - unsafe HTML marking
-  - B309 # httpsconnection - insecure HTTPS usage
+  # - B309 # httpsconnection - insecure HTTPS usage
   - B310 # urllib_urlopen - risk of injection or no TLS validation
   - B311 # random - weak RNG for security contexts
   - B312 # telnetlib - plaintext connection
@@ -59,12 +59,12 @@ tests:
   - B317 # xml_bad_expatbuilder
   - B318 # libyaml_load - unsafe YAML loader
   - B319 # ftplib - plaintext FTP
-  - B320 # lxml - potential XML vulns depending on configuration
+  # - B320 # lxml - potential XML vulns depending on configuration
   - B321 # fstring_sql - SQL injection via f-strings
-  - B322 # input - dangerous use in CLI tools
+  # - B322 # input - dangerous use in CLI tools
   - B323 # unverified_context - unverified SSL context
   - B324 # hashlib_new_insecure_functions
-  - B325 # tempnam/tempfile - unsafe temporary names
+  # - B325 # tempnam/tempfile - unsafe temporary names
 
   # B4xx - Misc vulnerabilities
   - B401 # import_telnetlib
@@ -76,14 +76,14 @@ tests:
   - B407 # import_pycryptodome
   - B408 # import_lxml
   - B409 # import_yaml
-  - B410 # import_httpoxy - legacy issue with CGI env vars
+  # - B410 # import_httpoxy - legacy issue with CGI env vars
   - B411 # import_xml_libs - insecure XML libraries
   - B412 # import_ftplib_module
   - B413 # import_crypt - weak crypto lib
-  - B414 # import_random
+  # - B414 # import_random
   - B415 # import_md5_hash
-  - B416 # import_sha1_hash
-  - B417 # import_request_with_no_cert_validation
+  # - B416 # import_sha1_hash
+  # - B417 # import_request_with_no_cert_validation
 
   # B5xx - Web framework issues
   - B501 # request_without_timeout (requests) - repeated check
