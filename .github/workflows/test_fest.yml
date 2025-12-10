@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: "Set up Python"
+      - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version-file: "pyproject.toml"
@@ -27,11 +27,11 @@ jobs:
           version: "0.9.17"
           enable-cache: true
 
-      - name: Install the project
+      - name: Install The Project
         run: uv sync --locked --all-extras --dev
 
-      - name: Run tests
-        run: uv run pytest
+      - name: Run Tests
+        run: uv run pytest --cov=backend
 
       - name: Run Bandit
         run: |
