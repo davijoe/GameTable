@@ -15,10 +15,10 @@ class LanguageCreate(LanguageBase):
     pass
 
 
-class LanguageUpdate(ORMModel):
+class LanguageUpdate(LanguageBase):
     language: constr(max_length=255) | None = None
 
 
 class LanguageRead(ORMModel):
     id: int
-    language: constr(max_length=255)
+    language: str

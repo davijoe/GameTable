@@ -116,22 +116,105 @@ class GameCreate(GameBase):
     pass
 
 
-class GameUpdate(ORMModel):
+class GameUpdate(GameBase):
     name: constr(max_length=255) | None = None
     slug: constr(max_length=255) | None = None
-    year_published: int | None = None
-    difficulty_rating: confloat() | None = None
-    description: str | None = None
+    year_published: int | None = Field(None, ge=1901, le=2155)
+    bgg_rating: float | None = Field(None, ge=1, le=10)
+    difficulty_rating: float | None = Field(None, ge=1, le=5)
     playing_time: int | None = None
     available: bool | None = None
+    description: str | None = None
     min_players: int | None = Field(None, ge=1, le=999)
     max_players: int | None = Field(None, ge=1, le=999)
     image: str | None = None
     thumbnail: str | None = None
 
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if not v.strip():
+            raise ValueError("Name cannot be empty or only whitespace")
+        if re.match(r"^-+$", v.strip()):
+            raise ValueError("Name cannot be only hyphens")
+        return v
 
-class GameRead(GameBase):
+    @field_validator("slug")
+    @classmethod
+    def validate_slug(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if not v.strip():
+            raise ValueError("Slug cannot be empty or only whitespace")
+        v = v.lower().replace(" ", "-")
+        if re.match(r"^-+$", v):
+            raise ValueError("Slug cannot be only hyphens")
+        return v
+
+    @field_validator("bgg_rating")
+    @classmethod
+    def validate_bgg_rating(cls, v: float | None) -> float | None:
+        if v is None:
+            return v
+        if len(str(v).split(".")[-1]) > 2:
+            raise ValueError("BGG rating must have at most 2 decimal places")
+        return v
+
+    @field_validator("difficulty_rating")
+    @classmethod
+    def validate_difficulty_rating(cls, v: float | None) -> float | None:
+        if v is None:
+            return v
+        if len(str(v).split(".")[-1]) > 2:
+            raise ValueError("Difficulty rating must have at most 2 decimal places")
+        return v
+
+    @field_validator("description")
+    @classmethod
+    def validate_desc_byte_size(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        byte_len = len(v.encode("utf-8"))
+        if byte_len > MAX_BYTES:
+            raise ValueError(
+                f"Description is too long: byte length {byte_len} exceeds {MAX_BYTES}"
+            )
+        return v
+
+    @field_validator("image")
+    @classmethod
+    def validate_image(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if " " in v:
+            raise ValueError("Image cannot contain spaces")
+        return v
+
+    @field_validator("thumbnail")
+    @classmethod
+    def validate_thumbnail(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if " " in v:
+            raise ValueError("Thumbnail cannot contain spaces")
+        return v
+
+
+class GameRead(ORMModel):
     id: int
+    name: str
+    slug: str | None = None
+    year_published: int | None = None
+    bgg_rating: float | None = None
+    difficulty_rating: float | None = None
+    playing_time: int | None = None
+    description: str | None = None
+    min_players: int | None = None
+    max_players: int | None = None
+    image: str | None = None
+    thumbnail: str | None = None
 
 
 class GameDetail(GameRead):
