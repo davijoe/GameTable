@@ -35,7 +35,7 @@ origins = [
     "http://127.0.0.1:3000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://www.gametable.online/"
+    "https://www.gametable.online/"
 ]
 
 app.add_middleware(
