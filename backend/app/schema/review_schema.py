@@ -18,7 +18,7 @@ class ReviewCreate(ReviewBase):
     game_id: int
 
 
-class ReviewUpdate(ORMModel):
+class ReviewUpdate(ReviewBase):
     title: constr(max_length=255) | None = None
     text: constr(max_length=255) | None = None
     star_amount: int | None = None
@@ -28,8 +28,8 @@ class ReviewUpdate(ORMModel):
 
 class ReviewRead(ORMModel):
     id: int
-    title: constr(max_length=255)
-    text: constr(max_length=255) | None = None
+    title: str
+    text: str | None = None
     star_amount: int
     user_id: int
     game_id: int
