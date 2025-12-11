@@ -75,3 +75,6 @@ class UserUpdate(ORMModel):
 
 class UserRead(UserBase):
     id: int
+
+class UserDisplayName(ORMModel):
+    display_name: constr(max_length=25)

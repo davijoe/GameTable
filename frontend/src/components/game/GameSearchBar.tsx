@@ -1,4 +1,4 @@
-import { Box, Input, InputGroup, InputLeftElement, InputRightElement, IconButton } from "@chakra-ui/react";
+import { Input, InputGroup, InputLeftElement, InputRightElement, IconButton } from "@chakra-ui/react";
 import { SearchIcon, CloseIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 
@@ -8,7 +8,7 @@ interface SearchBarProps {
   debounceTime?: number; // in ms
 }
 
-export default function GameSearchBar({ value, onChange, debounceTime = 250 }: SearchBarProps) {
+export default function GameSearchBar({ value, onChange, debounceTime = 350 }: SearchBarProps) {
   const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {

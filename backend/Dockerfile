@@ -15,5 +15,8 @@ RUN uv sync --locked
 # Copy the application into the container.
 COPY ./backend /app
 
+# remove any accidentally included virtualenv
+RUN rm -rf /app/.venv
+
 # Run the application.
 CMD ["uv", "run", "--env-file", ".env","--", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

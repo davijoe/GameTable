@@ -6,7 +6,7 @@ This application is developed for the courses "Full Stack Development", "Databas
 
 - DevOps: Docker (compose), GitHub (actions), Azure VPS,
 - Backend: UV, Python, FastAPI, MySQL
-- Frontend: React, Chakra (perhaps), TypeScript, Bun
+- Frontend: React, Chakra UI, TypeScript, Bun
 - Database Migration: NoSQLMigrator
 
 ### Pre-Requirements
