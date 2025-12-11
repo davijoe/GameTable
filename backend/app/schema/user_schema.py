@@ -56,8 +56,8 @@ class UserCreate(UserBase):
         return v
 
 
-class UserUpdate(ORMModel):
-    display_name: constr(max_length=25) | None = None
+class UserUpdate(UserBase):
+    display_name: constr(max_length=55) | None = None
     username: constr(max_length=255) | None = None
     email: EmailStr | None = None
     dob: date | None = None
@@ -73,5 +73,10 @@ class UserUpdate(ORMModel):
         return v
 
 
-class UserRead(UserBase):
+class UserRead(ORMModel):
     id: int
+    display_name: str
+    username: str
+    email: str
+    dob: date
+    is_admin: bool
