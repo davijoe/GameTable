@@ -46,7 +46,7 @@ def get_language(language_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{language_id}",
     response_model=LanguageRead,
     dependencies=[Depends(require_admin)],

@@ -46,7 +46,7 @@ def get_mechanic(mechanic_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{mechanic_id}",
     response_model=MechanicRead,
     dependencies=[Depends(require_admin)],

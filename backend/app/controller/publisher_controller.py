@@ -46,7 +46,7 @@ def get_publisher(publisher_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{publisher_id}",
     response_model=PublisherRead,
     dependencies=[Depends(require_admin)],

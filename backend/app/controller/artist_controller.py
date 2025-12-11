@@ -51,7 +51,7 @@ def get_artist(
     return item
 
 
-@router.put(
+@router.patch(
     "/{artist_id}",
     response_model=ArtistRead,
     dependencies=[Depends(require_admin)],
