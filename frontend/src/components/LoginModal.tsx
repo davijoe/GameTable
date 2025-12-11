@@ -126,6 +126,11 @@ export default function LoginModal() {
 
         if (!response.ok) {
           const data = await response.json();
+          // Handle Pydantic validation errors
+          if (Array.isArray(data.detail)) {
+            const errorMessages = data.detail.map((err: any) => err.msg).join(", ");
+            throw new Error(errorMessages);
+          }
           throw new Error(data.detail || "Signup failed");
         }
 

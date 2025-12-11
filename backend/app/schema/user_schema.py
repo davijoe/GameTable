@@ -46,13 +46,15 @@ class UserBase(ORMModel):
 
 
 class UserCreate(UserBase):
-    password: constr(min_length=6, max_length=255)
+    password: constr(max_length=255)
 
     @field_validator("password")
     @classmethod
     def validate_password(cls, v: str) -> str:
         if not v.strip():
             raise ValueError("Password cannot be empty or only whitespace")
+        if len(v) < 6:
+            raise ValueError("Password must be at least 6 characters")
         return v
 
 
@@ -94,7 +96,7 @@ class UserUpdate(UserBase):
             raise ValueError("DOB cannot be in the future")
         return v
 
-    password: constr(min_length=6, max_length=255) | None = None
+    password: constr(max_length=255) | None = None
 
     @field_validator("password")
     @classmethod
@@ -103,6 +105,8 @@ class UserUpdate(UserBase):
             return v
         if not v.strip():
             raise ValueError("Password cannot be empty or only whitespace")
+        if len(v) < 6:
+            raise ValueError("Password must be at least 6 characters")
         return v
 
 
