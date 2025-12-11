@@ -19,7 +19,7 @@ class VideoCreate(VideoBase):
     pass
 
 
-class VideoUpdate(ORMModel):
+class VideoUpdate(VideoBase):
     title: constr(max_length=255) | None = None
     category: constr(max_length=255) | None = None
     link: constr(max_length=255) | None = None
@@ -29,8 +29,8 @@ class VideoUpdate(ORMModel):
 
 class VideoRead(ORMModel):
     id: int
-    title: constr(max_length=255)
-    category: constr(max_length=255)
-    link: constr(max_length=255)
+    title: str
+    category: str
+    link: str
     game_id: int
     language_id: int
