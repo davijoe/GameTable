@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 from app.utility.db_sql import Base
 
@@ -13,3 +14,4 @@ class Review(Base):
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
     game_id = Column(Integer, ForeignKey("game.id"), nullable=False)
 
+    user = relationship("User", lazy="joined")

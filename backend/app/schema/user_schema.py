@@ -117,3 +117,6 @@ class UserRead(ORMModel):
     email: str
     dob: date
     is_admin: bool
+
+class UserDisplayName(ORMModel):
+    display_name: constr(max_length=25)

@@ -19,7 +19,6 @@ import GameReview from "./GameReview";
 
 export default function SelectedGame() {
   const { gameId } = useParams<{ gameId: string }>();
-
   const { data, isLoading, error } = useGameDetail(gameId);
   const [descExpanded, setDescExpanded] = useState(false); //used for description
 
@@ -123,7 +122,7 @@ export default function SelectedGame() {
               items={data.publishers}
             />
           </SimpleGrid>
-          <GameReview />
+          <GameReview gameId={gameId ?? ""} />
         </VStack>
       )}
     </Box>

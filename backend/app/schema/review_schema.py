@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, constr, field_validator
 
+from app.schema.user_schema import UserDisplayName
+
 
 class ORMModel(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -79,5 +81,5 @@ class ReviewRead(ORMModel):
     title: str
     text: str | None = None
     star_amount: int
-    user_id: int
+    user: UserDisplayName
     game_id: int

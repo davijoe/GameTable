@@ -31,11 +31,17 @@ def get_review_count_for_game(
 	count = svc.get_review_count_for_game(game_id)
 	return {"game_id": game_id, "review_count": count}
 
-@router.get("/by-game/{game_id}", response_model=list[ReviewRead])
-def get_reviews_by_game(game_id: int, db: Session = Depends(get_sql_db)):
+@router.get("/gameid/{game_id}", response_model=dict[str, Any])
+def list_reviews_by_game(
+	game_id: int,
+	offset: int = Query(0, ge=0),
+	limit: int = Query(5, ge=1),
+	db: Session = Depends(get_sql_db),
+):
 	svc = ReviewService(db)
-	items = svc.list_by_game(game_id)
-	return items
+	items, total = svc.list_by_game(game_id=game_id, offset=offset, limit=limit)
+
+	return {"total": total, "offset": offset, "limit": limit, "items": items}
 
 @router.post(
     "",
