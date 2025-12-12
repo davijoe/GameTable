@@ -28,8 +28,10 @@ class GameService:
 
     def get(self, game_id):
         obj = self.repo.get(game_id)
-        obj.bgg_rating = round(obj.bgg_rating, 2) # round because of validator
-        return GameRead.model_validate(obj) if obj else None
+        if not obj:
+            return None
+        obj.bgg_rating = round(obj.bgg_rating, 2)  # round because of validator
+        return GameRead.model_validate(obj)
 
     def get_detail(self, game_id):
         obj = self.repo.get_detail(game_id)
