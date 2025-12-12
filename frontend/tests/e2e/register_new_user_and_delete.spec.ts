@@ -10,7 +10,6 @@ const NEW_USER_TEST_PASSWORD = "e2e test password";
 const NEW_USER_TEST_EMAIL = `e2e_${timestamp}_${random}@mail.com`;
 const NEW_USER_TEST_DOB = "1999-10-30";
 
-
 let created_user_id : number
 
 test("register new user", async ({ page }) => {
@@ -24,7 +23,7 @@ test("register new user", async ({ page }) => {
   await page.getByRole("textbox", { name: "Username" }).fill(NEW_USER_TEST_USERNAME);
   await page.getByRole("textbox", { name: "Password" }).fill(NEW_USER_TEST_PASSWORD);
 
-  // Wait for the user creation response and save the new user ID
+  // subscribe to api call to get user id
   const [response] = await Promise.all([
     page.waitForResponse(resp =>
       resp.url().endsWith("/api/users") &&
@@ -39,14 +38,14 @@ test("register new user", async ({ page }) => {
   //wait to make sure everything renders
   await page.waitForTimeout(500);
 
-  // avigate to Profile page and check
+  // navigate to Profile page and check
   await page.getByRole("link", { name: "Profile" }).click();
   await expect(page.getByText(NEW_USER_TEST_DISPLAYNAME)).toBeVisible();
   await expect(page.getByText(NEW_USER_TEST_USERNAME)).toBeVisible();
   await expect(page.getByText(NEW_USER_TEST_EMAIL)).toBeVisible();
 });
 
-test('delete user', async ({page, request, apiBase, adminUser, adminPassword }) => {
+test('delete user', async ({request, apiBase, adminUser, adminPassword }) => {
     console.log("username password: ", adminUser, " ", adminPassword)
     const loginRes = await request.post(`${apiBase}/auth/login`, {
         data: {
