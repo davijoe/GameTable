@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "e2e:report": "bun run e2e && npx playwright show-report"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
