@@ -52,7 +52,7 @@ def get_designer(designer_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{designer_id}",
     response_model=DesignerRead,
     dependencies=[Depends(require_admin)],

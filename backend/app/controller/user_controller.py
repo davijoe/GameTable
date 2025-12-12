@@ -61,7 +61,7 @@ def get_user(user_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put("/api/user/{user_id}", response_model=UserRead)
+@router.patch("/api/user/{user_id}", response_model=UserRead)
 def update_user(
     user_id: int,
     payload: UserUpdate,

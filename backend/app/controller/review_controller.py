@@ -66,7 +66,7 @@ def get_review(review_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{review_id}",
     response_model=ReviewRead,
     dependencies=[Depends(require_admin)],

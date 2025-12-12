@@ -45,7 +45,7 @@ def get_genre(genre_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{genre_id}",
     response_model=GenreRead,
     dependencies=[Depends(require_admin)],

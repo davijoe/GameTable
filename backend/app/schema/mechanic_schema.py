@@ -26,9 +26,21 @@ class MechanicCreate(MechanicBase):
     pass
 
 
-class MechanicUpdate(ORMModel):
+class MechanicUpdate(MechanicBase):
     name: constr(max_length=255) | None = None
 
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if not v.strip():
+            raise ValueError("Name cannot be empty or only whitespace")
+        if re.match(r"^-+$", v.strip()):
+            raise ValueError("Name cannot be only hyphens")
+        return v
 
-class MechanicRead(MechanicBase):
+
+class MechanicRead(ORMModel):
     id: int
+    name: str

@@ -37,10 +37,10 @@ class GenreService:
 
         update_data = payload.model_dump(exclude_unset=True)
 
-        if "title" in update_data:
-            existing = self.repo.get_by_title(update_data["title"])
+        if "name" in update_data:
+            existing = self.repo.get_by_name(update_data["name"])
             if existing and existing.id != genre_id:
-                raise ValueError("Genre with this title already exists")
+                raise ValueError("Genre with this name already exists")
 
         for key, value in update_data.items():
             setattr(obj, key, value)

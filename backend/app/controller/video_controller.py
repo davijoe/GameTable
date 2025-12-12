@@ -46,7 +46,7 @@ def get_video(video_id: int, db: Session = Depends(get_sql_db)):
     return item
 
 
-@router.put(
+@router.patch(
     "/{video_id}",
     response_model=VideoRead,
     dependencies=[Depends(require_admin)],

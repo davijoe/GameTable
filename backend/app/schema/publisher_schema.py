@@ -26,9 +26,21 @@ class PublisherCreate(PublisherBase):
     pass
 
 
-class PublisherUpdate(ORMModel):
+class PublisherUpdate(PublisherBase):
     name: constr(max_length=255) | None = None
 
+    @field_validator("name")
+    @classmethod
+    def validate_name(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        if not v.strip():
+            raise ValueError("Name cannot be empty or only whitespace")
+        if re.match(r"^-+$", v.strip()):
+            raise ValueError("Name cannot be only hyphens")
+        return v
 
-class PublisherRead(PublisherBase):
+
+class PublisherRead(ORMModel):
     id: int
+    name: str
