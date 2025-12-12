@@ -14,4 +14,4 @@ class Review(Base):
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
     game_id = Column(Integer, ForeignKey("game.id"), nullable=False)
 
-    user = relationship("User", lazy="joined")
+    user = relationship("User", back_populates="reviews", lazy="joined")

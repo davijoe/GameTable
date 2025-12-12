@@ -2,8 +2,8 @@
 DEV_COMPOSE=docker compose -f docker-compose.dev.yml
 
 ### Env / Dev VARS
-FRONTEND-SERVICE=frontend-server
-BACKEND-SERVICE=backend-server
+FRONTEND_SERVICE=frontend-server
+BACKEND_SERVICE=backend-server
 
 
 .PHONY: frontend backend migrator scraper setup
@@ -32,14 +32,27 @@ down:
 	$(DEV_COMPOSE) down
 	cd NoSQLMigrator/ && docker compose down
 
+down-frontend:
+	$(DEV_COMPOSE) down $(FRONTEND_SERVICE)
+
+down-backend:
+	$(DEV_COMPOSE) down $(BACKEND_SERVICE)
+
+
 up:
 	$(DEV_COMPOSE) up -d
 
+up-backend:
+	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
+
+up-frontend:
+	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
+
 build-frontend:
-	$(DEV_COMPOSE) build $(FRONTEND-SERVICE) --no-cache
+	$(DEV_COMPOSE) build $(FRONTEND_SERVICE) --no-cache
 
 build-backend:
-	$(DEV_COMPOSE) build $(BACKEND-SERVICE) --no-cache
+	$(DEV_COMPOSE) build $(BACKEND_SERVICE) --no-cache
 
 build-migrator:
 	cd NoSQLMigrator/ && docker compose build --no-cache
