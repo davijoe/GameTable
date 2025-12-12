@@ -22,7 +22,7 @@ class SQLGenreRepository:
         stmt = select(Genre)
         if search:
             like = f"%{search}%"
-            stmt = stmt.where(Genre.title.ilike(like))
+            stmt = stmt.where(Genre.name.ilike(like))
         total = self.db.execute(
             select(func.count()).select_from(stmt.subquery())
         ).scalar_one()
