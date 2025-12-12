@@ -4,7 +4,7 @@ from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from app.model.review_model import Review
-from app.schema.review_schema import ReviewCreate
+from app.schema.review_schema import ReviewCreate, ReviewRead
 
 
 class SQLReviewRepository:
@@ -46,9 +46,11 @@ class SQLReviewRepository:
         result = self.db.execute(stmt, {"game_id": game_id}).scalar_one()
         return result
 
-    def list_by_game(self, game_id: int) -> List[Review]:  # noqa: UP006 # disable warning because of current python ver
+    def list_by_game(self, game_id: int, offset: int = 0, limit: int = 5):
         stmt = select(Review).where(Review.game_id == game_id)
-        return self.db.execute(stmt).scalars().all()
+        total = self.db.execute(select(func.count()).select_from(stmt.subquery())).scalar_one()
+        rows = self.db.execute(stmt.offset(offset).limit(limit)).scalars().all()
+        return rows, total
 
     def create_via_procedure(self, payload: ReviewCreate) -> Review:
         stmt = text("""
