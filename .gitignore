@@ -19,5 +19,5 @@ db/neo4j/*
 .prettierignore
 
 ###frontend playwright and test output
-frontend/playwright-report/index.html
-frontend/test-results/.last-run.json
+frontend/playwright-report/*
+frontend/test-results/*
