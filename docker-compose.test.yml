@@ -1,0 +1,16 @@
+services:
+  mysql8_database:
+    image: mysql:8.4
+    container_name: test-mysql8-database
+    env_file: "backend/.env.test"
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db/mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s

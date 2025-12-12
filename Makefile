@@ -47,6 +47,9 @@ build-migrator:
 build: build-frontend build-backend build-migrator
 	@echo "YAY. Since you are seeing this message, your build has definitely potentially succeeded."
 
+up-backend:
+	@echo "Starting Backend container"
+	$(DEV_COMPOSE) up -d $(BACKEND-SERVICE)
 
 ### Install EVERYTHING LETSA GOOOO
 install: gp, frontend, backend, migrator, scraper, build-frontend, build-backend, build-migrator
