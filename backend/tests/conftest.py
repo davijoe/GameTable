@@ -69,13 +69,23 @@ def client():
         yield c
 
 
-@pytest.fixture(autouse=True)
-def override_require_admin():
-    """Override require_admin"""
-
-    def allow_admin():
+@pytest.fixture
+def allow_admin():
+    def _allow():
         return True
 
-    app.dependency_overrides[require_admin] = allow_admin
+    app.dependency_overrides[require_admin] = _allow
+    yield
+    app.dependency_overrides.pop(require_admin, None)
+
+
+@pytest.fixture
+def deny_admin():
+    from fastapi import HTTPException
+
+    def _deny():
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    app.dependency_overrides[require_admin] = _deny
     yield
     app.dependency_overrides.pop(require_admin, None)

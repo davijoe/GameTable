@@ -14,35 +14,43 @@ class GameService:
         rows, total = self.repo.list(offset, limit, search, sort_by, sort_order)
 
         for r in rows:
-            r.bgg_rating = round(r.bgg_rating, 2) # round because of validator
+            if r.bgg_rating is not None:
+                r.bgg_rating = round(r.bgg_rating, 2)
 
-            #clean data before validation
-            if r.year_published < 1901:
+            # clean data before validation
+            if r.year_published is not None and r.year_published < 1901:
                 r.year_published = 1901
-            if r.min_players < 1:
+            if r.min_players is not None and r.min_players < 1:
                 r.min_players = 1
-            if r.max_players < 1:
+            if r.max_players is not None and r.max_players < 1:
                 r.max_players = 1
 
         return [GameRead.model_validate(r) for r in rows], total
 
     def get(self, game_id):
         obj = self.repo.get(game_id)
-        obj.bgg_rating = round(obj.bgg_rating, 2) # round because of validator
-        return GameRead.model_validate(obj) if obj else None
+        if not obj:
+            return None
+
+        if obj.bgg_rating is not None:
+            obj.bgg_rating = round(obj.bgg_rating, 2)
+
+        return GameRead.model_validate(obj)
 
     def get_detail(self, game_id):
         obj = self.repo.get_detail(game_id)
         if not obj:
             return None
 
-        return GameDetail.model_validate({
-            **obj.__dict__,
-            "artists": [ArtistRead.model_validate(a) for a in obj.artists],
-            "designers": [DesignerRead.model_validate(d) for d in obj.designers],
-            "publishers": [PublisherRead.model_validate(p) for p in obj.publishers],
-            "mechanics": [MechanicRead.model_validate(m) for m in obj.mechanics],
-        })
+        return GameDetail.model_validate(
+            {
+                **obj.__dict__,
+                "artists": [ArtistRead.model_validate(a) for a in obj.artists],
+                "designers": [DesignerRead.model_validate(d) for d in obj.designers],
+                "publishers": [PublisherRead.model_validate(p) for p in obj.publishers],
+                "mechanics": [MechanicRead.model_validate(m) for m in obj.mechanics],
+            }
+        )
 
     def create(self, payload: GameCreate):
         return GameRead.model_validate(self.repo.create(payload.model_dump()))
@@ -53,4 +61,3 @@ class GameService:
 
     def delete(self, game_id):
         return self.repo.delete(game_id)
-
