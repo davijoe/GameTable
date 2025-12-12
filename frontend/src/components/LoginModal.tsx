@@ -133,7 +133,9 @@ export default function LoginModal() {
           }
           throw new Error(data.detail || "Signup failed");
         }
-
+        const data = await response.json();
+        console.log(data)
+        
         // Auto-login after signup
         await login(formData.username, formData.password);
         onClose();

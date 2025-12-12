@@ -21,3 +21,4 @@ db/neo4j/*
 ###frontend playwright and test output
 frontend/playwright-report/*
 frontend/test-results/*
+node_modules/*
