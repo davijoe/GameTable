@@ -119,4 +119,4 @@ class UserRead(ORMModel):
     is_admin: bool
 
 class UserDisplayName(ORMModel):
-    display_name: constr(max_length=25)
+    display_name: constr(max_length=55)
