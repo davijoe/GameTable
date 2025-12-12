@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "e2e": "playwright test",
-    "e2e:report": "bun run e2e && npx playwright show-report"
+    "e2e:head": "bun run e2e --headed",
+    "e2e:report": "bun run e2e && bunx playwright show-report"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.2.4",
