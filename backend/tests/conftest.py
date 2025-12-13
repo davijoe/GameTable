@@ -15,6 +15,7 @@ from app.utility.db_sql import Base, get_sql_db
 
 TEST_DB_URL = os.environ["DATABASE_URL"]
 
+#used to define which test is unit, and which is integration
 UNIT = "unit"
 INTEGRATION = "integration"
 REQUIRED_MARKERS = {UNIT, INTEGRATION}
@@ -108,7 +109,7 @@ def pytest_collection_modifyitems(items):
         has_unit = item.get_closest_marker(UNIT)
         has_integration = item.get_closest_marker(INTEGRATION)
 
-        # Folder → marker
+        # marker based on folder structure
         if is_unit:
             if has_integration:
                 pytest.fail(f"{item.nodeid} is in /unit/ but marked integration")
@@ -123,5 +124,4 @@ def pytest_collection_modifyitems(items):
         if not (has_unit or has_integration or is_unit or is_integration):
             pytest.fail(
                 f"{item.nodeid} must live in /unit/ or /integration/ "
-                f"or be explicitly marked"
             )
