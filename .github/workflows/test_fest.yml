@@ -28,12 +28,12 @@ jobs:
           enable-cache: true
 
       - name: Install The Project
+        working-directory: backend
         run: uv sync --locked --all-extras --dev
 
       - name: Run Tests
-        run: |
-          uv run pytest --cov=backend \
-            --cov-report=xml:coverage.xml
+        working-directory: backend
+        run: uv run pytest --cov=. --cov-report=xml:coverage.xml
 
       - name: Run Bandit
         run: |

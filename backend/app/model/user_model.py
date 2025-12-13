@@ -16,4 +16,4 @@ class User(Base):
 
     is_admin = Column(Boolean, default=False)
 
-    reviews = relationship("Review", lazy="select")
+    reviews = relationship("Review", back_populates="user", lazy="select")

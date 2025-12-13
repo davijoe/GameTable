@@ -32,8 +32,18 @@ down:
 	$(DEV_COMPOSE) down
 	cd NoSQLMigrator/ && docker compose down
 
+down-frontend:
+	$(DEV_COMPOSE) down $(FRONTEND_SERVICE)
+
+down-backend:
+	$(DEV_COMPOSE) down $(BACKEND_SERVICE)
+
+
 up:
 	$(DEV_COMPOSE) up -d
+
+up-backend:
+	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
 
 up-frontend:
 	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
