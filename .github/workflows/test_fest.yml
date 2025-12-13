@@ -42,11 +42,19 @@ jobs:
             --cov=. \
             --cov-report=xml:tests/reports/coverage.xml
 
+      - name: Upload test reports artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: backend/tests/reports/
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Run Bandit
         run: |
           uv run bandit -c bandit.yaml \
             -r backend NoSQLMigrator data-aggregator \
-            --severity-level high
+            --severity-level medium
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
