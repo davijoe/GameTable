@@ -1,4 +1,3 @@
-//env_loader_fixture.ts
 import { test as base, expect } from "@playwright/test";
 import dotenv from "dotenv";
 
