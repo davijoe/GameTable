@@ -95,9 +95,9 @@ def _deny_admin():
     app.dependency_overrides.pop(require_admin, None)
 
 #applies a isUnit or isIntegration marker for every test based on the folder structure
-#run unit with:     uv run pytest -m integration
-#run integration:   uv run pytest -m unit
-#run both:          uv run pytest
+#run integration with:      uv run pytest -m integration
+#run unit:                  uv run pytest -m unit
+#run both:                  uv run pytest
 def pytest_collection_modifyitems(items):
     for item in items:
         path = Path(item.fspath).as_posix()
