@@ -126,8 +126,12 @@ class TestGameBggRating:
     @pytest.mark.parametrize(
         "bgg_rating",
         [
+            -5,
+            -0.02,
+            -0.01,
             0,
             0.01,
+            0.02,
             0.5,
             0.98,
             0.99,
@@ -162,8 +166,12 @@ class TestGameDifficultyRating:
     @pytest.mark.parametrize(
         "difficulty_rating",
         [
+            -2.5,
+            -0.02,
+            -0.01,
             0,
             0.01,
+            0.02,
             0.5,
             0.98,
             0.99,
@@ -195,7 +203,6 @@ class TestGameDifficultyRating:
 
 
 MAX_BYTES = 65535
-
 
 class TestGameDescription:
     @pytest.mark.parametrize(
@@ -241,8 +248,10 @@ class TestGameMinPlayers:
     @pytest.mark.parametrize(
         "min_players",
         [
-            0,
+            -500,
+            -2,
             -1,
+            0,
             1000,
             1001,
             1500,
@@ -273,8 +282,10 @@ class TestGameMaxPlayers:
     @pytest.mark.parametrize(
         "max_players",
         [
-            0,
+            -500,
+            -2,
             -1,
+            0,
             1000,
             1001,
             1500,
