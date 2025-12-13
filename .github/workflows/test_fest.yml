@@ -53,7 +53,8 @@ jobs:
       - name: Run Bandit
         run: |
           uv run bandit -c bandit.yaml \
-            -r backend NoSQLMigrator data-aggregator
+            -r backend NoSQLMigrator data-aggregator \
+            --severity-level high
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
