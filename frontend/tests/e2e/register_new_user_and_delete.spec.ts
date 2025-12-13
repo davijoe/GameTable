@@ -1,6 +1,6 @@
 import { test, expect} from "../fixtures/env_loader_fixture.ts";
 
-//randomness so test is not so flaky with other tests
+//randomness so test is not so flaky with other tests running same time
 const timestamp = Date.now();
 const random = Math.floor(Math.random() * 10000);
 
@@ -33,12 +33,11 @@ test("register new user", async ({ page }) => {
   ]);
 
   const newUser = await response.json();
-  created_user_id = newUser.id; // save ID for next delete test
+  created_user_id = newUser.id; // save id for next delete test
 
-  //wait to make sure everything renders
-  await page.waitForTimeout(500);
+  await page.waitForTimeout(1000);
 
-  // navigate to Profile page and check
+  // navigate to Profile page and assert
   await page.getByRole("link", { name: "Profile" }).click();
   await expect(page.getByText(NEW_USER_TEST_DISPLAYNAME)).toBeVisible();
   await expect(page.getByText(NEW_USER_TEST_USERNAME)).toBeVisible();
@@ -46,7 +45,6 @@ test("register new user", async ({ page }) => {
 });
 
 test('delete user', async ({request, apiBase, adminUser, adminPassword }) => {
-    console.log("username password: ", adminUser, " ", adminPassword)
     const loginRes = await request.post(`${apiBase}/auth/login`, {
         data: {
             username: adminUser,
