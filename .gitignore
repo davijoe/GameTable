@@ -17,3 +17,8 @@ db/neo4j/*
 !backups/.gitkeep
 
 .prettierignore
+
+###frontend playwright and test output
+frontend/playwright-report/*
+frontend/test-results/*
+node_modules/*

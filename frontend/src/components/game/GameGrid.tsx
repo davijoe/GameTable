@@ -65,27 +65,38 @@ export const GameGrid = () => {
         dataLength={games.length}
         hasMore={!!hasNextPage}
         next={fetchNextPage}
-        loader={<Spinner />}
+        loader={<Spinner data-testid="games-loading-spinner" />}
       >
         <SimpleGrid
+          data-testid="game-grid"
           columns={{ base: 1, sm: 3, md: 3, lg: 5 }}
           spacing={5}
           padding={3}
         >
           {isLoading &&
             skeletons.map((id) => (
-              <GameCardContainer key={`skeleton-initial-${id}`}>
+              <GameCardContainer
+                key={`skeleton-initial-${id}`}
+                data-testid="game-card-skeleton"
+              >
                 <GameCardSkeleton />
               </GameCardContainer>
             ))}
           {games.map((game) => (
-            <GameCardContainer key={game.id} gameId={game.id}>
+            <GameCardContainer
+              key={game.id}
+              gameId={game.id}
+              data-testid="game-card"
+            >
               <GameCard game={game} />
             </GameCardContainer>
           ))}
           {isFetchingNextPage &&
             skeletons.map((id) => (
-              <GameCardContainer key={`skeleton-next-${id}`}>
+              <GameCardContainer
+                key={`skeleton-next-${id}`}
+                data-testid="game-card-skeleton-next"
+              >
                 <GameCardSkeleton />
               </GameCardContainer>
             ))}
