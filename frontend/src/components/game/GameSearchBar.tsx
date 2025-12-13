@@ -21,7 +21,7 @@ export default function GameSearchBar({ value, onChange, debounceTime = 350 }: S
 
   return (
       <InputGroup >
-        <InputLeftElement pointerEvents="none">
+        <InputLeftElement pointerEvents="none" >
           <SearchIcon color="gray.400" />
         </InputLeftElement>
 
@@ -31,6 +31,7 @@ export default function GameSearchBar({ value, onChange, debounceTime = 350 }: S
           onChange={(e) => setLocalValue(e.target.value)}
           borderRadius="md"
           _focus={{borderColor: "brand.500" }}
+          data-testid="game-search-bar"
         />
 
         {localValue && (
