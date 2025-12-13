@@ -97,12 +97,14 @@ class TestReviewStarAmount:
     @pytest.mark.parametrize(
         "star_amount",
         [
+            -5,
+            -2,
+            -1,
             0,
             11,
             12,
             15,
             "abc",
-            -1,
             5.5,
         ],
     )
