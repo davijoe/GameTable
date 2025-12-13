@@ -46,6 +46,7 @@ export const GameGrid = () => {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortField)}
               variant="filled"
+              data-testid="games_sort_select"
             >
               <option value="bgg_rating">Rating</option>
               <option value="year_published">Year Published</option>
@@ -53,6 +54,7 @@ export const GameGrid = () => {
             </Select>
 
             <IconButton
+              data-testid="games-sort-toggle-button"
               aria-label="Toggle sort order"
               icon={sortOrder === "asc" ? <ArrowUpIcon /> : <ArrowDownIcon />}
               onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}

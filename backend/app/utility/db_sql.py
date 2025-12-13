@@ -1,4 +1,5 @@
 import os
+from typing import Any
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
@@ -36,12 +37,17 @@ def get_database_url() -> str:
 DATABASE_URL = get_database_url()
 
 
-engine_kwargs = {"pool_pre_ping": True, "future": True}
+engine_kwargs: dict[str, Any] = {
+    "pool_pre_ping": True,
+    "future": True,
+}
+
 if DATABASE_URL.startswith("sqlite"):
     engine_kwargs["connect_args"] = {"check_same_thread": False}
+else:
+    engine_kwargs["pool_size"] = 20
 
 engine = create_engine(DATABASE_URL, **engine_kwargs)
-
 
 SessionLocal = sessionmaker(
     bind=engine,
