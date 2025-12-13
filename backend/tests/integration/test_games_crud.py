@@ -26,7 +26,7 @@ def create_game(client, *, name="Chess", description="Fun", bgg_rating=5.5):
     return data
 
 
-def test_create_game_returns_201_and_body(client, _allow_admin):
+def test_create_game_returns_201(client, _allow_admin):
     created = create_game(
         client,
         name="Chess",
