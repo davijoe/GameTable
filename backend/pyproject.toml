@@ -19,6 +19,7 @@ dependencies = [
   "python-multipart>=0.0.20",
   "sentry-sdk[fastapi]>=2.47.0",
   "bandit[toml]>=1.9.2",
+  "httpx>=0.28.1",
 ]
 
 [dependency-groups]
