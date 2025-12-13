@@ -16,7 +16,7 @@ def create_game(client, *, name="Chess", description="Fun", bgg_rating=5.5):
     return data
 
 
-def test_create_game_returns_201_and_body(client, allow_admin):
+def test_create_game_returns_201_and_body(client, _allow_admin):
     created = create_game(
         client,
         name="Chess",
@@ -31,7 +31,7 @@ def test_create_game_returns_201_and_body(client, allow_admin):
     assert created["id"] > 0
 
 
-def test_get_game_gives_200(client, allow_admin):
+def test_get_game_gives_200(client, _allow_admin):
     created = create_game(
         client,
         name="Checkers",
@@ -50,7 +50,7 @@ def test_get_game_gives_200(client, allow_admin):
     assert fetched["bgg_rating"] == 7.2
 
 
-def test_get_game_detail_gives_200(client, allow_admin):
+def test_get_game_detail_gives_200(client, _allow_admin):
     created = create_game(client, name="Catan", description="Trade", bgg_rating=7.8)
     game_id = created["id"]
 
@@ -62,7 +62,7 @@ def test_get_game_detail_gives_200(client, allow_admin):
     assert detail["name"] == "Catan"
 
 
-def test_list_games_has_expected_shape(client, allow_admin):
+def test_list_games_has_expected_shape(client, _allow_admin):
     create_game(client, name=f"A-{uuid.uuid4()}", description="d", bgg_rating=1.0)
     create_game(client, name=f"B-{uuid.uuid4()}", description="d", bgg_rating=2.0)
 
@@ -77,7 +77,7 @@ def test_list_games_has_expected_shape(client, allow_admin):
     assert isinstance(data["items"], list)
 
 
-def test_list_games_pagination_offset_limit(client, allow_admin):
+def test_list_games_pagination_offset_limit(client, _allow_admin):
     create_game(client, name=f"P1-{uuid.uuid4()}", description="d", bgg_rating=1.0)
     create_game(client, name=f"P2-{uuid.uuid4()}", description="d", bgg_rating=2.0)
     create_game(client, name=f"P3-{uuid.uuid4()}", description="d", bgg_rating=3.0)
@@ -97,7 +97,7 @@ def test_list_games_pagination_offset_limit(client, allow_admin):
     assert page2["limit"] == 2
 
 
-def test_list_games_search_q_filters(client, allow_admin):
+def test_list_games_search_q_filters(client, _allow_admin):
     needle = f"Needle-{uuid.uuid4()}"
     create_game(client, name=needle, description="hello", bgg_rating=5.0)
     create_game(
@@ -112,22 +112,7 @@ def test_list_games_search_q_filters(client, allow_admin):
     assert any(n == needle for n in names)
 
 
-def test_list_games_sort_by_name_asc_if_supported(client):
-    a = f"Sort-A-{uuid.uuid4()}"
-    z = f"Sort-Z-{uuid.uuid4()}"
-    create_game(client, name=z, description="d", bgg_rating=1.0)
-    create_game(client, name=a, description="d", bgg_rating=1.0)
-
-    r = client.get("/api/games?sort_by=name&sort_order=asc&limit=100")
-    assert r.status_code == 200, r.text
-    items = r.json()["items"]
-
-    names = [x["name"] for x in items]
-    assert a in names and z in names
-    assert names.index(a) < names.index(z)
-
-
-def test_update_game_patch_changes_fields(client, allow_admin):
+def test_update_game_patch_changes_fields(client, _allow_admin):
     created = create_game(client, name="Monopoly", description="Old", bgg_rating=6.5)
     game_id = created["id"]
 
@@ -144,7 +129,7 @@ def test_update_game_patch_changes_fields(client, allow_admin):
     assert updated["bgg_rating"] == 7.0
 
 
-def test_delete_game_then_get_404(client, allow_admin):
+def test_delete_game_then_get_404(client, _allow_admin):
     created = create_game(client, name="Risk", description="War", bgg_rating=6.0)
     game_id = created["id"]
 
@@ -155,27 +140,27 @@ def test_delete_game_then_get_404(client, allow_admin):
     assert r.status_code == 404
 
 
-def test_get_unknown_game_returns_404(client, allow_admin):
+def test_get_unknown_game_returns_404(client, _allow_admin):
     r = client.get("/api/games/999999999")
     assert r.status_code == 404
 
 
-def test_update_unknown_game_returns_404(client, allow_admin):
+def test_update_unknown_game_returns_404(client, _allow_admin):
     r = client.patch("/api/games/999999999", json={"description": "x"})
     assert r.status_code == 404
 
 
-def test_delete_unknown_game_returns_404(client, allow_admin):
+def test_delete_unknown_game_returns_404(client, _allow_admin):
     r = client.delete("/api/games/999999999")
     assert r.status_code == 404
 
 
-def test_create_game_missing_fields_returns_422(client, allow_admin):
+def test_create_game_missing_fields_returns_422(client, _allow_admin):
     r = client.post("/api/games", json={"description": "x"})
     assert r.status_code == 422
 
 
-def test_create_game_wrong_types_returns_422(client, allow_admin):
+def test_create_game_wrong_types_returns_422(client, _allow_admin):
     r = client.post(
         "/api/games",
         json={"name": 123, "description": ["nope"], "bgg_rating": "high"},

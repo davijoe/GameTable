@@ -70,7 +70,7 @@ def client():
 
 
 @pytest.fixture
-def allow_admin():
+def _allow_admin():
     def _allow():
         return True
 
