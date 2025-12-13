@@ -1,5 +1,15 @@
 import uuid
 
+"""
+POSITIVE TESTS
+- test creating a game
+- test getting a game
+- test getting game detail
+- test listing games
+- test listing games with pagination
+- test listing games with search q
+"""
+
 
 def create_game(client, *, name="Chess", description="Fun", bgg_rating=5.5):
     r = client.post(
@@ -168,10 +178,14 @@ def test_create_game_wrong_types_returns_422(client, _allow_admin):
     assert r.status_code == 422
 
 
-# Optional auth tests, if you have a deny_admin fixture that forces require_admin to reject.
-def test_create_game_requires_admin_returns_403(client, deny_admin):
+def test_create_game_requires_admin_returns_403(client, _deny_admin):
     r = client.post(
         "/api/games",
         json={"name": "Nope", "description": "x", "bgg_rating": 5.0},
     )
     assert r.status_code == 403
+
+
+# def test_list_games_negative_limit_returns_422(client, _allow_admin):
+#    r = client.get("/api/games?limit=-1")
+#    assert r.status_code == 404, r.text

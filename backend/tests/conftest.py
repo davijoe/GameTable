@@ -12,7 +12,7 @@ from app.main import app
 from app.utility.auth import get_current_user, require_admin
 from app.utility.db_sql import Base, get_sql_db
 
-TEST_DB_URL = "sqlite:///./test.db"
+TEST_DB_URL = os.environ["DATABASE_URL"]
 
 
 engine = create_engine(
@@ -80,7 +80,7 @@ def _allow_admin():
 
 
 @pytest.fixture
-def deny_admin():
+def _deny_admin():
     from fastapi import HTTPException
 
     def _deny():
