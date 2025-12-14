@@ -11,7 +11,7 @@ class TestGameName:
             "",
             "A" * 256,
             "A" * 257,
-            "A" * 500, 
+            "A" * 500,
             123,
             " ",
             "-",
@@ -24,7 +24,7 @@ class TestGameName:
     @pytest.mark.parametrize(
         "name",
         [
-            "A", 
+            "A",
             "A" * 2,
             "A" * 125,
             "A" * 254,
@@ -205,13 +205,20 @@ class TestGameDifficultyRating:
 
 MAX_BYTES = 65535
 
+
 class TestGameDescription:
     @pytest.mark.parametrize(
         "param",
         [
             {"type": "value", "value": ""},
-            {"type": "length","value": MAX_BYTES + 1,},
-            {"type": "length","value": MAX_BYTES + 2,},
+            {
+                "type": "length",
+                "value": MAX_BYTES + 1,
+            },
+            {
+                "type": "length",
+                "value": MAX_BYTES + 2,
+            },
             {"type": "length", "value": MAX_BYTES + 10000},
         ],
     )
@@ -378,4 +385,3 @@ class TestGameImage:
     def test_valid_image(self, image):
         game = GameCreate(name="Valid Name", image=image)
         assert game.image == image
-
