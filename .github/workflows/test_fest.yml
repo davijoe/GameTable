@@ -37,7 +37,10 @@ jobs:
 
       - name: Run Tests
         working-directory: backend
-        run: uv run pytest --cov=. --cov-report=xml:coverage.xml
+        run: |
+          uv run pytest \
+            --cov=. \
+            --cov-report=xml:tests/reports/coverage.xml
 
       - name: Run Bandit
         run: |
