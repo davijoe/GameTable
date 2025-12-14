@@ -88,19 +88,20 @@ class TestGameYearPublished:
     @pytest.mark.parametrize(
         "year_published",
         [
+            -1000,
+            -2,
+            -1,
             0,
             1,
             2,
-            1500,
+            1000,
             1899,
             1900,
             2156,
             2157,
             2500,
             "abc",
-            12345,
             1999.5,
-            99,
         ],
     )
     def test_invalid_year_published(self, year_published):
