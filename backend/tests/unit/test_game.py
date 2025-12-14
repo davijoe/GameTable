@@ -110,6 +110,7 @@ class TestGameYearPublished:
     @pytest.mark.parametrize(
         "year_published",
         [
+            -1000,
             1901,
             1902,
             2000,
