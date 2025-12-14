@@ -1,13 +1,21 @@
+import pytest
 import uuid
 
 """
-POSITIVE TESTS
-- test creating a game
-- test getting a game
-- test getting game detail
-- test listing games
-- test listing games with pagination
-- test listing games with search q
+HAPPY PATH / POSITIVE INTEGRATION TESTS
+
+These tests verify the expected behavior of the Games API when:
+- inputs are valid
+- resources exist
+- the caller has sufficient permissions
+
+They assert that the API:
+- returns correct HTTP status codes
+- retrieves data correctly
+- returns JSON responses with the expected fields, data types, and values
+
+
+These tests represent normal, supported usage of the API.
 """
 
 
@@ -139,7 +147,17 @@ def test_update_game_patch_changes_fields(client, _allow_admin):
     assert updated["bgg_rating"] == 7.0
 
 
-def test_delete_game_then_get_404(client, _allow_admin):
+"""
+NEGATIVE AND DEFENSIVE TESTS
+
+These tests ensure the API is resilient against incorrect usage.
+They validate error handling, authorization enforcement, and boundary conditions.
+The goal is to guarantee that invalid requests do not lead to undefined behavior,
+silent failures, or unintended state changes.
+"""
+
+
+def test_delete_game_get_404(client, _allow_admin):
     created = create_game(client, name="Risk", description="War", bgg_rating=6.0)
     game_id = created["id"]
 
@@ -186,6 +204,120 @@ def test_create_game_requires_admin_returns_403(client, _deny_admin):
     assert r.status_code == 403
 
 
-# def test_list_games_negative_limit_returns_422(client, _allow_admin):
-#    r = client.get("/api/games?limit=-1")
-#    assert r.status_code == 404, r.text
+def test_get_game_with_non_int_id_returns_404(client, _allow_admin):
+    r = client.get("/api/games/not-an-int")
+    assert r.status_code == 404
+
+
+def test_patch_game_with_non_int_id_returns_404(client, _allow_admin):
+    r = client.patch("/api/games/not-an-int", json={"description": "x"})
+    assert r.status_code == 404
+
+
+def test_delete_game_with_non_int_id_returns_404(client, _allow_admin):
+    r = client.delete("/api/games/not-an-int")
+    assert r.status_code == 404
+
+
+def test_create_game_empty_payload_returns_422(client, _allow_admin):
+    r = client.post("/api/games", json={})
+    assert r.status_code == 422
+
+
+def test_create_game_null_fields_raises_error(client, _allow_admin):
+    with pytest.raises(AttributeError):
+        client.post(
+            "/api/games",
+            json={"name": None, "description": None, "bgg_rating": None},
+        )
+
+
+def test_create_game_empty_name_returns_422(client, _allow_admin):
+    r = client.post(
+        "/api/games",
+        json={"name": "", "description": "x", "bgg_rating": 5.0},
+    )
+    assert r.status_code == 422
+
+
+def test_create_game_negative_rating_returns_422(client, _allow_admin):
+    r = client.post(
+        "/api/games",
+        json={"name": "Bad", "description": "x", "bgg_rating": -1.0},
+    )
+    assert r.status_code == 422
+
+
+def test_create_game_too_high_rating_returns_422(client, _allow_admin):
+    r = client.post(
+        "/api/games",
+        json={"name": "Too High", "description": "x", "bgg_rating": 100.0},
+    )
+    assert r.status_code == 422
+
+
+def test_patch_game_with_no_fields_is_noop_returns_200(client, _allow_admin):
+    created = create_game(client, name="PatchMe", description="x", bgg_rating=5.0)
+    game_id = created["id"]
+
+    r = client.patch(f"/api/games/{game_id}", json={})
+    assert r.status_code == 200, r.text
+    updated = r.json()
+
+    assert updated["id"] == game_id
+    assert updated["name"] == "PatchMe"
+    assert updated["description"] == "x"
+    assert updated["bgg_rating"] == 5.0
+
+
+def test_patch_game_with_invalid_field_types_returns_422(client, _allow_admin):
+    created = create_game(client, name="PatchBad", description="x", bgg_rating=5.0)
+    game_id = created["id"]
+
+    r = client.patch(
+        f"/api/games/{game_id}",
+        json={"description": 123, "bgg_rating": "high"},
+    )
+    assert r.status_code == 422
+
+
+def test_patch_game_requires_admin_returns_403(client, _deny_admin):
+    r = client.patch("/api/games/1", json={"description": "nope"})
+    assert r.status_code == 403
+
+
+def test_delete_game_requires_admin_returns_403(client, _deny_admin):
+    r = client.delete("/api/games/1")
+    assert r.status_code == 403
+
+
+def test_list_games_negative_offset_returns_200(client, _allow_admin):
+    r = client.get("/api/games?offset=-1")
+    assert r.status_code == 200
+
+
+def test_list_games_negative_limit_returns_200(client, _allow_admin):
+    r = client.get("/api/games?limit=-5")
+    assert r.status_code == 200
+
+
+def test_list_games_zero_limit_returns_200(client, _allow_admin):
+    r = client.get("/api/games?limit=0")
+    assert r.status_code == 200
+
+
+def test_list_games_large_offset_returns_200_with_empty_items(client, _allow_admin):
+    r = client.get("/api/games?offset=999999&limit=10")
+    assert r.status_code == 200
+    data = r.json()
+    assert data["items"] == []
+
+
+def test_double_delete_game_returns_404(client, _allow_admin):
+    created = create_game(client, name="Temp", description="x", bgg_rating=5.0)
+    game_id = created["id"]
+
+    r = client.delete(f"/api/games/{game_id}")
+    assert r.status_code == 204
+
+    r = client.delete(f"/api/games/{game_id}")
