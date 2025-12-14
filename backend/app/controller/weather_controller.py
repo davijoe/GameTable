@@ -1,4 +1,3 @@
-
 from typing import Any
 
 import requests
@@ -9,9 +8,10 @@ router = APIRouter(prefix="/api/weather", tags=["weather"])
 OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
 
 
-
-
-@router.get("/geo", response_model=dict[str, Any])
+@router.get(
+    "/geo",
+    response_model=dict[str, Any],
+)
 def get_weather_geo(
     latitude: float = Query(...),
     longitude: float = Query(...),
@@ -28,9 +28,10 @@ def fetch_weather(latitude: float, longitude: float):
     try:
         r = requests.get(OPEN_METEO_URL, params=params, timeout=5)
     except requests.RequestException as exc:
-        raise HTTPException(502, f"Failed to contact weather provider (open-meteo): {exc}")
+        raise HTTPException(
+            502, f"Failed to contact weather provider (open-meteo): {exc}"
+        )
 
     if r.status_code != 200:
         raise HTTPException(502, "Weather provider (open-meteo) returned an error")
     return r.json()
-
