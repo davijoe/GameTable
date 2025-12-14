@@ -71,20 +71,6 @@ jobs:
           SONAR_SCANNER_OPTS: >
             -Dsonar.python.coverage.reportPaths=backend/tests/reports/coverage.xml
 
-      - name: Collect SonarQube scanner files
-        if: always()
-        working-directory: backend
-        run: |
-          if [ -d ".scannerwork" ]; then
-            cp -r .scannerwork tests/reports/sonarqube/.scannerwork
-          fi
-
-          if [ -f "report-task.txt" ]; then
-            cp report-task.txt tests/reports/sonarqube/report-task.txt
-          fi
-
-          ls -la tests/reports/sonarqube || true
-
       - name: Upload reports artifact
         if: always()
         uses: actions/upload-artifact@v4
