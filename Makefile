@@ -43,7 +43,7 @@ up:
 	$(DEV_COMPOSE) up -d
 
 up-backend:
-	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
+	$(DEV_COMPOSE) up -d $(BACKEND_SERVICE)
 
 up-frontend:
 	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
