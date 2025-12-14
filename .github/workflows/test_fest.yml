@@ -31,9 +31,16 @@ jobs:
         working-directory: backend
         run: uv sync --locked --all-extras --dev
 
+      - name: Create Report Dirs
+        working-directory: backend
+        run: mkdir -p tests/reports
+
       - name: Run Tests
         working-directory: backend
-        run: uv run pytest --cov=. --cov-report=xml:coverage.xml
+        run: |
+          uv run pytest \
+            --cov=. \
+            --cov-report=xml:tests/reports/coverage.xml
 
       - name: Run Bandit
         run: |
@@ -41,7 +48,48 @@ jobs:
             -r backend NoSQLMigrator data-aggregator \
             --severity-level high
 
+      - name: Run Bandit (HTML report)
+        run: |
+          uv run bandit -c bandit.yaml \
+            -r backend NoSQLMigrator data-aggregator \
+            --severity-level high \
+            -f html \
+            -o backend/tests/reports/bandit.html
+
+      - name: Run Bandit (JSON report)
+        run: |
+          uv run bandit -c bandit.yaml \
+            -r backend NoSQLMigrator data-aggregator \
+            --severity-level high \
+            -f json \
+            -o backend/tests/reports/bandit.json
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: >
+            -Dsonar.python.coverage.reportPaths=backend/tests/reports/coverage.xml
+
+      - name: Collect SonarQube scanner files
+        if: always()
+        working-directory: backend
+        run: |
+          if [ -d ".scannerwork" ]; then
+            cp -r .scannerwork tests/reports/sonarqube/.scannerwork
+          fi
+
+          if [ -f "report-task.txt" ]; then
+            cp report-task.txt tests/reports/sonarqube/report-task.txt
+          fi
+
+          ls -la tests/reports/sonarqube || true
+
+      - name: Upload reports artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: backend/tests/reports/
+          if-no-files-found: error
+          retention-days: 14
