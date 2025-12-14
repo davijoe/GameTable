@@ -31,6 +31,10 @@ jobs:
         working-directory: backend
         run: uv sync --locked --all-extras --dev
 
+      - name: Create Report Dirs
+        working-directory: backend
+        run: mkdir -p tests/reports
+
       - name: Run Tests
         working-directory: backend
         run: uv run pytest --cov=. --cov-report=xml:coverage.xml
@@ -39,7 +43,9 @@ jobs:
         run: |
           uv run bandit -c bandit.yaml \
             -r backend NoSQLMigrator data-aggregator \
-            --severity-level high
+            --severity-level high\
+            -f json \
+            -o backend/tests/reports/bandit.json
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
@@ -48,4 +54,11 @@ jobs:
           SONAR_SCANNER_OPTS: >
             -Dsonar.python.coverage.reportPaths=backend/tests/reports/coverage.xml
 
-
+      - name: Upload reports artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: backend/tests/reports/
+          if-no-files-found: error
+          retention-days: 14
