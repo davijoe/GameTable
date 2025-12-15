@@ -1,0 +1,67 @@
+name: copy of test fest
+
+on:
+  push:
+    branches:
+      - WenmExam
+    paths-ignore:
+      - "backups/**"
+      - "db/**"
+
+jobs:
+  test:
+    name: tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
+        with:
+          version: "0.9.17"
+          enable-cache: true
+
+      - name: Install The Project
+        working-directory: backend
+        run: uv sync --locked --all-extras --dev
+
+      - name: Create Report Dirs
+        working-directory: backend
+        run: mkdir -p tests/reports
+
+      - name: Run Tests
+        working-directory: backend
+        run: |
+          uv run pytest \
+            --cov=. \
+            --cov-report=xml:tests/reports/coverage.xml
+
+      - name: Run Bandit
+        run: |
+          uv run bandit -c bandit.yaml \
+            -r backend NoSQLMigrator data-aggregator \
+            --severity-level high\
+            -f json \
+            -o backend/tests/reports/bandit.json
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@a31c9398be7ace6bbfaf30c0bd5d415f843d45e9
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_SCANNER_OPTS: >
+            -Dsonar.python.coverage.reportPaths=backend/tests/reports/coverage.xml
+
+      - name: Upload reports artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: backend/tests/reports/
+          if-no-files-found: error
+          retention-days: 14
