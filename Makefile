@@ -5,8 +5,14 @@ DEV_COMPOSE=docker compose -f docker-compose.dev.yml
 FRONTEND_SERVICE=frontend-server
 BACKEND_SERVICE=backend-server
 
+### SQL Loads and Dumps
+MYSQL_CONTAINER=gametable-mysql8-database
+DUMP_FILE=dump.sql
 
 .PHONY: frontend backend migrator scraper setup
+
+sql:
+	docker exec -i $(MYSQL_CONTAINER) mysql -u root -p < backups/$(DUMP_FILE)
 
 gp:
 	git pull
