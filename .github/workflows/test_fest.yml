@@ -8,6 +8,10 @@ on:
       - "backups/**"
       - "db/**"
 
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: tests
@@ -56,3 +60,29 @@ jobs:
           path: backend/tests/reports/
           if-no-files-found: error
           retention-days: 14
+
+  deploy:
+    name: deployment
+    if: github.event_name == 'push'
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Backend Image
+        run: |
+          docker build -t gametable-backend:${{ github.sha }} ./backend
+          docker save gametable-backend:${{ github.sha }} -o gametable-backend-image.tar
+
+      - name: Copy Backend Image Tar To Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          source: "gametable-backend-image.tar"
+          target: "/tmp/"
