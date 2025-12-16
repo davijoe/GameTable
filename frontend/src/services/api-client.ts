@@ -29,8 +29,8 @@ export default class ApiClient<T> {
 		return res.data;
 	}
 
-	async create(data: Partial<T>) {
-		const res = await api.post<T>(this.endpoint, data);
+	async create(data: Partial<T>, config?: AxiosRequestConfig) {
+		const res = await api.post<T>(this.endpoint, data, config);
 		return res.data;
 	}
 

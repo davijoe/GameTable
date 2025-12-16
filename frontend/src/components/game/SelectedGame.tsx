@@ -16,11 +16,19 @@ import GameDetailContributerBox from "./GameDetailBox";
 import BackArrow from "../reusable/BackArrow";
 import { useState } from "react";
 import GameReview from "./GameReview";
+import ReviewForm from "./ReviewForm";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SelectedGame() {
   const { gameId } = useParams<{ gameId: string }>();
   const { data, isLoading, error } = useGameDetail(gameId);
   const [descExpanded, setDescExpanded] = useState(false); //used for description
+  const { user } = useAuth();
+  const [reviewRefreshKey, setReviewRefreshKey] = useState(0);
+
+  const handleReviewSubmitted = () => {
+    setReviewRefreshKey((k) => k + 1);
+  };
 
   return (
     <Box maxW="900px" mx="auto">
@@ -55,7 +63,6 @@ export default function SelectedGame() {
             {/* title + stats +  */}
             <VStack align="start" spacing={3}>
               <Heading>{data.name}</Heading>
-
               <Text fontSize="lg">{data.year_published ?? "N/A"}</Text>
 
               <HStack spacing={6} wrap="wrap">
@@ -122,7 +129,11 @@ export default function SelectedGame() {
               items={data.publishers}
             />
           </SimpleGrid>
-          <GameReview gameId={gameId ?? ""} />
+          {/* Review form only for logged-in users */}
+          {user && (
+            <ReviewForm gameId={gameId ?? ""} onReviewSubmitted={handleReviewSubmitted} />
+          )}
+          <GameReview key={reviewRefreshKey} gameId={gameId ?? ""} />
         </VStack>
       )}
     </Box>
