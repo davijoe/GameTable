@@ -1,9 +1,12 @@
 name: Test Fest Workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - main
+    paths-ignore:
+      - "backups/**"
+      - "db/**"
 
 concurrency:
   group: deploy-${{ github.ref }}
@@ -57,36 +60,42 @@ jobs:
           path: backend/tests/reports/
           if-no-files-found: error
           retention-days: 14
+# deploy:
+#   name: deployment
+#   runs-on: ubuntu-latest
 
-  deploy:
-    name: deployment
-    if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'synchronize' || github.event.action == 'reopened')
-    runs-on: ubuntu-latest
+#   steps:
+#     - uses: actions/checkout@v5
 
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: DEBUG 1. WHERE WE AT
-        run: |
-          ls -R ./backend
-
-      - name: Set Up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Backend Image
-        run: |
-          docker build -t gametable-backend:${{ github.sha }} backend/
-          docker save gametable-backend:${{ github.sha }} -o gametable-backend-image.tar
-
-      - name: DEBUG 2. WHERE WE AT
-        run: |
-          ls -R ./backend
-
-      - name: Copy Backend Image Tar To Server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          source: "gametable-backend-image.tar"
-          target: "/tmp/"
+#     - name: Set Up Docker Buildx
+#       uses: docker/setup-buildx-action@v3
+#
+#     - name: Security Engineering
+#       run: |
+#         cat > backend/.env << 'EOF'
+#         MYSQL_USER=${{ secrets.MYSQL_USER }}
+#         MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+#         MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}
+#         MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
+#         MYSQL_PORT=${{ secrets.MYSQL_PORT }}
+#         EOF
+#
+#     - name: Build Backend Image
+#       run: |
+#         docker build -t gametable-backend:${{ github.sha }} .
+#         docker save gametable-backend:${{ github.sha }} -o gametable-backend-image.tar
+#
+#     - name: Tar Permissions fix
+#       run: |
+#         ls -la gametable-backend-image.tar
+#         sudo chown gametable_user:gametable_user gametable-backend-image.tar || true
+#         sudo chmod 644 gametable-backend-image.tar
+#         ls -la gametable-backend-image.tar
+#
+#     - name: Copy Backend Image Tar To Server
+#       uses: appleboy/scp-action@v0.1.7
+#       with:
+#         host: ${{ secrets.DEPLOY_HOST }}
+#         username: ${{ secrets.DEPLOY_USER }}
+#         key: ${{ secrets.DEPLOY_SSH_KEY }}
+#         source: "gametable-backend-image.tar"
