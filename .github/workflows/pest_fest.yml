@@ -1,0 +1,40 @@
+name: Test Fest Workflow
+
+on:
+  push:
+    branches:
+      - main
+      - hyggebranch
+
+jobs:
+  deploy:
+    name: deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: DEBUG 1. WHERE WE AT
+        run: |
+          ls -R ./backend
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Backend Image
+        run: |
+          docker build -t gametable-backend:${{ github.sha }} backend/
+          docker save gametable-backend:${{ github.sha }} -o gametable-backend-image.tar
+
+      - name: DEBUG 2. WHERE WE AT
+        run: |
+          ls -R ./backend
+
+      - name: Copy Backend Image Tar To Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          source: "gametable-backend-image.tar"
+          target: "/tmp/"
