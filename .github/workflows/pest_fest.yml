@@ -55,3 +55,18 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           source: "gametable-backend-image.tar"
           target: "/tmp/"
+
+      - name: Deploy backend on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            set -e
+
+            docker load -i /tmp/gametable-backend-image.tar
+            rm -f /tmp/gametable-backend-image.tar
+
+            cd /opt/gametable
+            BACKEND_TAG=${{ github.sha }} docker compose up -d backend
