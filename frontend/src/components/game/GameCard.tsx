@@ -11,7 +11,7 @@ export const GameCard = ({ game }: Props) => {
   return (
     <GameCardBase
       image={
-        <Image src={game.thumbnail ?? undefined} objectFit="cover" /> //hard coded right now - should use the correct when we have that in the DB
+        <Image src={game.thumbnail ?? undefined} objectFit="cover" />
       }
     >
       <VStack align="start" spacing={2}>
