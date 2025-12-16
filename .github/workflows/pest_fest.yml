@@ -21,6 +21,16 @@ jobs:
       - name: Set Up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Security Engineering
+        run: |
+          cat > backend/.env << 'EOF'
+          MYSQL_USER=${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}
+          MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
+          MYSQL_PORT=${{ secrets.MYSQL_PORT }}
+          EOF
+
       - name: Build Backend Image
         run: |
           docker build -t gametable-backend:${{ github.sha }} .
