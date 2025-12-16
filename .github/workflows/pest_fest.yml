@@ -44,7 +44,7 @@ jobs:
         run: |
           ls -la gametable-backend-image.tar
           sudo chown gametable_user:gametable_user gametable-backend-image.tar || true
-          chmod 644 gametable-backend-image.tar
+          sudo chmod 644 gametable-backend-image.tar
           ls -la gametable-backend-image.tar
 
       - name: Copy Backend Image Tar To Server
