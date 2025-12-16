@@ -65,8 +65,8 @@ jobs:
           script: |
             set -e
 
-            docker load -i /tmp/gametable-backend-image.tar
+            sudo docker load -i /tmp/gametable-backend-image.tar
             rm -f /tmp/gametable-backend-image.tar
 
             cd /opt/gametable
-            BACKEND_TAG=${{ github.sha }} docker compose up -d backend
+            BACKEND_TAG=${{ github.sha }} sudo docker compose up -d backend
