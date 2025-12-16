@@ -23,7 +23,7 @@ jobs:
 
       - name: Build Backend Image
         run: |
-          docker build -t gametable-backend:${{ github.sha }} backend/
+          docker build -t gametable-backend:${{ github.sha }} .
           docker save gametable-backend:${{ github.sha }} -o gametable-backend-image.tar
 
       - name: DEBUG 2. WHERE WE AT
