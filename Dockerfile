@@ -7,13 +7,13 @@ COPY --from=ghcr.io/astral-sh/uv:0.9.6 /uv /uvx /bin/
 WORKDIR /app
 
 # Copy dependencies lock file and .env
-COPY ./pyproject.toml ./uv.lock ./.env ./
+COPY ./backend/pyproject.toml ./backend/uv.lock ./backend/.env ./
 
 # Install dependencies
 RUN uv sync --locked
 
 # Copy the application into the container.
-COPY ./ /app
+COPY ./backend/ /app
 
 # remove any accidentally included virtualenv
 RUN rm -rf /app/.venv

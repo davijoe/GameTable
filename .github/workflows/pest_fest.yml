@@ -1,0 +1,48 @@
+name: Test Fest Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: deployment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Set Up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Security Engineering
+        run: |
+          cat > backend/.env << 'EOF'
+          MYSQL_USER=${{ secrets.MYSQL_USER }}
+          MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+          MYSQL_SERVER=${{ secrets.MYSQL_SERVER }}
+          MYSQL_DB_NAME=${{ secrets.MYSQL_DB_NAME }}
+          MYSQL_PORT=${{ secrets.MYSQL_PORT }}
+          EOF
+
+      - name: Build Backend Image
+        run: |
+          docker build -t gametable-backend:${{ github.sha }} .
+          docker save gametable-backend:${{ github.sha }} -o gametable-backend-image.tar
+
+      - name: Tar Permissions fix
+        run: |
+          ls -la gametable-backend-image.tar
+          sudo chown gametable_user:gametable_user gametable-backend-image.tar || true
+          sudo chmod 644 gametable-backend-image.tar
+          ls -la gametable-backend-image.tar
+
+      - name: Copy Backend Image Tar To Server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          source: "gametable-backend-image.tar"
+          target: "/tmp/"

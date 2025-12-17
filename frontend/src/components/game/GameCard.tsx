@@ -13,9 +13,7 @@ export const GameCard = ({ game }: Props) => {
       image={
         <Image src={game.thumbnail ?? undefined} objectFit="cover" /> //hard coded right now - should use the correct when we have that in the DB
       }
-    >
-      <VStack align="start" spacing={2}>
-        {/* Title + Year */}
+    >   {/* Title + Year */}
         <HStack spacing={2}>
           <Heading fontSize="lg" noOfLines={1}>
             {game.name}
@@ -24,7 +22,6 @@ export const GameCard = ({ game }: Props) => {
             {game.year_published || "—"}
           </Text>
         </HStack>
-      </VStack>
 
       {/* Description */}
       <Text fontSize="sm" color="gray.400" noOfLines={3} mt={2} mb={2}>
