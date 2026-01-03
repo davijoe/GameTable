@@ -72,22 +72,23 @@ class GameRepositoryNeo(IGameRepository):
     @staticmethod
     def _create_node(tx, game_data: GameCreate):
         query = """
-		CREATE (g:Game {
-			id: $id,
-			name: $name,
-			slug: $slug,
-			year_published: $year_published,
-			bgg_rating: $bgg_rating,
-			difficulty_rating: $difficulty_rating,
-			description: $description,
-			playing_time: $playing_time,
-			available: $available,
-			min_players: $min_players,
-			max_players: $max_players,
-			image: $image,
-			thumbnail: $thumbnail
-		})
-		"""
+        CREATE (g:Game {
+            id: $id,
+            name: $name,
+            slug: $slug,
+            year_published: $year_published,
+            bgg_rating: $bgg_rating,
+            difficulty_rating: $difficulty_rating,
+            description: $description,
+            playing_time: $playing_time,
+            available: $available,
+            min_players: $min_players,
+            max_players: $max_players,
+            image: $image,
+            thumbnail: $thumbnail
+        })
+        """
+
         tx.run(query, **game_data.model_dump())
 
     @staticmethod

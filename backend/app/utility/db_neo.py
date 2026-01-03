@@ -17,4 +17,3 @@ def get_neo() -> Driver:
             auth=(NEO4J_USER, NEO4J_PASSWORD),
         )
     return _driver
-

@@ -50,4 +50,3 @@ class GameRepositoryMongo(IGameRepository):
     def delete(self, game_id: Any) -> bool:
         res = self.col.delete_one({"_id": game_id})
         return res.deleted_count == 1
-
