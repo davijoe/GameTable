@@ -1,12 +1,10 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
 
 from app.schema.video_schema import VideoCreate, VideoRead, VideoUpdate
 from app.service.video_service import VideoService
 from app.utility.auth import require_admin
-from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/videos", tags=["videos"])
 
@@ -16,7 +14,6 @@ def list_videos(
     q: str | None = Query(None, description="Search by title"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_sql_db),
 ):
     svc = VideoService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
@@ -29,7 +26,7 @@ def list_videos(
     status_code=201,
     dependencies=[Depends(require_admin)],
 )
-def create_video(payload: VideoCreate, db: Session = Depends(get_sql_db)):
+def create_video(payload: VideoCreate):
     svc = VideoService()
     try:
         return svc.create(payload)
@@ -38,7 +35,7 @@ def create_video(payload: VideoCreate, db: Session = Depends(get_sql_db)):
 
 
 @router.get("/{video_id}", response_model=VideoRead)
-def get_video(video_id: int, db: Session = Depends(get_sql_db)):
+def get_video(video_id: int):
     svc = VideoService()
     item = svc.get(video_id)
     if not item:
@@ -51,9 +48,7 @@ def get_video(video_id: int, db: Session = Depends(get_sql_db)):
     response_model=VideoRead,
     dependencies=[Depends(require_admin)],
 )
-def update_video(
-    video_id: int, payload: VideoUpdate, db: Session = Depends(get_sql_db)
-):
+def update_video(video_id: int, payload: VideoUpdate):
     svc = VideoService()
     try:
         item = svc.update(video_id, payload)
@@ -69,7 +64,7 @@ def update_video(
     status_code=204,
     dependencies=[Depends(require_admin)],
 )
-def delete_video(video_id: int, db: Session = Depends(get_sql_db)):
+def delete_video(video_id: int):
     svc = VideoService()
     if not svc.delete(video_id):
         raise HTTPException(status_code=404, detail="Video not found")
