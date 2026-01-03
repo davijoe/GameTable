@@ -7,6 +7,13 @@ from app.schema.game_schema import GameCreate, GameRead, GameUpdate
 
 
 class GameRepositoryMongo(IGameRepository):
+    SORT_FIELDS = {
+        "bgg_rating": "bgg_rating",
+        "year_published": "year_published",
+        "playing_time": "playing_time",
+        "name": "name",
+    }
+
     def __init__(self, db):
         self.col: Collection = db["games"]
 
@@ -25,13 +32,25 @@ class GameRepositoryMongo(IGameRepository):
         return self._doc_to_game(doc)
 
     def list(
-        self, offset: int, limit: int, search: str | None = None
-    ) -> tuple[list[GameRead], int]:
+        self,
+        offset: int,
+        limit: int,
+        search: str | None = None,
+        sort_by: str | None = None,
+        sort_order: str = "desc",
+    ) -> tuple[list[dict], int]:
         query = {}
         if search:
             query["name"] = {"$regex": search, "$options": "i"}
+
         total = self.col.count_documents(query)
-        cursor = self.col.find(query).skip(offset).limit(limit).sort("name", 1)
+        cursor = self.col.find(query).skip(offset).limit(limit)
+
+        if sort_by in self.SORT_FIELDS:
+            sort_field = self.SORT_FIELDS[sort_by]
+            pymongo_order = -1 if sort_order == "desc" else 1
+            cursor = cursor.sort(sort_field, pymongo_order)
+
         return [self._doc_to_game(d) for d in cursor], total
 
     def create(self, game_data: GameCreate) -> GameRead:
