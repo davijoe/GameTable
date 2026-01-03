@@ -1,9 +1,15 @@
 from typing import Any
 
+from app.schema.artist_schema import ArtistRead
+from app.schema.designer_schema import DesignerRead
+from app.schema.genre_schema import GenreRead
+from app.schema.mechanic_schema import MechanicRead
+from app.schema.publisher_schema import PublisherRead
+from app.schema.video_schema import VideoRead
 from pymongo.collection import Collection
 
 from app.repository.game.i_game_repository import IGameRepository
-from app.schema.game_schema import GameCreate, GameRead, GameUpdate
+from app.schema.game_schema import GameCreate, GameDetail, GameRead, GameUpdate
 
 
 class GameRepositoryMongo(IGameRepository):
@@ -65,6 +71,37 @@ class GameRepositoryMongo(IGameRepository):
         if res.matched_count == 0:
             return None
         return self.get(game_id)
+
+    def get_detail(self, game_id: Any) -> GameDetail | None:
+        """Return a game with all related embedded documents"""
+        doc = self.col.find_one({"_id": int(game_id)})
+        if not doc:
+            return None
+
+        game_data = dict(doc)
+        game_data["id"] = game_data["_id"]
+
+        images = game_data.get("images") or {}
+        game_data["thumbnail"] = images.get("thumbnail")
+        game_data["image"] = images.get("image")
+
+        game_data["artists"] = [
+            ArtistRead.model_validate(a) for a in doc.get("artists", [])
+        ]
+        game_data["designers"] = [
+            DesignerRead.model_validate(d) for d in doc.get("designers", [])
+        ]
+        game_data["publishers"] = [
+            PublisherRead.model_validate(p) for p in doc.get("publishers", [])
+        ]
+        game_data["mechanics"] = [
+            MechanicRead.model_validate(m) for m in doc.get("mechanics", [])
+        ]
+        game_data["genres"] = [
+            GenreRead.model_validate(g) for g in doc.get("genres", [])
+        ]
+
+        return GameDetail.model_validate(game_data)
 
     def delete(self, game_id: Any) -> bool:
         res = self.col.delete_one({"_id": game_id})
