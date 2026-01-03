@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Any
 
 
 class IVideoRepository(ABC):
@@ -13,13 +12,14 @@ class IVideoRepository(ABC):
         limit: int,
         search: str | None,
         sort_by: str | None,
+        sort_order: str | None = None,
     ): ...
 
     @abstractmethod
     def create(self, video_data: dict): ...
 
     @abstractmethod
-    def update(self, video_id: Any, video_data: dict): ...
+    def update(self, video_id: int, video_data: dict): ...
 
     @abstractmethod
-    def delete(self, video_id: Any) -> bool: ...
+    def delete(self, video_id: int) -> bool: ...

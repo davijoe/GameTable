@@ -4,6 +4,9 @@ DEV_COMPOSE=docker compose -f docker-compose.dev.yml
 ### Env / Dev VARS
 FRONTEND_SERVICE=frontend-server
 BACKEND_SERVICE=backend-server
+NEO4J=neo4j_database
+SQL=mysql8_database
+MONGO=mongodb
 
 
 .PHONY: frontend backend migrator scraper setup
@@ -38,6 +41,17 @@ down-frontend:
 down-backend:
 	$(DEV_COMPOSE) down $(BACKEND_SERVICE)
 
+down-db:
+	$(DEV_COMPOSE) down $(NEO4J) $(SQL) $(MONGO)
+
+down-neo:
+	$(DEV_COMPOSE) down $(NEO4J)
+
+down-mongo:
+	$(DEV_COMPOSE) down $(MONGO)
+
+down-sql:
+	$(DEV_COMPOSE) down $(SQL)
 
 up:
 	$(DEV_COMPOSE) up -d
@@ -47,6 +61,18 @@ up-backend:
 
 up-frontend:
 	$(DEV_COMPOSE) up -d $(FRONTEND_SERVICE)
+
+up-db:
+	$(DEV_COMPOSE) up -d $(NEO4J) $(SQL) $(MONGO)
+
+up-neo:
+	$(DEV_COMPOSE) up -d $(NEO4J)
+
+up-mongo:
+	$(DEV_COMPOSE) up -d $(MONGO)
+
+up-sql:
+	$(DEV_COMPOSE) up -d $(SQL)
 
 build-frontend:
 	$(DEV_COMPOSE) build $(FRONTEND_SERVICE) --no-cache

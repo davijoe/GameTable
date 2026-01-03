@@ -21,7 +21,7 @@ class VideoRepositoryMongo(IVideoRepository):
         offset: int,
         limit: int,
         search: str | None,
-        sort_by: str | None,
+        sort_by: str | None = None,
         sort_order: str | None = None,
     ):
         query = {}

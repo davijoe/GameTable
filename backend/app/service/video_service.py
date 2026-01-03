@@ -16,8 +16,15 @@ class VideoService:
         limit: int = 50,
         search: str | None = None,
         sort_by: str | None = None,
+        sort_order: str | None = None,
     ) -> tuple[list[VideoRead], int]:
-        rows, total = self.repo.list(offset, limit, search, sort_by)
+        rows, total = self.repo.list(
+            offset,
+            limit,
+            search,
+            sort_by,
+            sort_order,
+        )
         return [VideoRead.model_validate(r) for r in rows], total
 
     def create(self, payload: VideoCreate) -> VideoRead:

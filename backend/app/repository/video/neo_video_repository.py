@@ -31,23 +31,27 @@ class VideoRepositoryNeo(IVideoRepository):
         sort_order: str | None = "asc",
     ):
         with self.driver.session() as session:
-            query = "MATCH (v:Video)"
+            base = "MATCH (v:Video)"
+            where = ""
             params = {"skip": offset, "limit": limit}
 
             if search:
-                query += " WHERE v.title CONTAINS $search"
+                where = " WHERE v.title CONTAINS $search"
                 params["search"] = search
 
+            # for safety
             sort_field = "title"
             sort_dir = "ASC" if (sort_order or "asc") == "asc" else "DESC"
 
-            query += (
-                f" RETURN v ORDER BY v.{sort_field} {sort_dir} SKIP $skip LIMIT $limit"
+            query = (
+                base
+                + where
+                + f" RETURN v ORDER BY v.{sort_field} {sort_dir} SKIP $skip LIMIT $limit"
             )
             records = session.run(query, **params)
             items = [self._node_to_video(r["v"]) for r in records]
 
-            count_query = "MATCH (v:Video) RETURN count(v) AS count"
+            count_query = base + where + " RETURN count(v) AS count"
             if search:
                 count_query = "MATCH (v:Video) WHERE v.title CONTAINS $search RETURN count(v) AS count"
             count_res = session.run(
