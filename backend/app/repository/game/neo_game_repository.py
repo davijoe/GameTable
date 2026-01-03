@@ -1,7 +1,11 @@
 from neo4j import Driver
 
 from app.repository.game.i_game_repository import IGameRepository
-from app.schema.game_schema import GameCreate, GameRead, GameUpdate
+from app.schema.artist_schema import ArtistRead
+from app.schema.designer_schema import DesignerRead
+from app.schema.game_schema import GameCreate, GameDetail, GameRead, GameUpdate
+from app.schema.mechanic_schema import MechanicRead
+from app.schema.publisher_schema import PublisherRead
 
 
 class GameRepositoryNeo(IGameRepository):
@@ -112,6 +116,36 @@ class GameRepositoryNeo(IGameRepository):
 		})
 		"""
         tx.run(query, **game_data.model_dump())
+
+    def get_detail(self, game_id: int) -> GameDetail | None:
+        """Return a game with all related nodes (artists, designers, publishers, mechanics)."""
+        with self.driver.session() as session:
+            query = """
+            MATCH (g:Game {id: $id})
+            OPTIONAL MATCH (g)-[:ART_BY]->(a:Artist)
+            OPTIONAL MATCH (g)-[:DESIGNED_BY]->(d:Designer)
+            OPTIONAL MATCH (g)-[:PUBLISHED_BY]->(p:Publisher)
+            OPTIONAL MATCH (g)-[:USES_MECHANIC]->(m:Mechanic)
+            RETURN g,
+                collect(DISTINCT a) AS artists,
+                collect(DISTINCT d) AS designers,
+                collect(DISTINCT p) AS publishers,
+                collect(DISTINCT m) AS mechanics
+            """
+            record = session.run(query, id=int(game_id)).single()
+            if not record:
+                return None
+
+            g = self._doc_to_game(record["g"])
+            return GameDetail.model_validate(
+                {
+                    **g.model_dump(),
+                    "artists": list(record["artists"]),
+                    "designers": list(record["designers"]),
+                    "publishers": list(record["publishers"]),
+                    "mechanics": list(record["mechanics"]),
+                }
+            )
 
     @staticmethod
     def _get_node(tx, game_id: int):

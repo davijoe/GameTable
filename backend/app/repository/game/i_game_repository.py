@@ -27,3 +27,6 @@ class IGameRepository(ABC):
 
     @abstractmethod
     def delete(self, game_id: Any) -> bool: ...
+
+    @abstractmethod
+    def get_detail(self, game_id: Any): ...
