@@ -86,6 +86,27 @@ build-migrator:
 build: build-frontend build-backend build-migrator
 	@echo "YAY. Since you are seeing this message, your build has definitely potentially succeeded."
 
+### SPEEDRUNNERS
+byg:
+	$(DEV_COMPOSE) build $(BACKEND_SERVICE)
+
+bb:
+	$(DEV_COMPOSE) down $(BACKEND_SERVICE)
+	$(DEV_COMPOSE) build $(BACKEND_SERVICE) --no-cache
+	$(DEV_COMPOSE) up -d $(BACKEND_SERVICE)
+
+bn:
+	$(DEV_COMPOSE) down
+	$(DEV_COMPOSE) build $(BACKEND_SERVICE)
+	$(DEV_COMPOSE) up -d $(BACKEND_SERVICE) $(NEO4J)
+
+bs:
+	$(DEV_COMPOSE) down
+	$(DEV_COMPOSE) up -d $(BACKEND_SERVICE) $(SQL)
+
+bm:
+	$(DEV_COMPOSE) down
+	$(DEV_COMPOSE) up -d $(BACKEND_SERVICE) $(MONGO)
 
 ### Install EVERYTHING LETSA GOOOO
 install: gp frontend backend migrator scraper build-frontend build-backend build-migrator
