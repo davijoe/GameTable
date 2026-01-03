@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.model.designer_model import Designer
-from app.repository.sql.sql_designer_repository import SQLDesignerRepository
+from app.repository.designer.sql_designer_repository import SQLDesignerRepository
 from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 
 

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.model.genre_model import Genre
-from app.repository.sql.sql_genre_repository import SQLGenreRepository
+from app.repository.genre.sql_genre_repository import SQLGenreRepository
 from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
 
 

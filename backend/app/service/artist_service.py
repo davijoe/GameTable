@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 
 from app.model.artists_model import Artist
-from app.repository.sql.sql_artist_repository import SQLArtistRepository
 from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
+from app.repository.artist.sql_artist_repository import SQLArtistRepository
 
 
 class ArtistService:

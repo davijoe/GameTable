@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.model.language_model import Language
-from app.repository.sql.sql_language_repository import SQLLanguageRepository
+from app.repository.language.sql_language_repository import SQLLanguageRepository
 from app.schema.language_schema import LanguageCreate, LanguageRead, LanguageUpdate
 
 
