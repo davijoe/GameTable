@@ -18,7 +18,7 @@ def list_publishers(
     limit: int = Query(50, ge=1, le=200),
     db: Session = Depends(get_sql_db),
 ):
-    svc = PublisherService(db)
+    svc = PublisherService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
@@ -30,7 +30,7 @@ def list_publishers(
     dependencies=[Depends(require_admin)],
 )
 def create_publisher(payload: PublisherCreate, db: Session = Depends(get_sql_db)):
-    svc = PublisherService(db)
+    svc = PublisherService()
     try:
         return svc.create(payload)
     except ValueError as e:
@@ -39,7 +39,7 @@ def create_publisher(payload: PublisherCreate, db: Session = Depends(get_sql_db)
 
 @router.get("/{publisher_id}", response_model=PublisherRead)
 def get_publisher(publisher_id: int, db: Session = Depends(get_sql_db)):
-    svc = PublisherService(db)
+    svc = PublisherService()
     item = svc.get(publisher_id)
     if not item:
         raise HTTPException(status_code=404, detail="Publisher not found")
@@ -54,7 +54,7 @@ def get_publisher(publisher_id: int, db: Session = Depends(get_sql_db)):
 def update_publisher(
     publisher_id: int, payload: PublisherUpdate, db: Session = Depends(get_sql_db)
 ):
-    svc = PublisherService(db)
+    svc = PublisherService()
     try:
         item = svc.update(publisher_id, payload)
         if not item:
@@ -70,6 +70,6 @@ def update_publisher(
     dependencies=[Depends(require_admin)],
 )
 def delete_publisher(publisher_id: int, db: Session = Depends(get_sql_db)):
-    svc = PublisherService(db)
+    svc = PublisherService()
     if not svc.delete(publisher_id):
         raise HTTPException(status_code=404, detail="Publisher not found")
