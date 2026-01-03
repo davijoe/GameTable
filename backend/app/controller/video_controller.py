@@ -18,7 +18,7 @@ def list_videos(
     limit: int = Query(50, ge=1, le=200),
     db: Session = Depends(get_sql_db),
 ):
-    svc = VideoService(db)
+    svc = VideoService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
@@ -30,7 +30,7 @@ def list_videos(
     dependencies=[Depends(require_admin)],
 )
 def create_video(payload: VideoCreate, db: Session = Depends(get_sql_db)):
-    svc = VideoService(db)
+    svc = VideoService()
     try:
         return svc.create(payload)
     except ValueError as e:
@@ -39,7 +39,7 @@ def create_video(payload: VideoCreate, db: Session = Depends(get_sql_db)):
 
 @router.get("/{video_id}", response_model=VideoRead)
 def get_video(video_id: int, db: Session = Depends(get_sql_db)):
-    svc = VideoService(db)
+    svc = VideoService()
     item = svc.get(video_id)
     if not item:
         raise HTTPException(status_code=404, detail="Video not found")
@@ -54,7 +54,7 @@ def get_video(video_id: int, db: Session = Depends(get_sql_db)):
 def update_video(
     video_id: int, payload: VideoUpdate, db: Session = Depends(get_sql_db)
 ):
-    svc = VideoService(db)
+    svc = VideoService()
     try:
         item = svc.update(video_id, payload)
         if not item:
@@ -70,6 +70,6 @@ def update_video(
     dependencies=[Depends(require_admin)],
 )
 def delete_video(video_id: int, db: Session = Depends(get_sql_db)):
-    svc = VideoService(db)
+    svc = VideoService()
     if not svc.delete(video_id):
         raise HTTPException(status_code=404, detail="Video not found")
