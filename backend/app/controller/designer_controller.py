@@ -1,7 +1,6 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
 
 from app.schema.designer_schema import (
     DesignerCreate,
@@ -10,7 +9,6 @@ from app.schema.designer_schema import (
 )
 from app.service.designer_service import DesignerService
 from app.utility.auth import require_admin
-from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/designers", tags=["designers"])
 

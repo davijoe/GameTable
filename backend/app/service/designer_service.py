@@ -1,10 +1,6 @@
-from sqlalchemy.orm import Session
-
 from app.model.designer_model import Designer
-from app.repository.artist.artist_repository_factory import get_artist_repository
-from app.repository.designer.sql_designer_repository import SQLDesignerRepository
-from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 from app.repository.designer.designer_repository_factory import get_designer_repository
+from app.schema.designer_schema import DesignerCreate, DesignerRead, DesignerUpdate
 
 
 class DesignerService:
