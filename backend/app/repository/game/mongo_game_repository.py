@@ -3,10 +3,22 @@ from typing import Any
 from pymongo.collection import Collection
 
 from app.repository.game.i_game_repository import IGameRepository
-from app.schema.game_schema import GameCreate, GameRead, GameUpdate
+from app.schema.artist_schema import ArtistRead
+from app.schema.designer_schema import DesignerRead
+from app.schema.game_schema import GameCreate, GameDetail, GameRead, GameUpdate
+from app.schema.genre_schema import GenreRead
+from app.schema.mechanic_schema import MechanicRead
+from app.schema.publisher_schema import PublisherRead
 
 
 class GameRepositoryMongo(IGameRepository):
+    SORT_FIELDS = {
+        "bgg_rating": "bgg_rating",
+        "year_published": "year_published",
+        "playing_time": "playing_time",
+        "name": "name",
+    }
+
     def __init__(self, db):
         self.col: Collection = db["games"]
 
@@ -25,13 +37,25 @@ class GameRepositoryMongo(IGameRepository):
         return self._doc_to_game(doc)
 
     def list(
-        self, offset: int, limit: int, search: str | None = None
-    ) -> tuple[list[GameRead], int]:
+        self,
+        offset: int,
+        limit: int,
+        search: str | None = None,
+        sort_by: str | None = None,
+        sort_order: str = "desc",
+    ) -> tuple[list[dict], int]:
         query = {}
         if search:
             query["name"] = {"$regex": search, "$options": "i"}
+
         total = self.col.count_documents(query)
-        cursor = self.col.find(query).skip(offset).limit(limit).sort("name", 1)
+        cursor = self.col.find(query).skip(offset).limit(limit)
+
+        if sort_by in self.SORT_FIELDS:
+            sort_field = self.SORT_FIELDS[sort_by]
+            pymongo_order = -1 if sort_order == "desc" else 1
+            cursor = cursor.sort(sort_field, pymongo_order)
+
         return [self._doc_to_game(d) for d in cursor], total
 
     def create(self, game_data: GameCreate) -> GameRead:
@@ -46,6 +70,37 @@ class GameRepositoryMongo(IGameRepository):
         if res.matched_count == 0:
             return None
         return self.get(game_id)
+
+    def get_detail(self, game_id: Any) -> GameDetail | None:
+        """Return a game with all related embedded documents"""
+        doc = self.col.find_one({"_id": int(game_id)})
+        if not doc:
+            return None
+
+        game_data = dict(doc)
+        game_data["id"] = game_data["_id"]
+
+        images = game_data.get("images") or {}
+        game_data["thumbnail"] = images.get("thumbnail")
+        game_data["image"] = images.get("image")
+
+        game_data["artists"] = [
+            ArtistRead.model_validate(a) for a in doc.get("artists", [])
+        ]
+        game_data["designers"] = [
+            DesignerRead.model_validate(d) for d in doc.get("designers", [])
+        ]
+        game_data["publishers"] = [
+            PublisherRead.model_validate(p) for p in doc.get("publishers", [])
+        ]
+        game_data["mechanics"] = [
+            MechanicRead.model_validate(m) for m in doc.get("mechanics", [])
+        ]
+        game_data["genres"] = [
+            GenreRead.model_validate(g) for g in doc.get("genres", [])
+        ]
+
+        return GameDetail.model_validate(game_data)
 
     def delete(self, game_id: Any) -> bool:
         res = self.col.delete_one({"_id": game_id})

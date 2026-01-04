@@ -8,7 +8,12 @@ class IGameRepository(ABC):
 
     @abstractmethod
     def list(
-        self, offset: int, limit: int, search: str | None, sort_by: str | None
+        self,
+        offset: int,
+        limit: int,
+        search: str | None = None,
+        sort_by: str | None = None,
+        sort_order: str = "desc",
     ): ...
 
     @abstractmethod
@@ -19,3 +24,6 @@ class IGameRepository(ABC):
 
     @abstractmethod
     def delete(self, game_id: Any) -> bool: ...
+
+    @abstractmethod
+    def get_detail(self, game_id: Any): ...
