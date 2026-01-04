@@ -11,8 +11,8 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/login", response_model=LoginResponse)
-def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
-    svc = UserService(db)
+def login(payload: LoginRequest):
+    svc = UserService()
     user = svc.authenticate(payload.username, payload.password)
 
     if not user:
@@ -31,9 +31,8 @@ def login(payload: LoginRequest, db: Session = Depends(get_sql_db)):
 @router.post("/token")
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
-    db: Session = Depends(get_sql_db),
 ):
-    svc = UserService(db)
+    svc = UserService()
     user = svc.authenticate(form_data.username, form_data.password)
 
     if not user:
