@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.model.mechanic_model import Mechanic
-from app.repository.sql.sql_mechanic_repository import SQLMechanicRepository
+from app.repository.mechanic.sql_mechanic_repository import SQLMechanicRepository
 from app.schema.mechanic_schema import MechanicCreate, MechanicRead, MechanicUpdate
 
 
