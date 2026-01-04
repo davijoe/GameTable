@@ -14,9 +14,11 @@ def get_publisher_repository():
     if db_mode == "sql":
         db = next(get_sql_db())
         return PublisherRepositorySQL(db)
+
     if db_mode == "mongo":
         db = next(get_mongo_db())
         return PublisherRepositoryMongo(db)
+
     if db_mode == "neo":
         driver = get_neo()
         return PublisherRepositoryNeo(driver)
