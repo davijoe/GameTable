@@ -2,10 +2,11 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.model.artists_model import Artist
+from app.repository.artist.i_artist_repository import IArtistRepository
 
 
-class SQLArtistRepository:
-    def __init__(self, db: Session):
+class ArtistRepositorySQL(IArtistRepository):
+    def __init__(self, db):
         self.db = db
 
     def get(self, artist_id: int) -> Artist | None:
@@ -39,6 +40,10 @@ class SQLArtistRepository:
         self.db.commit()
         return artist
 
-    def delete(self, artist: Artist) -> None:
+    def delete(self, artist_id: int) -> bool:
+        artist = self.db.get(Artist, artist_id)
+        if not artist:
+            return False
         self.db.delete(artist)
         self.db.commit()
+        return True
