@@ -1,12 +1,10 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
 
 from app.schema.mechanic_schema import MechanicCreate, MechanicRead, MechanicUpdate
 from app.service.mechanic_service import MechanicService
 from app.utility.auth import require_admin
-from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/mechanics", tags=["mechanics"])
 
@@ -16,9 +14,8 @@ def list_mechanics(
     q: str | None = Query(None, description="Search by mechanic name"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_sql_db),
 ):
-    svc = MechanicService(db)
+    svc = MechanicService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
@@ -29,8 +26,8 @@ def list_mechanics(
     status_code=201,
     dependencies=[Depends(require_admin)],
 )
-def create_mechanic(payload: MechanicCreate, db: Session = Depends(get_sql_db)):
-    svc = MechanicService(db)
+def create_mechanic(payload: MechanicCreate):
+    svc = MechanicService()
     try:
         return svc.create(payload)
     except ValueError as e:
@@ -38,8 +35,8 @@ def create_mechanic(payload: MechanicCreate, db: Session = Depends(get_sql_db)):
 
 
 @router.get("/{mechanic_id}", response_model=MechanicRead)
-def get_mechanic(mechanic_id: int, db: Session = Depends(get_sql_db)):
-    svc = MechanicService(db)
+def get_mechanic(mechanic_id: int):
+    svc = MechanicService()
     item = svc.get(mechanic_id)
     if not item:
         raise HTTPException(status_code=404, detail="Mechanic not found")
@@ -51,10 +48,8 @@ def get_mechanic(mechanic_id: int, db: Session = Depends(get_sql_db)):
     response_model=MechanicRead,
     dependencies=[Depends(require_admin)],
 )
-def update_mechanic(
-    mechanic_id: int, payload: MechanicUpdate, db: Session = Depends(get_sql_db)
-):
-    svc = MechanicService(db)
+def update_mechanic(mechanic_id: int, payload: MechanicUpdate):
+    svc = MechanicService()
     try:
         item = svc.update(mechanic_id, payload)
         if not item:
@@ -69,7 +64,7 @@ def update_mechanic(
     status_code=204,
     dependencies=[Depends(require_admin)],
 )
-def delete_mechanic(mechanic_id: int, db: Session = Depends(get_sql_db)):
-    svc = MechanicService(db)
+def delete_mechanic(mechanic_id: int):
+    svc = MechanicService()
     if not svc.delete(mechanic_id):
         raise HTTPException(status_code=404, detail="Mechanic not found")

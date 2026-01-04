@@ -1,14 +1,13 @@
-from sqlalchemy.orm import Session
-
 from app.model.mechanic_model import Mechanic
-from app.repository.mechanic.sql_mechanic_repository import SQLMechanicRepository
+from app.repository.mechanic.mechanic_repository_factory import (
+    get_mechanic_repository,
+)
 from app.schema.mechanic_schema import MechanicCreate, MechanicRead, MechanicUpdate
 
 
 class MechanicService:
-    def __init__(self, db: Session):
-        self.repo = SQLMechanicRepository(db)
-        self.db = db
+    def __init__(self):
+        self.repo = get_mechanic_repository()
 
     def get(self, mechanic_id: int) -> MechanicRead | None:
         obj = self.repo.get(mechanic_id)
