@@ -1,15 +1,12 @@
 import bcrypt
-from sqlalchemy.orm import Session
 
-from app.model.user_model import User
-from app.repository.sql.sql_user_repository import SQLUserRepository
+from app.repository.user.user_repository_factory import get_user_repository
 from app.schema.user_schema import UserCreate, UserRead, UserUpdate
 
 
 class UserService:
-    def __init__(self, db: Session):
-        self.repo = SQLUserRepository(db)
-        self.db = db
+    def __init__(self):
+        self.repo = get_user_repository()
 
     def _hash_password(self, password: str) -> str:
         return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
@@ -39,40 +36,24 @@ class UserService:
         data = payload.model_dump()
         data["password"] = self._hash_password(data["password"])
 
-        obj = User(**data)
-        obj = self.repo.create(obj)
-        self.db.commit()
-        self.db.refresh(obj)
+        obj = self.repo.create(data)
         return UserRead.model_validate(obj)
 
     def update(self, user_id: int, payload: UserUpdate) -> UserRead | None:
-        obj = self.repo.get(user_id)
-        if not obj:
-            return None
-
         update_data = payload.model_dump(exclude_unset=True)
 
         if "password" in update_data:
             update_data["password"] = self._hash_password(update_data["password"])
 
-        for key, value in update_data.items():
-            setattr(obj, key, value)
-
-        obj = self.repo.update(obj)
-        self.db.commit()
-        self.db.refresh(obj)
+        obj = self.repo.update(user_id, update_data)
         return UserRead.model_validate(obj)
 
     def delete(self, user_id: int) -> bool:
-        obj = self.repo.get(user_id)
-        if not obj:
-            return False
-        self.repo.delete(obj)
-        self.db.commit()
-        return True
+        return self.repo.delete(user_id)
 
     def authenticate(self, username: str, password: str):
         user = self.repo.get_by_username(username)
+
         if not user:
             return None
 

@@ -83,3 +83,4 @@ class ReviewRead(ORMModel):
     star_amount: int
     user: UserDisplayName
     game_id: int
+    user_id: int | None = None

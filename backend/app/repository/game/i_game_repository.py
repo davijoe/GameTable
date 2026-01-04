@@ -3,8 +3,6 @@ from typing import Any
 
 
 class IGameRepository(ABC):
-
-
     @abstractmethod
     def get(self, game_id: Any): ...
 
@@ -17,7 +15,6 @@ class IGameRepository(ABC):
         sort_by: str | None = None,
         sort_order: str = "desc",
     ): ...
-
 
     @abstractmethod
     def create(self, game_data: dict): ...
