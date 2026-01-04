@@ -2,6 +2,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.model.user_model import User
+from app.model.review_model import Review
 from app.repository.user.i_user_repository import IUserRepository
 
 
@@ -53,6 +54,17 @@ class UserRepositorySQL(IUserRepository):
         obj = self.get(user_id)
         if not obj:
             return False
-        self.db.delete(obj)
-        self.db.commit()
-        return True
+
+        try:
+            self.db.execute(select(Review).where(Review.user_id == int(user_id)))
+            self.db.query(Review).filter(Review.user_id == int(user_id)).delete(
+                synchronize_session=False
+            )
+
+            self.db.delete(obj)
+            self.db.commit()
+            return True
+
+        except Exception:
+            self.db.rollback()
+            raise
