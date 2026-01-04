@@ -1,3 +1,5 @@
+import datetime
+
 from neo4j import Driver
 
 from app.repository.user.i_user_repository import IUserRepository
@@ -10,8 +12,14 @@ class UserRepositoryNeo(IUserRepository):
     def _node(self, node):
         if not node:
             return None
+
         data = dict(node)
         data["id"] = int(data.get("id") or 0)
+
+        dob = data.get("dob")
+        if dob is not None:
+            data["dob"] = datetime.date(dob.year, dob.month, dob.day)
+
         return data
 
     def get(self, user_id: int):
