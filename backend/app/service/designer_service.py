@@ -23,8 +23,6 @@ class DesignerService:
 
         obj = Designer(**payload.model_dump())
         obj = self.repo.create(obj)
-        self.db.commit()
-        self.db.refresh(obj)
         return DesignerRead.model_validate(obj)
 
     def update(self, designer_id: int, payload: DesignerUpdate) -> DesignerRead | None:
@@ -43,14 +41,7 @@ class DesignerService:
             setattr(obj, key, value)
 
         obj = self.repo.update(obj)
-        self.db.commit()
-        self.db.refresh(obj)
-        return DesignerRead.model_validate(obj)
+        return DesignerRead.model_validate(obj) if obj else None
 
     def delete(self, designer_id: int) -> bool:
-        obj = self.repo.get(designer_id)
-        if not obj:
-            return False
-        self.repo.delete(obj)
-        self.db.commit()
-        return True
+        return self.repo.delete(designer_id)
