@@ -23,9 +23,8 @@ def list_users(
     ),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_sql_db),
 ):
-    svc = UserService(db)
+    svc = UserService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
@@ -34,8 +33,8 @@ def list_users(
     "/api/users",
     response_model=UserRead,
 )
-def create_user(payload: UserCreate, db: Session = Depends(get_sql_db)):
-    svc = UserService(db)
+def create_user(payload: UserCreate):
+    svc = UserService()
 
     if svc.get_by_username(payload.username):
         raise HTTPException(
@@ -53,8 +52,8 @@ def create_user(payload: UserCreate, db: Session = Depends(get_sql_db)):
     "/api/user/{user_id}",
     response_model=UserRead,
 )
-def get_user(user_id: int, db: Session = Depends(get_sql_db)):
-    svc = UserService(db)
+def get_user(user_id: int):
+    svc = UserService()
     item = svc.get(user_id)
     if not item:
         raise HTTPException(status_code=404, detail="User not found")
@@ -65,10 +64,9 @@ def get_user(user_id: int, db: Session = Depends(get_sql_db)):
 def update_user(
     user_id: int,
     payload: UserUpdate,
-    db: Session = Depends(get_sql_db),
     _: User = Depends(require_self_or_admin),
 ):
-    svc = UserService(db)
+    svc = UserService()
 
     if payload.username is not None:
         existing_user = svc.get_by_username(payload.username)
@@ -99,7 +97,7 @@ def update_user(
         Depends(require_admin),
     ],
 )
-def delete_user(user_id: int, db: Session = Depends(get_sql_db)):
-    svc = UserService(db)
+def delete_user(user_id: int):
+    svc = UserService()
     if not svc.delete(user_id):
         raise HTTPException(status_code=404, detail="User not found")

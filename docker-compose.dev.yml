@@ -10,8 +10,7 @@ services:
       - ./backend/app:/app/app
       - ./backend/.env:/app/.env:ro
       - ./backend/tests:/app/tests
-    depends_on:
-      - mysql8_database
+    env_file: ".env"
     networks:
       - gametable-net
 

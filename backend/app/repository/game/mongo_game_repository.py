@@ -1,15 +1,14 @@
 from typing import Any
 
-from app.schema.artist_schema import ArtistRead
-from app.schema.designer_schema import DesignerRead
-from app.schema.genre_schema import GenreRead
-from app.schema.mechanic_schema import MechanicRead
-from app.schema.publisher_schema import PublisherRead
-from app.schema.video_schema import VideoRead
 from pymongo.collection import Collection
 
 from app.repository.game.i_game_repository import IGameRepository
+from app.schema.artist_schema import ArtistRead
+from app.schema.designer_schema import DesignerRead
 from app.schema.game_schema import GameCreate, GameDetail, GameRead, GameUpdate
+from app.schema.genre_schema import GenreRead
+from app.schema.mechanic_schema import MechanicRead
+from app.schema.publisher_schema import PublisherRead
 
 
 class GameRepositoryMongo(IGameRepository):
@@ -106,4 +105,3 @@ class GameRepositoryMongo(IGameRepository):
     def delete(self, game_id: Any) -> bool:
         res = self.col.delete_one({"_id": game_id})
         return res.deleted_count == 1
-

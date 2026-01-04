@@ -19,7 +19,7 @@ class GameRepositorySQL(IGameRepository):
     def get(self, game_id):
         return self.db.get(Game, game_id)
 
-    def list(self, offset, limit, search, sort_by, sort_order = "desc"):
+    def list(self, offset, limit, search, sort_by, sort_order="desc"):
         stmt = select(Game)
 
         if search:
@@ -29,7 +29,9 @@ class GameRepositorySQL(IGameRepository):
             col = getattr(Game, sort_by)
             stmt = stmt.order_by(col.asc() if sort_order == "desc" else col.desc())
 
-        total = self.db.execute(select(func.count()).select_from(stmt.subquery())).scalar_one()
+        total = self.db.execute(
+            select(func.count()).select_from(stmt.subquery())
+        ).scalar_one()
         rows = self.db.execute(stmt.offset(offset).limit(limit)).scalars().all()
         return rows, total
 
@@ -57,19 +59,19 @@ class GameRepositorySQL(IGameRepository):
             obj = self.get(game_id)
             if not obj:
                 return False
-            
+
             for review in obj.reviews:
                 self.db.delete(review)
-            
+
             for video in obj.videos:
                 self.db.delete(video)
-            
+
             obj.artists.clear()
             obj.designers.clear()
             obj.publishers.clear()
             obj.mechanics.clear()
             obj.genres.clear()
-            
+
             self.db.delete(obj)
             self.db.commit()
             return True
