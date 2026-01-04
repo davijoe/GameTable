@@ -1,12 +1,10 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
 
 from app.schema.artist_schema import ArtistCreate, ArtistRead, ArtistUpdate
 from app.service.artist_service import ArtistService
 from app.utility.auth import require_admin
-from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/artists", tags=["artists"])
 

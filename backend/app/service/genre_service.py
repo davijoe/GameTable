@@ -1,14 +1,13 @@
 from sqlalchemy.orm import Session
 
 from app.model.genre_model import Genre
-from app.repository.genre.sql_genre_repository import SQLGenreRepository
+from app.repository.genre.genre_repository_factory import get_genre_repository
 from app.schema.genre_schema import GenreCreate, GenreRead, GenreUpdate
 
 
 class GenreService:
-    def __init__(self, db: Session):
-        self.repo = SQLGenreRepository(db)
-        self.db = db
+    def __init__(self):
+        self.repo = get_genre_repository()
 
     def get(self, genre_id: int) -> GenreRead | None:
         obj = self.repo.get(genre_id)
@@ -26,8 +25,6 @@ class GenreService:
 
         obj = Genre(**payload.model_dump())
         obj = self.repo.create(obj)
-        self.db.commit()
-        self.db.refresh(obj)
         return GenreRead.model_validate(obj)
 
     def update(self, genre_id: int, payload: GenreUpdate) -> GenreRead | None:
@@ -46,14 +43,8 @@ class GenreService:
             setattr(obj, key, value)
 
         obj = self.repo.update(obj)
-        self.db.commit()
-        self.db.refresh(obj)
         return GenreRead.model_validate(obj)
 
     def delete(self, genre_id: int) -> bool:
-        obj = self.repo.get(genre_id)
-        if not obj:
-            return False
-        self.repo.delete(obj)
-        self.db.commit()
-        return True
+        return self.repo.delete(genre_id)
+

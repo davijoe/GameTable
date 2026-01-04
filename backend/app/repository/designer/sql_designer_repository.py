@@ -39,6 +39,10 @@ class SQLDesignerRepository:
         self.db.commit()
         return designer
 
-    def delete(self, designer: Designer) -> None:
+    def delete(self, designer_id: int) -> None:
+        designer = self.db.get(Designer, designer_id)
+        if not designer:
+            return False
         self.db.delete(designer)
         self.db.commit()
+        return True

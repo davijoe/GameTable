@@ -1,7 +1,6 @@
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
 
 from app.schema.designer_schema import (
     DesignerCreate,
@@ -10,7 +9,6 @@ from app.schema.designer_schema import (
 )
 from app.service.designer_service import DesignerService
 from app.utility.auth import require_admin
-from app.utility.db_sql import get_sql_db
 
 router = APIRouter(prefix="/api/designers", tags=["designers"])
 
@@ -20,9 +18,8 @@ def list_designers(
     q: str | None = Query(None, description="Search by name"),
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
-    db: Session = Depends(get_sql_db),
 ):
-    svc = DesignerService(db)
+    svc = DesignerService()
     items, total = svc.list(offset=offset, limit=limit, search=q)
     return {"total": total, "offset": offset, "limit": limit, "items": items}
 
@@ -34,9 +31,8 @@ def list_designers(
 )
 def create_designer(
     payload: DesignerCreate,
-    db: Session = Depends(get_sql_db),
 ):
-    svc = DesignerService(db)
+    svc = DesignerService()
     try:
         return svc.create(payload)
     except ValueError as e:
@@ -44,8 +40,8 @@ def create_designer(
 
 
 @router.get("/{designer_id}", response_model=DesignerRead)
-def get_designer(designer_id: int, db: Session = Depends(get_sql_db)):
-    svc = DesignerService(db)
+def get_designer(designer_id: int):
+    svc = DesignerService()
     item = svc.get(designer_id)
     if not item:
         raise HTTPException(status_code=404, detail="Designer not found")
@@ -60,11 +56,8 @@ def get_designer(designer_id: int, db: Session = Depends(get_sql_db)):
 def update_designer(
     designer_id: int,
     payload: DesignerUpdate,
-    db: Session = Depends(
-        get_sql_db,
-    ),
 ):
-    svc = DesignerService(db)
+    svc = DesignerService()
     try:
         item = svc.update(designer_id, payload)
         if not item:
@@ -81,8 +74,7 @@ def update_designer(
 )
 def delete_designer(
     designer_id: int,
-    db: Session = Depends(get_sql_db),
 ):
-    svc = DesignerService(db)
+    svc = DesignerService()
     if not svc.delete(designer_id):
         raise HTTPException(status_code=404, detail="Designer not found")
