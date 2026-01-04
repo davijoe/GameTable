@@ -17,12 +17,6 @@ class ArtistRepositoryNeo(IArtistRepository):
         return ArtistRead(**data)
 
     def create(self, artist_data) -> ArtistRead:
-        # Convert SQLAlchemy/other objects to dict if necessary
-        #if hasattr(artist_data, "__dict__"):
-        #    data = {k: v for k, v in artist_data.__dict__.items() if v is not None}
-        #else:
-        #    data = artist_data  # assume dict already
-
         with self.driver.session() as session:
             with session.begin_transaction() as tx:
                 node = self._create_node(tx, artist_data)
@@ -84,17 +78,8 @@ class ArtistRepositoryNeo(IArtistRepository):
             return artists, total
 
     def update(self, artist_id: int, artist_data: ArtistUpdate) -> ArtistRead | None:
-        # Convert SQLAlchemy or other objects to dict
-        if hasattr(artist_data, "__dict__"):
-            update_fields = {k: v for k, v in artist_data.__dict__.items() if v is not None}
-        else:
-            update_fields = artist_data  # assume dict
-
-        if not update_fields:
-            return self.get(artist_id)
-
-        set_clause = ", ".join(f"a.{k} = ${k}" for k in update_fields)
-        params = {"id": artist_id, **update_fields}
+        set_clause = ", ".join(f"a.{k} = ${k}" for k in artist_data)
+        params = {"id": artist_id, **artist_data}
 
         with self.driver.session() as session:
             record = session.run(
