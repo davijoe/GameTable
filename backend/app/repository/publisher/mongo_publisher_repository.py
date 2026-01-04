@@ -5,7 +5,7 @@ from app.repository.publisher.i_publisher_repository import IPublisherRepository
 
 class PublisherRepositoryMongo(IPublisherRepository):
     def __init__(self, db):
-        self.col: Collection = db["publishers"]
+        self.games: Collection = db["games"]
 
     def _doc(self, doc: dict | None):
         if not doc:
@@ -14,14 +14,41 @@ class PublisherRepositoryMongo(IPublisherRepository):
         return doc
 
     def get(self, publisher_id: int):
-        doc = self.col.find_one({"id": int(publisher_id)}) or self.col.find_one(
-            {"_id": int(publisher_id)}
-        )
-        return self._doc(doc)
+        pid = int(publisher_id)
+
+        pipeline = [
+            {"$match": {"publishers.id": pid}},
+            {"$unwind": "$publishers"},
+            {"$match": {"publishers.id": pid}},
+            {"$replaceRoot": {"newRoot": "$publishers"}},
+            {"$limit": 1},
+        ]
+
+        docs = list(self.games.aggregate(pipeline))
+        if not docs:
+            return None
+
+        doc = docs[0]
+        doc["id"] = int(doc["id"])
+        return doc
 
     def get_by_name(self, name: str):
-        doc = self.col.find_one({"name": name})
-        return self._doc(doc)
+        # Case-insensitive exact-ish match
+        pipeline = [
+            {"$match": {"publishers.name": {"$regex": f"^{name}$", "$options": "i"}}},
+            {"$unwind": "$publishers"},
+            {"$match": {"publishers.name": {"$regex": f"^{name}$", "$options": "i"}}},
+            {"$replaceRoot": {"newRoot": "$publishers"}},
+            {"$limit": 1},
+        ]
+
+        docs = list(self.games.aggregate(pipeline))
+        if not docs:
+            return None
+
+        doc = docs[0]
+        doc["id"] = int(doc["id"])
+        return doc
 
     def list(
         self,
