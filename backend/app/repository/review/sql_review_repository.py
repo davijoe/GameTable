@@ -38,10 +38,6 @@ class ReviewRepositorySQL(IReviewRepository):
         return rows, total
 
     def create(self, review_data: dict) -> Review:
-        # Maybe we should use a procedure here?
-        # Maybe not?
-        # Maybe?
-
         review = self._create_via_procedure(review_data)
         self.db.commit()
         self.db.refresh(review)
@@ -66,7 +62,37 @@ class ReviewRepositorySQL(IReviewRepository):
         return True
 
     def _create_via_procedure(self, review_data: dict) -> Review:
-        # Put your stored-proc call here.
-        # If you paste your existing SQLReviewRepository.create_via_procedure implementation,
-        # I can adapt it exactly.
-        raise NotImplementedError
+        # Adjust keys if payload use star_amount and not stars
+        # or similar
+        stmt = text(
+            """
+            CALL add_game_review(
+                :p_user_id,
+                :p_game_id,
+                :p_title,
+                :p_text,
+                :p_stars
+            )
+            """
+        )
+
+        params = {
+            "p_user_id": int(review_data["user_id"]),
+            "p_game_id": int(review_data["game_id"]),
+            "p_title": review_data.get("title"),
+            "p_text": review_data.get("text") or review_data.get("comment"),
+            "p_stars": int(
+                review_data.get("star_amount") or review_data.get("stars") or 0
+            ),
+        }
+
+        result = self.db.execute(stmt, params)
+        row = result.fetchone()
+        if not row or row[0] is None:
+            raise ValueError("add_game_review did not return a new review id")
+
+        new_id = int(row[0])
+        obj = self.db.get(Review, new_id)
+        if not obj:
+            raise ValueError("Review created but could not be loaded by id")
+        return obj
